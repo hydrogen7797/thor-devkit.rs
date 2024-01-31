@@ -9,6 +9,7 @@ edition = "2021"
 leptos = { version = "0.6.3", features = ["csr", "nightly"] }
 leptos-use = {git = "https://github.com/Synphonyte/leptos-use.git",  features = ["serde"] }
 leptos_router = { version = "0.6.3",  features = ["csr", "nightly"]}
+leptos_icons = "0.3.0"
 serde = "1.0.196"
 rand = "0.8.5"
 gloo = "0.11.0"
@@ -38,3 +39,4 @@ regex= "1.8.3"
 sp-core-hashing= "15.0.0"
 anyhow ="1.0.75"
 polars = { version="0.37.0", default-features = false, features= ['csv']}
+icondata = "0.3.0"
