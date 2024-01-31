@@ -1,5 +1,4 @@
-use serde::{Serialize, Deserialize};
-
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct AccountStore {
@@ -16,12 +15,9 @@ impl Default for AccountStore {
     }
 }
 
-
-
-
 // Does not get stored in local storage
 #[derive(Default, Clone, PartialEq, Eq, Deserialize, Serialize)]
-pub (super) struct PhraseStore {
+pub(super) struct PhraseStore {
     pub mnemonic_phrase: Option<String>,
 }
 

@@ -1,0 +1,15 @@
+
+pub const CRUST_TOKEN: &str = "Basic token";
+
+pub const CRUST_SEED: &str = "";
+
+// https://web3.storage/
+pub const WEB3_STORAGE_TOKEN: &str = "Bearer token";
+
+// Huggingface access token
+// https://huggingface.co/docs/hub/security-tokens
+pub const HF_ACCESS_TOKEN: &str = "Token ";
+
+
+// 4everland.org (key, secret, session_token, expiration)
+pub static EVERLAND_CREDENTIALS: (&str, &str, &str, &str) = ("", "", "", "2024-03-23T21:27:36.000Z");

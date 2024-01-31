@@ -1,5 +1,5 @@
-use leptos::*;
 use crate::components::navigation::nav::Nav;
+use leptos::*;
 
 #[component]
 pub fn Home() -> impl IntoView {
@@ -8,9 +8,9 @@ pub fn Home() -> impl IntoView {
     view! {
         <>
             <Nav/>
-            <button on:click={move |_| {
+            <button on:click=move |_| {
                 set_count.update(|count: &mut i32| *count += 1);
-            }}>
+            }>
 
                 "Click me: " {move || count}
             </button>

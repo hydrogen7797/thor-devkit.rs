@@ -51,6 +51,13 @@ Format all .rs files ending with `_test.rs` within the examples directory
 
 `leptosfmt ./examples/**/*_test.rs`
 
+## Rust format check
+
+`cargo fmt --all -- --check`
+
+## Rust format
+
+`cargo fmt --all`
 
 <!-- ## rpc call to substrate
 ## transaction
