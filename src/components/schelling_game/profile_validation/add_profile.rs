@@ -1,18 +1,53 @@
+use crate::components::api::ipfs_request::ipfs_call_json_string;
+use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 use crate::components::markdown::markdown_field::MarkdownField;
 use crate::components::navigation::nav::Nav;
 use crate::components::upload::upload_video::FileUpload;
+use crate::services::error::ErrorString;
 use json::object;
 use leptos::ev::SubmitEvent;
+use leptos::html::mark;
 use leptos::*;
+
+async fn get_cid_post(
+    name: String,
+    details: String,
+    profile_video_cid: String,
+) -> Result<String, ErrorString> {
+    let data = object! {
+          version: "1.0",
+          name: name,
+          details: details,
+          profile_video_cid: profile_video_cid,
+    };
+    let json_string = json::stringify(data);
+    let response =
+        ipfs_call_json_string(DEFAULT_IPFS_PROVIDER, &json_string, "ipfs".to_owned()).await;
+    Ok(response)
+}
 
 #[component]
 pub fn AddProfile() -> impl IntoView {
     let (name, set_name) = create_signal(String::from(""));
     let (markdown, set_markdown) = create_signal(String::from(""));
-    let (cid, set_cid) = create_signal(String::from(""));
+    let (video_cid, set_video_cid) = create_signal(String::from(""));
+    let submit_action = create_action(
+        |(name, details, profile_video_cid): &(String, String, String)| {
+            let name = name.to_owned();
+            let details = details.to_owned();
+            let profile_video_cid = profile_video_cid.to_owned();
+
+            async move { get_cid_post(name, details, profile_video_cid).await }
+        },
+    );
+    let pending = submit_action.pending();
+    let submit_action_value = submit_action.value();
 
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
+        gloo::console::log!(format!("hello"));
+
+        submit_action.dispatch((name(), markdown(), video_cid()));
     };
 
     view! {
@@ -64,7 +99,7 @@ pub fn AddProfile() -> impl IntoView {
                                 Profile Video
                             </label>
                             <FileUpload
-                                set_cid_props=set_cid
+                                set_cid_props=set_video_cid
                                 accept_file_type=String::from("video/mp4")
                             />
                         </div>
@@ -76,6 +111,12 @@ pub fn AddProfile() -> impl IntoView {
 
                             Submit
                         </button>
+
+                        <p>{move || pending().then(|| "Loading...")}</p>
+                        <p>"Pending: " <code>{move || format!("{:#?}", pending())}</code></p>
+                        <p>
+                            "Value: " <code>{move || format!("{:#?}", submit_action_value())}</code>
+                        </p>
 
                     </div>
                 </form>
