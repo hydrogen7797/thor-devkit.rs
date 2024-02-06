@@ -25,11 +25,19 @@ async fn get_cid_post(
     Ok(response)
 }
 
+#[derive(Copy, Clone)]
+struct CidContext(ReadSignal<String>);
+
 #[component]
 pub fn AddProfile() -> impl IntoView {
     let (name, set_name) = create_signal(String::from(""));
     let (markdown, set_markdown) = create_signal(String::from(""));
     let (video_cid, set_video_cid) = create_signal(String::from(""));
+    let (post_cid, set_post_cid) = create_signal(String::from(""));
+
+    provide_context(CidContext(post_cid));
+
+    
     let submit_action = create_action(
         |(name, details, profile_video_cid): &(String, String, String)| {
             let name = name.to_owned();
@@ -48,10 +56,7 @@ pub fn AddProfile() -> impl IntoView {
     };
 
     let cid_value = move || {
-        gloo::console::log!("With in the set cid");
-
         let cid_result = submit_action_value();
-
         let cid = match cid_result {
             Some(result_cid) => {
                 let cid_value_in_result = match result_cid {
@@ -68,7 +73,7 @@ pub fn AddProfile() -> impl IntoView {
             }
             None => String::from(""),
         };
-
+        set_post_cid(cid.clone());
         cid
     };
 
