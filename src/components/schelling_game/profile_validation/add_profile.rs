@@ -37,7 +37,6 @@ pub fn AddProfile() -> impl IntoView {
 
     provide_context(CidContext(post_cid));
 
-    
     let submit_action = create_action(
         |(name, details, profile_video_cid): &(String, String, String)| {
             let name = name.to_owned();
