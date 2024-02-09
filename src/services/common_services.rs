@@ -1,4 +1,5 @@
 use crate::js_extension_binding::{js_get_accounts, js_sign_payload};
+use crate::services::error::ErrorString;
 use anyhow::anyhow;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
@@ -49,14 +50,17 @@ pub struct Account {
     pub address: String,
 }
 
-pub async fn get_accounts() -> Result<Vec<Account>, anyhow::Error> {
+pub async fn get_accounts() -> Result<Vec<Account>, ErrorString> {
     let result = JsFuture::from(js_get_accounts())
         .await
-        .map_err(|js_err| anyhow!("{js_err:?}"))?;
-    let accounts_str = result
-        .as_string()
-        .ok_or(anyhow!("Error converting JsValue into String"))?;
-    let accounts: Vec<Account> = serde_json::from_str(&accounts_str)?;
+        .map_err(|js_err| ErrorString(format!("{js_err:?}")))?;
+
+    let accounts_str = result.as_string().ok_or(ErrorString(
+        "Error converting JsValue into String".to_string(),
+    ))?;
+
+    let accounts: Vec<Account> = serde_json::from_str(&accounts_str)
+        .map_err(|serde_err| ErrorString(format!("{:?}", serde_err)))?;
     Ok(accounts)
 }
 
