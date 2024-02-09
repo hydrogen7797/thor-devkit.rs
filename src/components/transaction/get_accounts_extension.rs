@@ -11,16 +11,20 @@ async fn get_accounts_result() -> Result<Vec<Account>, ErrorString> {
 #[component]
 pub fn GetAccountsExtension(// set_account_load: WriteSignal<(String, String)>
 ) -> impl IntoView {
-    // let (accounts, set_accounts) = create_signal::<Result<Vec<Account>, ErrorString>>(Ok(vec![]));
-    let (account_called, set_account_called) = create_signal(false);
-    let (error, set_error) = create_signal("".to_string());
+    let (accounts, set_accounts) = create_signal::<Vec<Account>>(vec![]);
+    
 
     let get_accounts_action = create_action(|()| async move { get_accounts_result().await });
     let pending_accounts = get_accounts_action.pending();
     let get_accounts_value = get_accounts_action.value();
 
     let onclick_button = move |e: MouseEvent, i| {
-        gloo::console::log!(format!("Account number{}", i));
+        // gloo::console::log!(format!("Account number{}", i));
+        let accounts = accounts();
+        let account: &Account =  accounts.get(i).unwrap();
+        let account_address = account.address.clone();
+        let account_source = account.source.clone();
+        gloo::console::log!(format!("Account number{}, account address: {}, account source: {}", i, account_address, account_source));
     };
     let get_accounts_click = move |e: MouseEvent| {
         get_accounts_action.dispatch(());
@@ -31,17 +35,21 @@ pub fn GetAccountsExtension(// set_account_load: WriteSignal<(String, String)>
             Some(accounts_result) => match accounts_result {
                 Ok(accounts_value) => {
                     if accounts_value.is_empty() {
-                        view!(<div>{"No Web3 extension accounts found. Install Talisman or the Polkadot.js extension and add an account."}</div>)
+                        view!(<div><br/><div>{"No Web3 extension accounts found. Install Talisman or the Polkadot.js extension and add an account."}</div></div>)
                     } else {
+                        set_accounts(accounts_value.clone());
                         view! {
                             <div>
+                            <br/>
                                 <div class="mb"><b>{"Select an account you want to use for signing:"}</b></div>
                                 { move || accounts_value.iter().enumerate().map(|(i, account)| {
                                     view! {
-                                        <button on:click=move |e| {onclick_button(e, i)}>
+                                        <div>
+                                        <button class="btn btn-outline btn-info btn-block my-3" on:click=move |e| {onclick_button(e, i)}>
                                         {&account.source} {" | "} {&account.name}<br/>
                                         <small>{&account.address}</small>
                                         </button>
+                                        </div>
                                     }
                                 }).collect_view() }
                             </div>
@@ -64,13 +72,11 @@ pub fn GetAccountsExtension(// set_account_load: WriteSignal<(String, String)>
 
     view! {
         <>
-            <div class="container">
-                <button on:click=get_accounts_click> {"=> Select an Account for Signing"} </button>
-                {if account_called() {
-                    accounts_html()
-                } else {
-                    view! { <div></div> }
-                }}
+            <div class="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
+                    <div>
+                         <button on:click=get_accounts_click class="btn btn-warning"> {"=> Select an Account for Signing"} </button>
+                    </div>
+                    {move || accounts_html()}
             </div>
         </>
     }
