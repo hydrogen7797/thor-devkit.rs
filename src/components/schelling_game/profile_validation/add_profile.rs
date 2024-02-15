@@ -2,9 +2,9 @@ use crate::components::api::ipfs_request::ipfs_call_json_string;
 use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 use crate::components::markdown::markdown_field::MarkdownField;
 use crate::components::navigation::nav::Nav;
-use crate::components::schelling_game::profile_validation::extension_sign_in::SignTransaction;
+use crate::components::schelling_game::profile_validation::add_profile_extension_sign_in::SignTransaction;
 use crate::components::upload::upload_video::FileUpload;
-use crate::services::error::ErrorString;
+use crate::services::common_imp::View;
 use json::object;
 use leptos::ev::SubmitEvent;
 use leptos::*;
@@ -27,12 +27,6 @@ async fn get_cid_post(
         ipfs_call_json_string(DEFAULT_IPFS_PROVIDER, &json_string, "ipfs".to_owned()).await;
     set_post_cid(response);
     set_current_view(View::Success);
-}
-
-#[derive(Debug, Clone)]
-enum View {
-    Form,
-    Success,
 }
 
 #[component]
@@ -158,7 +152,7 @@ pub fn AddProfile() -> impl IntoView {
                     <p>{move || pending().then(|| "Loading...")}</p>
                     <p>"Pending: " <code>{move || format!("{:#?}", pending())}</code></p>
                     <p>{move || cid_value()}</p>
-                    </div>
+                </div>
             }
         }
 

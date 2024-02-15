@@ -22,7 +22,7 @@ pub async fn sign_in_with_extension<T>(
         .await
         .unwrap();
     let account_nonce_option = match api.tx().account_nonce(&account_id).await {
-        Ok(account_nonce) => { Some(account_nonce)} ,
+        Ok(account_nonce) => Some(account_nonce),
         Err(_) => {
             set_error("Fetching account nonce failed".to_string());
             None

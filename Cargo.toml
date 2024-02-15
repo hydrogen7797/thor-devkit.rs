@@ -10,6 +10,7 @@ leptos = { version = "0.6.5", features = ["csr", "nightly"] }
 leptos-use = {verison="0.10.2",  features = ["serde"] }
 leptos_router = { version = "0.6.5",  features = ["csr", "nightly"]}
 leptos_icons = "0.3.0"
+icondata = "0.3.0"
 serde = "1.0.196"
 rand = "0.8.5"
 gloo = "0.11.0"
@@ -36,7 +37,7 @@ tiny-bip39 = "1.0.0"
 pulldown-cmark = "0.10.0"
 json = "0.12.4"
 regex= "1.8.3"
-sp-core-hashing= "15.0.0"
+sp-core-hashing= "16.0.0"
 anyhow ="1.0.75"
 polars = { version="0.37.0", default-features = false, features= ['csv']}
-icondata = "0.3.0"
+oauth2 = "4.4.2"

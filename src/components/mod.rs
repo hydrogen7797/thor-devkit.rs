@@ -4,5 +4,6 @@ pub mod home;
 pub mod markdown;
 pub mod navigation;
 pub mod schelling_game;
+pub mod tests;
 pub mod transaction;
 pub mod upload;

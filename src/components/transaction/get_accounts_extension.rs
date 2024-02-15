@@ -9,10 +9,7 @@ async fn get_accounts_result() -> Result<Vec<Account>, ErrorString> {
 }
 
 #[component]
-pub fn GetAccountsExtension(
-    set_account_load: WriteSignal<(String, String)>
-
-) -> impl IntoView {
+pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> impl IntoView {
     let (accounts, set_accounts) = create_signal::<Vec<Account>>(vec![]);
     let get_accounts_action = create_action(|()| async move { get_accounts_result().await });
     let pending_accounts = get_accounts_action.pending();
