@@ -7,3 +7,4 @@ pub mod schelling_game;
 pub mod tests;
 pub mod transaction;
 pub mod upload;
+pub mod balance;

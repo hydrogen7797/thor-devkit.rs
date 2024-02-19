@@ -1,5 +1,4 @@
 use crate::components::navigation::nav::Nav;
-use crate::components::schelling_game::profile_validation::apply_jurors_sign_in::SignTransaction;
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -7,31 +6,23 @@ use leptos::*;
 use leptos_router::*;
 
 #[component]
-pub fn ApplyJurors() -> impl IntoView {
-    let params = use_params_map();
-    let profile_user_account = move || {
-        params.with(|params| {
-            params
-                .get("profile_user_account")
-                .cloned()
-                .unwrap_or_default()
-        })
-    };
-
-    // gloo::console::log!(profile_user_account());
+pub fn TransferBalance() -> impl IntoView {
     let (current_view, set_current_view) = create_signal(View::Form);
-    let (juror_stake, set_juror_stake) = create_signal::<Result<u128, ErrorString>>(Ok(0));
+
+    let (dest_account, set_dest_account) = create_signal(String::from(""));
+    let (transfer_balance, set_transfer_balance) = create_signal::<Result<u128, ErrorString>>(Ok(0));
+
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
 
         set_current_view(View::Success);
     };
 
-    let stake_value = move |value: String| {
-        let stake = value.parse::<u128>().expect("Invalid input");
-        gloo::console::log!(stake);
+    let transfer_value_fn = move |value: String| {
+        let transfer_value = value.parse::<u128>().expect("Invalid input");
+        gloo::console::log!(transfer_value);
 
-        set_juror_stake(Ok(stake));
+        set_transfer_balance(Ok(transfer_value));
     };
 
     let render_view = move || match current_view() {
@@ -45,17 +36,33 @@ pub fn ApplyJurors() -> impl IntoView {
                     >
                         <div class="mb-5">
                             <label
-                                for="juror-stake"
+                                for="destination account"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >
-                                Juror Stake
+                                Destination Account
+                            </label>
+                            <input
+                                type="text"
+                                id="destination account"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                required
+                                on:input=move |e| set_dest_account(event_target_value(&e))
+                            />
+                        </div>
+
+                        <div class="mb-5">
+                            <label
+                                for="transfer-balance"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                                Transfer Balance
                             </label>
                             <input
                                 type="number"
-                                id="juror-stake"
+                                id="transfer-balance"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                on:input=move |e| stake_value(event_target_value(&e))
+                                on:input=move |e| transfer_value_fn(event_target_value(&e))
                             />
                         </div>
                         <button
@@ -72,10 +79,10 @@ pub fn ApplyJurors() -> impl IntoView {
         View::Success => {
             view! {
                 <div>
-                    <SignTransaction
-                        stake=juror_stake().unwrap()
-                        profile_user_account=profile_user_account()
-                    />
+                    // <SignTransaction
+                    //     stake=juror_stake().unwrap()
+                    //     profile_user_account=profile_user_account()
+                    // />
 
                 </div>
             }
@@ -91,4 +98,6 @@ pub fn ApplyJurors() -> impl IntoView {
             {move || render_view()}
         </>
     }
+
 }
+
