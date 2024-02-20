@@ -96,7 +96,7 @@ pub fn TransferBalance() -> impl IntoView {
     view! {
         <>
             <Nav/>
-            {render_view()}
+            {move || render_view()}
         </>
     }
 }
