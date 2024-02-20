@@ -2,15 +2,20 @@ use crate::components::transaction::extension_sign_in::sign_in_with_extension;
 use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
 use crate::services::common_services::polkadot;
 use leptos::*;
-use polkadot::runtime_types::pallet_support::Content;
+use std::str::FromStr;
+use subxt::utils::AccountId32;
 
 #[component]
-pub fn SignTransaction(post_cid: ReadSignal<String>) -> impl IntoView {
-    view! { <ExtensionSignIn post_cid=post_cid/> }
+pub fn SignTransaction(dest_account: String, transfer_balance: u128) -> impl IntoView {
+    view! {         
+        <ExtensionSignIn dest_account=dest_account  transfer_balance=transfer_balance /> 
+    
+    }
 }
 
+
 #[component]
-pub fn ExtensionSignIn(post_cid: ReadSignal<String>) -> impl IntoView {
+pub fn ExtensionSignIn(dest_account: String, transfer_balance: u128) -> impl IntoView {
     let (account_load, set_account_load) = create_signal(("".to_owned(), "".to_owned()));
 
     let render_html = move || {
@@ -26,7 +31,8 @@ pub fn ExtensionSignIn(post_cid: ReadSignal<String>) -> impl IntoView {
                     view! {
                         <div>
                             <ExtensionTransaction
-                                post_cid=post_cid
+                                dest_account=dest_account.clone()
+                                transfer_balance=transfer_balance
                                 account_address=account_load().0
                                 account_source=account_load().1
                             />
@@ -43,7 +49,7 @@ pub fn ExtensionSignIn(post_cid: ReadSignal<String>) -> impl IntoView {
 
 #[component]
 pub fn ExtensionTransaction(
-    post_cid: ReadSignal<String>,
+    dest_account: String, transfer_balance: u128,
     account_address: String,
     account_source: String,
 ) -> impl IntoView {
@@ -51,10 +57,11 @@ pub fn ExtensionTransaction(
     let (extrinsic_success, set_extrinsic_success) = create_signal(String::from("extrinsic"));
     let (account, set_account) = create_signal((account_address, account_source));
     let transaction_resource = create_local_resource(
-        move || (post_cid, account, set_error, set_extrinsic_success),
-        move |_| async move {
-            let content: Content = Content::IPFS(post_cid().as_bytes().to_vec());
-            let tx = polkadot::tx().profile_validation().add_citizen(content);
+        move || (dest_account.clone(), transfer_balance , account, set_error, set_extrinsic_success),
+        move |(dest_account, transfer_balance , account, set_error, set_extrinsic_success)| async move {
+            let account_id32 = AccountId32::from_str(&dest_account).unwrap();
+
+            let tx = polkadot::tx().balances().transfer_allow_death(subxt::utils::MultiAddress::Id(account_id32), transfer_balance);
             let (account_address, account_source) = account();
             sign_in_with_extension(
                 tx,
@@ -79,3 +86,4 @@ pub fn ExtensionTransaction(
         </div>
     }
 }
+

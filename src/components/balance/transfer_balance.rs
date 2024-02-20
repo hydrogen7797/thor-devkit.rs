@@ -3,7 +3,7 @@ use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::*;
-use leptos_router::*;
+use crate::components::balance::transfer_balance_sign_in::SignTransaction;
 
 #[component]
 pub fn TransferBalance() -> impl IntoView {
@@ -79,10 +79,10 @@ pub fn TransferBalance() -> impl IntoView {
         View::Success => {
             view! {
                 <div>
-                    // <SignTransaction
-                    //     stake=juror_stake().unwrap()
-                    //     profile_user_account=profile_user_account()
-                    // />
+                    <SignTransaction
+                    dest_account=dest_account()
+                    transfer_balance=transfer_balance().unwrap()
+                    />
 
                 </div>
             }

@@ -6,38 +6,38 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-leptos = { version = "0.6.5", features = ["csr", "nightly"] }
-leptos-use = {verison="0.10.2",  features = ["serde"] }
-leptos_router = { version = "0.6.5",  features = ["csr", "nightly"]}
+leptos = { version = "0.6.6", features = ["csr", "nightly"] }
+leptos-use = { version= "0.10.2", features = ["serde"] }
+leptos_router = { version = "0.6.6",  features = ["csr", "nightly"]}
 leptos_icons = "0.3.0"
 icondata = "0.3.0"
-serde = "1.0.196"
+serde = "1.0.197"
 rand = "0.8.5"
 gloo = "0.11.0"
 gloo-storage = "0.3.0"
 gloo-timers = "0.3.0"
 serde_json = "1.0.104"
-wasm-bindgen = "0.2.87"
-web-sys = {version = "0.3.64", features=["HtmlInputElement", "DragEvent", "File", "DataTransfer"]}
-js-sys = "0.3.64"
+wasm-bindgen = "0.2.91"
+web-sys = {version = "0.3.68", features=["HtmlInputElement", "DragEvent", "File", "DataTransfer"]}
+js-sys = "0.3.68"
 # sp-keyring = { version = "21.0.0", default-features = false }
-futures = "0.3.28"
+futures = "0.3.30"
 hex = "0.4.3"
-tracing-subscriber = "0.3.17"
-wasm-bindgen-futures = "0.4.37"
-jsonrpsee-wasm-client = "0.22.0"
-jsonrpsee-core = "0.22.0"
-codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = ["derive", "full", "bit-vec"] }
+tracing-subscriber = "0.3.18"
+wasm-bindgen-futures = "0.4.41"
+jsonrpsee-wasm-client = "0.22.1"
+jsonrpsee-core = "0.22.1"
+codec = { package = "parity-scale-codec", version = "3.6.9", default-features = false, features = ["derive", "full", "bit-vec"] }
 # getrandom = { version = "0.2.7", features = ["js"] }
 subxt = { version="0.34.0", default-features = false, features = ["jsonrpsee", "web"]}
 subxt-signer = { version="0.34.0", default-features = false, features = ["web", "sr25519", "ecdsa", "subxt"] }
 # sp-core = { version = "20.0.0", features = ["full_crypto"] }
-magic-crypt = "3.1.12"
+magic-crypt = "3.1.13"
 tiny-bip39 = "1.0.0"
 pulldown-cmark = "0.10.0"
 json = "0.12.4"
-regex= "1.8.3"
+regex= "1.10.3"
 sp-core-hashing= "16.0.0"
-anyhow ="1.0.75"
+anyhow ="1.0.80"
 polars = { version="0.37.0", default-features = false, features= ['csv']}
 oauth2 = "4.4.2"
