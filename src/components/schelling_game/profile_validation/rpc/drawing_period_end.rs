@@ -7,33 +7,39 @@ use leptos_icons::*;
 use leptos_use::use_interval_fn;
 use leptos_use::utils::Pausable;
 
-async fn load_data(profile_user_account: String, set_end_period: WriteSignal<Option<u32>>) {
+async fn load_data(
+    profile_user_account: String,
+    set_drawing_period: WriteSignal<Option<(u64, u64, bool)>>,
+) {
     let client = WasmClientBuilder::default().build(NODE_URL).await.unwrap();
-    let result: Option<u32> = client
+    let result: (u64, u64, bool) = client
         .request(
-            "profilevalidation_evidenceperiodendblock",
+            "profilevalidation_drawingperiodend",
             rpc_params![profile_user_account],
         )
         .await
         .unwrap();
-    set_end_period(result);
+    set_drawing_period(Some(result));
 }
 
 #[component]
-pub fn EvidenceEndBlock(profile_user_account: String) -> impl IntoView {
-    let (end_period, set_end_period) = create_signal::<Option<u32>>(None);
+pub fn DrawingEndBlock(profile_user_account: String) -> impl IntoView {
+    let (drawing_period, set_drawing_period) = create_signal::<Option<(u64, u64, bool)>>(None);
 
     let action = create_action(
-        |(profile_user_account, set_end_period): &(String, WriteSignal<Option<u32>>)| {
+        |(profile_user_account, set_drawing_period): &(
+            String,
+            WriteSignal<Option<(u64, u64, bool)>>,
+        )| {
             let profile_user_account = profile_user_account.clone();
-            let set_end_period = set_end_period.clone();
-            async move { load_data(profile_user_account, set_end_period).await }
+            let set_drawing_period = set_drawing_period.clone();
+            async move { load_data(profile_user_account, set_drawing_period).await }
         },
     );
 
     let Pausable { .. } = use_interval_fn(
         move || {
-            action.dispatch((profile_user_account.clone(), set_end_period));
+            action.dispatch((profile_user_account.clone(), set_drawing_period));
         },
         5000,
     );
@@ -41,17 +47,17 @@ pub fn EvidenceEndBlock(profile_user_account: String) -> impl IntoView {
     view! {
         <div>
             {move || {
-                if end_period().is_some() {
+                if drawing_period().is_some() {
                     view! {
                         <div>
-                            {"Commit Period ends: "}
-                            <span id="end-period-time">{move || end_period()}</span>
+                            {"Drawing Period ends: "}
+                            <span id="end-period-time">{move || drawing_period().unwrap().2}</span>
                         </div>
                     }
                 } else {
                     view! {
                         <div>
-                            {"Evidence Period ends: "} <span id="end-period-time">
+                            {"Drawing Period ends: "} <span id="end-period-time">
                                 <Icon
                                     icon=icondata::ImSpinner6
                                     style="color: green"

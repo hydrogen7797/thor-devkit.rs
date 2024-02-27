@@ -11,7 +11,7 @@ async fn load_data(profile_user_account: String, set_end_period: WriteSignal<Opt
     let client = WasmClientBuilder::default().build(NODE_URL).await.unwrap();
     let result: Option<u32> = client
         .request(
-            "profilevalidation_evidenceperiodendblock",
+            "profilevalidation_voteendblock",
             rpc_params![profile_user_account],
         )
         .await
@@ -20,7 +20,7 @@ async fn load_data(profile_user_account: String, set_end_period: WriteSignal<Opt
 }
 
 #[component]
-pub fn EvidenceEndBlock(profile_user_account: String) -> impl IntoView {
+pub fn VoteEndBlock(profile_user_account: String) -> impl IntoView {
     let (end_period, set_end_period) = create_signal::<Option<u32>>(None);
 
     let action = create_action(
@@ -44,14 +44,14 @@ pub fn EvidenceEndBlock(profile_user_account: String) -> impl IntoView {
                 if end_period().is_some() {
                     view! {
                         <div>
-                            {"Commit Period ends: "}
+                            {"Vote Period ends: "}
                             <span id="end-period-time">{move || end_period()}</span>
                         </div>
                     }
                 } else {
                     view! {
                         <div>
-                            {"Evidence Period ends: "} <span id="end-period-time">
+                            {"Vote Period ends: "} <span id="end-period-time">
                                 <Icon
                                     icon=icondata::ImSpinner6
                                     style="color: green"

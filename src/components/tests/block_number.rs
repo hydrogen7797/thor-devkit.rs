@@ -21,7 +21,7 @@ pub fn BlockNumber() -> impl IntoView {
         move || {
             action.dispatch((count, set_count));
         },
-    500,
+        500,
     );
 
     view! { <p>{move || count()}</p> }
