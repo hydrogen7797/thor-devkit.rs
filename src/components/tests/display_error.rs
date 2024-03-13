@@ -54,7 +54,7 @@ pub fn NumericInput() -> impl IntoView {
                 }
             }>
 
-                <p>"You entered " <strong>{value}</strong></p>
+            {move || value.get().map(|_| ())}
             </ErrorBoundary>
         </label>
     }

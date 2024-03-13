@@ -151,6 +151,7 @@ pub fn FileUpload(
                                                 DEFAULT_IPFS_FETCH_PROVIDER.address,
                                                 cid(),
                                             )
+                                            id="profile-video-load"
 
                                             type="video/mp4"
                                         />
