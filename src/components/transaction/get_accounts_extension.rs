@@ -94,7 +94,7 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
         <>
             <div class="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
                 <div>
-                    <button on:click=get_accounts_click class="btn btn-warning">
+                    <button on:click=get_accounts_click class="btn btn-warning" id="select-account">
                         {"=> Select an Account for Signing"}
                     </button>
                 </div>

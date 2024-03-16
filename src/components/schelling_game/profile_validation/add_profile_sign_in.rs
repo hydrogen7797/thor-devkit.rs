@@ -5,12 +5,12 @@ use leptos::*;
 use polkadot::runtime_types::pallet_support::Content;
 
 #[component]
-pub fn SignTransaction(post_cid: ReadSignal<String>) -> impl IntoView {
+pub fn SignTransaction(post_cid: String) -> impl IntoView {
     view! { <ExtensionSignIn post_cid=post_cid/> }
 }
 
 #[component]
-pub fn ExtensionSignIn(post_cid: ReadSignal<String>) -> impl IntoView {
+pub fn ExtensionSignIn(post_cid: String) -> impl IntoView {
     let (account_load, set_account_load) = create_signal(("".to_owned(), "".to_owned()));
 
     let render_html = move || {
@@ -24,7 +24,7 @@ pub fn ExtensionSignIn(post_cid: ReadSignal<String>) -> impl IntoView {
             view! {
                 <div>
                     <ExtensionTransaction
-                        post_cid=post_cid
+                        post_cid=post_cid.clone()
                         account_address=account_load().0
                         account_source=account_load().1
                     />
@@ -39,7 +39,7 @@ pub fn ExtensionSignIn(post_cid: ReadSignal<String>) -> impl IntoView {
 
 #[component]
 pub fn ExtensionTransaction(
-    post_cid: ReadSignal<String>,
+    post_cid: String,
     account_address: String,
     account_source: String,
 ) -> impl IntoView {
@@ -48,7 +48,7 @@ pub fn ExtensionTransaction(
     let transaction_resource = create_local_resource(
         move || {
             (
-                post_cid,
+                post_cid.clone(),
                 account_address.clone(),
                 account_source.clone(),
                 set_error,
@@ -56,7 +56,7 @@ pub fn ExtensionTransaction(
             )
         },
         move |(post_cid, account_address, account_source, set_error, set_extrinsic_success)| async move {
-            let content: Content = Content::IPFS(post_cid().as_bytes().to_vec());
+            let content: Content = Content::IPFS(post_cid.as_bytes().to_vec());
             let tx = polkadot::tx().profile_validation().add_citizen(content);
             sign_in_with_extension(
                 tx,

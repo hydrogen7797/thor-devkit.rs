@@ -158,7 +158,7 @@ pub fn AddProfile() -> impl IntoView {
 
         View::Success => view! {
             <div>
-                <SignTransaction post_cid=post_cid/>
+                <SignTransaction post_cid=post_cid()/>
             </div>
         },
     };
