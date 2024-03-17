@@ -34,7 +34,7 @@ pub fn RouterApp() -> impl IntoView {
                 <Route path="/profile-validation/:profile_user_account" view=SchellingGame/>
                 <Route path="/error-handling" view=NumericInput/>
                 <Route path="/enter-password" view=SetPhraseFromPass/>
-                <Route path="/polkadotjs" view=Polkadotjs />
+                <Route path="/polkadotjs" view=Polkadotjs/>
             </Routes>
         </Router>
     }

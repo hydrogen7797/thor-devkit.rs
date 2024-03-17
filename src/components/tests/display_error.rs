@@ -34,8 +34,8 @@ pub fn NumericInput() -> impl IntoView {
         <label>
             "Type a number less than than 20 (or something that's not a number!)"
             <input type="number" on:input=on_input/>
-            <ErrorBoundary // the fallback receives a signal containing current errors
-            fallback=|errors| {
+            // the fallback receives a signal containing current errors
+            <ErrorBoundary fallback=|errors| {
                 view! {
                     <div class="error">
                         <p>" Errors: "</p>
@@ -54,7 +54,7 @@ pub fn NumericInput() -> impl IntoView {
                 }
             }>
 
-            {move || value.get().map(|_| ())}
+                {move || value.get().map(|_| ())}
             </ErrorBoundary>
         </label>
     }

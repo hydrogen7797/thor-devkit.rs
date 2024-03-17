@@ -5,7 +5,7 @@ use leptos::*;
 
 #[component]
 pub fn Polkadotjs() -> impl IntoView {
-    view! { <ExtensionSignIn /> }
+    view! { <ExtensionSignIn/> }
 }
 
 #[component]

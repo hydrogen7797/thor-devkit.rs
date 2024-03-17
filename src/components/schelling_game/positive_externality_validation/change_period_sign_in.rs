@@ -51,8 +51,8 @@ pub fn ExtensionTransaction(
     account_address: String,
     account_source: String,
 ) -> impl IntoView {
-    let (error, set_error) = create_signal(String::from("hello"));
-    let (extrinsic_success, set_extrinsic_success) = create_signal(String::from("extrinsic"));
+    let (error, set_error) = create_signal(String::from(""));
+    let (extrinsic_success, set_extrinsic_success) = create_signal(String::from(""));
     let transaction_resource = create_local_resource(
         move || {
             (
@@ -90,18 +90,51 @@ pub fn ExtensionTransaction(
     let loading = transaction_resource.loading();
     let is_loading = move || {
         if loading() {
-            "Loading... Please sign with extension."
+            view! {
+                <div class="alert">
+                    <span class="loading loading-spinner"></span>
+                    "Loading... Please sign with extension."
+                </div>
+            }
         } else {
-            "Idle."
+            view! { <div class="alert">"Idle."</div> }
+        }
+    };
+
+    let error_fn = move || {
+        if !error().is_empty() {
+            view! {
+                <div role="alert" class="alert alert-error">
+                    {move || error()}
+                </div>
+            }
+        } else {
+            view! { <div></div> }
+        }
+    };
+
+    let extrinsic_success_fn = move || {
+        if !extrinsic_success().is_empty() {
+            view! {
+                <div role="alert" class="alert alert-success">
+                    {move || extrinsic_success()}
+                </div>
+            }
+        } else {
+            view! { <div></div> }
         }
     };
 
     view! {
-        <div>
+        <div class="md:container md:mx-auto">
             <div>{move || transaction_resource.get()}</div>
+            <br/>
             <div>{move || is_loading()}</div>
-            <div>{move || error()}</div>
-            <div>{move || extrinsic_success()}</div>
+            <br/>
+            <div>{move || error_fn()}</div>
+            <br/>
+            <div>{move || extrinsic_success_fn()}</div>
+
         </div>
     }
 }
