@@ -63,48 +63,57 @@ pub fn ViewProfileFromAddress() -> impl IntoView {
     // create_effect(move |_| async_load.get());
 
     view! {
-           <div>
-           {move || match async_load.get() {
-               None => view! {<p><span class="loading loading-spinner text-primary"></span>Loading...</p>}.into_view(),
-               Some(data) => view! {
-    <div class="max-w-5xl mx-auto max-md:mx-10">
-                   <div class="mb-5">
-                       <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                           <h2 class="heading">{"Name"}</h2>
-                           <p class="data">{format!("{}", data.name.clone())}</p>
-                       </div>
+        <div>
+            {move || match async_load.get() {
+                None => {
+                    view! {
+                        <p>
+                            <span class="loading loading-spinner text-primary"></span>
+                            Loading...
+                        </p>
+                    }
+                        .into_view()
+                }
+                Some(data) => {
+                    view! {
+                        <div class="max-w-5xl mx-auto max-md:mx-10">
+                            <div class="mb-5">
+                                <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    <h2 class="heading">{"Name"}</h2>
+                                    <p class="data">{format!("{}", data.name.clone())}</p>
+                                </div>
 
-                   </div>
-                   <div class="mb-5">
-                       <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                           <h2 class="heading">{"Details"}</h2>
-                           <p inner_html=data.details.clone()></p>
-                       </div>
+                            </div>
+                            <div class="mb-5">
+                                <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    <h2 class="heading">{"Details"}</h2>
+                                    <p inner_html=data.details.clone()></p>
+                                </div>
 
-                   </div>
-                   <div class="mb-5">
-                       <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                           <video width="320" height="240" controls=true>
-                               <source
-                                   src=format!(
-                                       "{}{}",
-                                       DEFAULT_IPFS_FETCH_PROVIDER.address,
-                                       data.profile_video_cid.clone(),
-                                   )
+                            </div>
+                            <div class="mb-5">
+                                <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    <video width="320" height="240" controls=true>
+                                        <source
+                                            src=format!(
+                                                "{}{}",
+                                                DEFAULT_IPFS_FETCH_PROVIDER.address,
+                                                data.profile_video_cid.clone(),
+                                            )
 
-                                   type="video/mp4"
-                               />
-                               {"Your browser does not support the video tag."}
-                           </video>
-                       </div>
+                                            type="video/mp4"
+                                        />
+                                        {"Your browser does not support the video tag."}
+                                    </video>
+                                </div>
 
-                   </div>
-               </div>
+                            </div>
+                        </div>
+                    }
+                        .into_view()
+                }
+            }}
 
-
-               }.into_view()
-           }}
-
-           </div>
-                  }
+        </div>
+    }
 }

@@ -5,6 +5,7 @@ use crate::components::home::Home;
 use crate::components::markdown::markdown_component::MarkdownHtmlView;
 use crate::components::schelling_game::profile_validation::add_profile::AddProfile;
 use crate::components::schelling_game::profile_validation::add_profile_sign_in::ExtensionSignIn;
+use crate::components::schelling_game::profile_validation::add_profile_stake::AddProfileStake;
 use crate::components::schelling_game::profile_validation::apply_jurors::ApplyJurors;
 use crate::components::schelling_game::profile_validation::game::schelling_game::SchellingGame;
 use crate::components::schelling_game::profile_validation::rpc::evidence_end_block::EvidenceEndBlock;
@@ -28,6 +29,7 @@ pub fn RouterApp() -> impl IntoView {
                 // <Route path="/upload" view=FileUpload/>
                 <Route path="/add-profile" view=AddProfile/>
                 <Route path="/view-profile/:profile_user_account" view=ViewProfileFromAddress/>
+                <Route path="/add-profile-stake/:profile_user_account" view=AddProfileStake/>
                 // <Route path="/extension" view=ExtensionSignIn/>
                 // <Route path="/signin" view=GetAccountsExtension/>
                 // <Route path="/apply-juror/:profile_user_account" view=ApplyJurors/>
