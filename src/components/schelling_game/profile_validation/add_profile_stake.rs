@@ -5,6 +5,7 @@ use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::*;
 use leptos_router::*;
+use crate::components::schelling_game::profile_validation::storage::get_total_fund_for_profile_collected::TotalFundProfileCollected;
 
 #[component]
 pub fn AddProfileStake() -> impl IntoView {
@@ -38,12 +39,13 @@ pub fn AddProfileStake() -> impl IntoView {
     let render_view = move || match current_view() {
         View::Form => {
             view! {
-                <div>
-                    <form
-                        class="max-w-5xl mx-auto max-md:mx-10"
-                        id="profile-stake-submit-from"
-                        on:submit=submit_click
-                    >
+                <div 
+                class="max-w-5xl mx-auto max-md:mx-10">
+                    <div>
+                        <TotalFundProfileCollected profile_user_account=profile_user_account()/>
+                    </div>
+                    <br/>
+                    <form id="profile-stake-submit-from" on:submit=submit_click>
                         <div class="mb-5">
                             <label
                                 for="profile-stake"
@@ -53,7 +55,7 @@ pub fn AddProfileStake() -> impl IntoView {
                             </label>
                             <input
                                 type="number"
-                                id="juror-stake"
+                                id="profile-stake"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
                                 on:input=move |e| stake_value(event_target_value(&e))
@@ -80,9 +82,6 @@ pub fn AddProfileStake() -> impl IntoView {
 
                 </div>
             }
-        }
-        _ => {
-            view! { <div></div> }
         }
     };
 

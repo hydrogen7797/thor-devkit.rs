@@ -1,0 +1,7 @@
+[editor.lsp]
+display-inlay-hints = true
+
+
+ [keys.normal.space]
+ "H" = ":toggle lsp.display-inlay-hints"
+
