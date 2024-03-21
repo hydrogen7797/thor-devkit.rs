@@ -1,7 +1,6 @@
 use crate::components::api::ipfs_request::ipfs_call_json_string;
 use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 use crate::components::markdown::markdown_field::MarkdownField;
-use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::department_funding::challenge_evidence_sign_in::SignTransaction;
 
 use crate::services::common_imp::View;
@@ -110,10 +109,5 @@ pub fn ChallengeEvidence(department_required_fund_id: u64) -> impl IntoView {
         },
     };
 
-    view! {
-        <>
-            <Nav/>
-            {move || render_view()}
-        </>
-    }
+    view! { <>{move || render_view()}</> }
 }

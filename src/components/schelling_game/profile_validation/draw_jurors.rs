@@ -1,4 +1,3 @@
-use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::profile_validation::draw_jurors_sign_in::SignTransaction;
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
@@ -70,15 +69,7 @@ pub fn DrawJurors(profile_user_account: String) -> impl IntoView {
                 </div>
             }
         }
-        _ => {
-            view! { <div></div> }
-        }
     };
 
-    view! {
-        <>
-            <Nav/>
-            {move || render_view()}
-        </>
-    }
+    view! { <>{move || render_view()}</> }
 }

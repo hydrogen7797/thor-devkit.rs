@@ -1,4 +1,3 @@
-use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::profile_validation::reveal_vote_sign_in::SignTransaction;
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
@@ -91,15 +90,7 @@ pub fn RevealVote(profile_user_account: String) -> impl IntoView {
                 </div>
             }
         }
-        _ => {
-            view! { <div></div> }
-        }
     };
 
-    view! {
-        <>
-            <Nav/>
-            {move || render_view()}
-        </>
-    }
+    view! { <>{move || render_view()}</> }
 }

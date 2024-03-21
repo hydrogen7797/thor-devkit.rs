@@ -1,4 +1,3 @@
-use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::department_funding::unstaking_sign_in::SignTransaction;
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
@@ -42,15 +41,7 @@ pub fn Unstaking(department_required_fund_id: u64) -> impl IntoView {
                 </div>
             }
         }
-        _ => {
-            view! { <div></div> }
-        }
     };
 
-    view! {
-        <>
-            <Nav/>
-            {move || render_view()}
-        </>
-    }
+    view! { <>{move || render_view()}</> }
 }

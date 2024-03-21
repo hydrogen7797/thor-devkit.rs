@@ -44,7 +44,7 @@ pub fn EvidenceEndBlock(profile_user_account: String) -> impl IntoView {
                 if end_period().is_some() {
                     view! {
                         <div>
-                            {"Commit Period ends: "}
+                            {"Evidence Period ends: "}
                             <span id="end-period-time">{move || end_period()}</span>
                         </div>
                     }

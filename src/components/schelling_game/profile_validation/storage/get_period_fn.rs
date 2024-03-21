@@ -41,6 +41,7 @@ async fn load_data(profile_user_account: String, set_period: WriteSignal<Option<
             .fetch(&period_storage)
             .await
             .unwrap();
+        gloo::console::log!(format!("period in block: {:?}", period));
         set_period(period);
     }
 }
@@ -56,9 +57,7 @@ pub fn get_period_fn(profile_user_account: String) -> ReadSignal<Option<Period>>
         },
     );
 
-    create_effect(move |_| {
-        action.dispatch((profile_user_account.clone(), set_period));
-    });
+    action.dispatch((profile_user_account.clone(), set_period));
 
     period
 }

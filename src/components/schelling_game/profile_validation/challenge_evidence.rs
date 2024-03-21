@@ -1,7 +1,6 @@
 use crate::components::api::ipfs_request::ipfs_call_json_string;
 use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 use crate::components::markdown::markdown_field::MarkdownField;
-use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::profile_validation::challenge_evidence_sign_in::SignTransaction;
 use crate::components::schelling_game::profile_validation::rpc::evidence_end_block::EvidenceEndBlock;
 use crate::components::schelling_game::profile_validation::storage::challenger_fees::ChallengerFees;
@@ -110,10 +109,5 @@ pub fn ChallengeEvidence(profile_user_account: String) -> impl IntoView {
         },
     };
 
-    view! {
-        <>
-            <Nav/>
-            {move || render_view()}
-        </>
-    }
+    view! { <>{move || render_view()}</> }
 }

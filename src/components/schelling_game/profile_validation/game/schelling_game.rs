@@ -21,48 +21,64 @@ pub fn SchellingGame() -> impl IntoView {
         })
     };
 
-    let period = move || get_period_fn(profile_user_account());
+    view! {
+        <div>
+            <SchellingGameComponent profile_user_account=profile_user_account()/>
+        </div>
+    }
+}
+
+#[component]
+pub fn SchellingGameComponent(profile_user_account: String) -> impl IntoView {
+    let profile_user_account = move || profile_user_account.clone();
+
+    let period = get_period_fn(profile_user_account());
 
     let myview = move || {
-        let period_read_signal = period();
-        if let Some(period) = period_read_signal() {
-            let view = match period {
-                Period::Evidence => view! {
-                    <div>
-                        <ChallengeEvidence profile_user_account=profile_user_account()/>
-                    </div>
-                },
-                Period::Staking => {
+        {
+            {
+                // let period_read_signal = period();
+                if let Some(period) = period() {
+                    let view = match period {
+                        Period::Evidence => view! {
+                            <div>
+                                <ChallengeEvidence profile_user_account=profile_user_account()/>
+                            </div>
+                        },
+                        Period::Staking => {
+                            view! {
+                                <div>
+                                    <ApplyJurors profile_user_account=profile_user_account()/>
+                                </div>
+                            }
+                        }
+                        Period::Drawing => view! {
+                            <div>
+                                <DrawJurors profile_user_account=profile_user_account()/>
+                            </div>
+                        },
+                        Period::Commit => view! {
+                            <div>
+                                <CommitVote profile_user_account=profile_user_account()/>
+                            </div>
+                        },
+                        Period::Vote => view! {
+                            <div>
+                                <RevealVote profile_user_account=profile_user_account()/>
+                            </div>
+                        },
+                        Period::Appeal => view! { <div></div> },
+                        Period::Execution => view! { <div></div> },
+                    };
+                    view
+                } else {
                     view! {
-                        <div>
-                            <ApplyJurors profile_user_account=profile_user_account()/>
+                        <div class="container">
+                            <p>{format!("{:?}", period())}</p>
+                            <p>{"No period"}</p>
                         </div>
                     }
                 }
-                Period::Drawing => view! {
-                    <div>
-                        <DrawJurors profile_user_account=profile_user_account()/>
-                    </div>
-                },
-                Period::Commit => view! {
-                    <div>
-                        <CommitVote profile_user_account=profile_user_account()/>
-                    </div>
-                },
-                Period::Vote => view! {
-                    <div>
-                        <RevealVote profile_user_account=profile_user_account()/>
-                    </div>
-                },
-                Period::Appeal => view! { <div></div> },
-                Period::Execution => view! { <div></div> },
-            };
-            view
-        } else {
-            view! {
-                <div class="container">
-                    <p>{"No period"}</p>
-                </div>
             }
         }
     };
@@ -70,6 +86,8 @@ pub fn SchellingGame() -> impl IntoView {
     view! {
         <div>
             <Nav/>
+            // {move || account()}
+            // {move || format!("{:?}", period())}
             {move || myview()}
         </div>
     }
