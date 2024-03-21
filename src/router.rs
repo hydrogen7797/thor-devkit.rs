@@ -7,6 +7,7 @@ use crate::components::schelling_game::profile_validation::add_profile::AddProfi
 use crate::components::schelling_game::profile_validation::add_profile_sign_in::ExtensionSignIn;
 use crate::components::schelling_game::profile_validation::add_profile_stake::AddProfileStake;
 use crate::components::schelling_game::profile_validation::apply_jurors::ApplyJurors;
+use crate::components::schelling_game::profile_validation::change_period_sign_in::SignTransaction as ChangePeriodProfileValidation;
 use crate::components::schelling_game::profile_validation::game::schelling_game::SchellingGame;
 use crate::components::schelling_game::profile_validation::rpc::evidence_end_block::EvidenceEndBlock;
 use crate::components::schelling_game::profile_validation::view_profile_from_address::ViewProfileFromAddress;
@@ -40,6 +41,10 @@ pub fn RouterApp() -> impl IntoView {
                 <Route path="/error-handling" view=NumericInput/>
                 <Route path="/enter-password" view=SetPhraseFromPass/>
                 <Route path="/polkadotjs" view=Polkadotjs/>
+                <Route
+                    path="/profile-validation-change-period/:profile_user_account"
+                    view=ChangePeriodProfileValidation
+                />
             </Routes>
         </Router>
     }

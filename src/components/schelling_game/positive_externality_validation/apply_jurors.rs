@@ -1,4 +1,5 @@
 use crate::components::schelling_game::positive_externality_validation::apply_jurors_sign_in::SignTransaction;
+
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -25,9 +26,10 @@ pub fn ApplyJurors(user_to_calculate: String) -> impl IntoView {
     let render_view = move || match current_view() {
         View::Form => {
             view! {
-                <div>
+                <div class="max-w-5xl mx-auto max-md:mx-10">
+
                     <form
-                        class="max-w-5xl mx-auto max-md:mx-10"
+
                         id="apply-juror-submit-from"
                         on:submit=submit_click
                     >

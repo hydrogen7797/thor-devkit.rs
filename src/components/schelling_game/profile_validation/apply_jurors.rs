@@ -1,4 +1,8 @@
 use crate::components::schelling_game::profile_validation::apply_jurors_sign_in::SignTransaction;
+use crate::components::schelling_game::profile_validation::change_period::ChangePeriod;
+use crate::components::schelling_game::profile_validation::rpc::staking_end_block::StakingEndBlock;
+use crate::components::schelling_game::profile_validation::storage::get_period::GetPeriod;
+
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -25,9 +29,12 @@ pub fn ApplyJurors(profile_user_account: String) -> impl IntoView {
     let render_view = move || match current_view() {
         View::Form => {
             view! {
-                <div>
+                <div class="max-w-5xl mx-auto max-md:mx-10">
+                    <GetPeriod profile_user_account=profile_user_account.clone()/>
+                    <ChangePeriod profile_user_account=profile_user_account.clone()/>
+                    <StakingEndBlock profile_user_account=profile_user_account.clone()/>
                     <form
-                        class="max-w-5xl mx-auto max-md:mx-10"
+
                         id="apply-juror-submit-from"
                         on:submit=submit_click
                     >
