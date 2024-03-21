@@ -21,9 +21,11 @@ pub fn SchellingGame() -> impl IntoView {
         })
     };
 
+    let account = untrack(move || profile_user_account());
+
     view! {
         <div>
-            <SchellingGameComponent profile_user_account=profile_user_account()/>
+            <SchellingGameComponent profile_user_account=account/>
         </div>
     }
 }
