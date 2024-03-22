@@ -1,4 +1,5 @@
 use crate::components::schelling_game::department_funding::draw_jurors_sign_in::SignTransaction;
+
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -27,6 +28,7 @@ pub fn DrawJurors(department_required_fund_id: u64) -> impl IntoView {
         View::Form => {
             view! {
                 <div class="max-w-5xl mx-auto max-md:mx-10">
+
                     <form id="draw-juror-submit-from" on:submit=submit_click>
                         <div class="mb-5">
                             <label

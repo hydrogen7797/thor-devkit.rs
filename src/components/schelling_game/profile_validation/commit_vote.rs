@@ -1,4 +1,7 @@
+use crate::components::schelling_game::profile_validation::change_period::ChangePeriod;
 use crate::components::schelling_game::profile_validation::commit_vote_sign_in::SignTransaction;
+use crate::components::schelling_game::profile_validation::rpc::commit_end_block::CommitEndBlock;
+use crate::components::schelling_game::profile_validation::storage::get_period::GetPeriod;
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -27,6 +30,31 @@ pub fn CommitVote(profile_user_account: String) -> impl IntoView {
         View::Form => {
             view! {
                 <div class="max-w-5xl mx-auto max-md:mx-10">
+                    <GetPeriod profile_user_account=profile_user_account.clone()/>
+                    <ChangePeriod profile_user_account=profile_user_account.clone()/>
+                    <CommitEndBlock profile_user_account=profile_user_account.clone()/>
+                    <div>
+
+                        <div class="flex justify-center items-center">
+                            <div class="card w-96 bg-base-100 shadow-xl">
+                                <div class="card-body">
+                                    <h2 class="card-title">How to vote?</h2>
+                                    <p>
+                                        Vote format, first character can be 0 or 1, your choice, then a unique
+                                        string or salt. <br/>
+                                        1 = Evidence given for profile are valid <br/>
+                                        0 = Evidence given for profile are invalid <br/> <br/>
+                                        For example, <br/> 0iilzmfeofopzblgycbuiahhkptp <br/>
+                                        1psiycigusjdkfoartn <br/> 0lbjvjgzqwigattqdqglzxxdepmwnsf
+                                        <br/>
+                                    </p>
+                                    <p>
+                                        <b>Save the vote in safe place.</b>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <form
 
                         id="commit-vote-submit-from"

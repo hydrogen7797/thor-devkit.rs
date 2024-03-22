@@ -1,4 +1,5 @@
 use crate::components::schelling_game::positive_externality_validation::commit_vote_sign_in::SignTransaction;
+
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -27,6 +28,9 @@ pub fn CommitVote(user_to_calculate: String) -> impl IntoView {
         View::Form => {
             view! {
                 <div class="max-w-5xl mx-auto max-md:mx-10">
+
+                    <div>
+                    </div>
                     <form
 
                         id="commit-vote-submit-from"
