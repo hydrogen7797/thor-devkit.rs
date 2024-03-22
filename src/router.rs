@@ -11,6 +11,7 @@ use crate::components::schelling_game::profile_validation::change_period_sign_in
 use crate::components::schelling_game::profile_validation::game::schelling_game::SchellingGame;
 use crate::components::schelling_game::profile_validation::rpc::evidence_end_block::EvidenceEndBlock;
 use crate::components::schelling_game::profile_validation::view_profile_from_address::ViewProfileFromAddress;
+use crate::components::schelling_game::profile_validation::views::juror_selected_check::JurorSelectedCheck;
 use crate::components::tests::block_number::BlockNumber;
 use crate::components::tests::display_error::NumericInput;
 use crate::components::tests::polkadotjs_test::Polkadotjs;
@@ -37,6 +38,7 @@ pub fn RouterApp() -> impl IntoView {
                 // <Route path="/apply-juror/:profile_user_account" view=ApplyJurors/>
                 <Route path="/transfer-balance" view=TransferBalance/>
                 <Route path="/block-number" view=BlockNumber/>
+                <Route path="/juror-selected/:profile_user_account" view=JurorSelectedCheck/>
                 <Route path="/profile-validation/:profile_user_account" view=SchellingGame/>
                 <Route path="/error-handling" view=NumericInput/>
                 <Route path="/enter-password" view=SetPhraseFromPass/>
