@@ -4,9 +4,13 @@ use leptos::*;
 #[component]
 pub fn GetPeriod(profile_user_account: String) -> impl IntoView {
     let period = get_period_fn(profile_user_account);
+    let period_value = move || match period() {
+        Some(value) => format!("Period name: {:?}", value),
+        None => format!(""),
+    };
     view! {
         <div>
-            <code>{move || format!("{:#?}", period())}</code>
+            <code>{move || period_value()}</code>
         </div>
     }
 }

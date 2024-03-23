@@ -35,8 +35,8 @@ pub fn RevealVote(profile_user_account: String) -> impl IntoView {
             view! {
                 <div class="max-w-5xl mx-auto max-md:mx-10">
                     <GetPeriod profile_user_account=profile_user_account.clone()/>
-                    <ChangePeriod profile_user_account=profile_user_account.clone()/>
                     <VoteEndBlock profile_user_account=profile_user_account.clone()/>
+                    <ChangePeriod profile_user_account=profile_user_account.clone()/>
                     <form id="reveal-vote-submit-from" on:submit=submit_click>
 
                         <div class="mb-5">

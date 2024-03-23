@@ -31,8 +31,8 @@ pub fn CommitVote(profile_user_account: String) -> impl IntoView {
             view! {
                 <div class="max-w-5xl mx-auto max-md:mx-10">
                     <GetPeriod profile_user_account=profile_user_account.clone()/>
-                    <ChangePeriod profile_user_account=profile_user_account.clone()/>
                     <CommitEndBlock profile_user_account=profile_user_account.clone()/>
+                    <ChangePeriod profile_user_account=profile_user_account.clone()/>
                     <div>
 
                         <div class="flex justify-center items-center">
