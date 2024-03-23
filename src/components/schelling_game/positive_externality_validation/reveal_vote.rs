@@ -1,4 +1,7 @@
 use crate::components::schelling_game::positive_externality_validation::reveal_vote_sign_in::SignTransaction;
+
+
+
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -32,6 +35,7 @@ pub fn RevealVote(user_to_calculate: String) -> impl IntoView {
         View::Form => {
             view! {
                 <div class="max-w-5xl mx-auto max-md:mx-10">
+
                     <form id="reveal-vote-submit-from" on:submit=submit_click>
 
                         <div class="mb-5">
