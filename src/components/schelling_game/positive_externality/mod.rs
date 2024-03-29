@@ -4,6 +4,8 @@ pub mod change_period;
 pub mod change_period_sign_in;
 pub mod commit_vote;
 pub mod commit_vote_sign_in;
+pub mod create_post;
+pub mod create_post_sign_in;
 pub mod draw_jurors;
 pub mod draw_jurors_sign_in;
 pub mod get_incentives;
