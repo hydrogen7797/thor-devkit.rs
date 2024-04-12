@@ -6,7 +6,7 @@ use polkadot::runtime_types::pallet_support::Content;
 
 #[component]
 pub fn SignTransaction(post_cid: String, department_id: u64) -> impl IntoView {
-    view! { <ExtensionSignIn post_cid=post_cid department_id=department_id /> }
+    view! { <ExtensionSignIn post_cid=post_cid department_id=department_id/> }
 }
 
 #[component]

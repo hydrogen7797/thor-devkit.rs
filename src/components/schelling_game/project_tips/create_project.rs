@@ -36,6 +36,15 @@ async fn get_cid_post(
 }
 
 #[component]
+pub fn SelectOption(is: &'static str, tip_name: ReadSignal<String>) -> impl IntoView {
+    view! {
+        <option value=is selected=move || tip_name() == is>
+            {is}
+        </option>
+    }
+}
+
+#[component]
 pub fn CreateProject() -> impl IntoView {
     let params = use_params_map();
 
@@ -54,8 +63,7 @@ pub fn CreateProject() -> impl IntoView {
     let (current_view, set_current_view) = create_signal(View::Form);
     let (markdown, set_markdown) = create_signal(String::from(""));
     let (post_cid, set_post_cid) = create_signal(String::from(""));
-    let (tip_name, set_tip_name) =
-        create_signal::<Result<Option<TippingName>, ErrorHandling>>(Ok(None));
+    let (tip_name, set_tip_name) = create_signal(String::from(""));
 
     let submit_action = create_action(
         |(details, set_current_view, set_post_cid): &(
@@ -111,7 +119,26 @@ pub fn CreateProject() -> impl IntoView {
 
                         </div>
 
+                        <select
+                            on:change=move |ev| {
+                                let new_value = event_target_value(&ev);
+                                set_tip_name(new_value);
+                            }
 
+                            class="select select-info w-full max-w-xs"
+                        >
+                            <option disabled selected>
+                                Select the tipper
+                            </option>
+                            <SelectOption tip_name is="SmallTipper"/>
+                            <SelectOption tip_name is="BigTipper"/>
+                            <SelectOption tip_name is="SmallSpender"/>
+                            <SelectOption tip_name is="MediumSpender"/>
+                            <SelectOption tip_name is="BigSpender"/>
+
+                        </select>
+                        <br/>
+                        <br/>
                         <button
                             type="submit"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

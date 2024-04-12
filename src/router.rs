@@ -17,6 +17,7 @@ use crate::components::tests::display_error::NumericInput;
 use crate::components::tests::polkadotjs_test::Polkadotjs;
 use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
 use crate::components::upload::upload_video::FileUpload;
+use crate::components::schelling_game::project_tips::create_project::CreateProject;
 use leptos::*;
 use leptos_router::*;
 
@@ -46,6 +47,10 @@ pub fn RouterApp() -> impl IntoView {
                 <Route
                     path="/profile-validation-change-period/:profile_user_account"
                     view=ChangePeriodProfileValidation
+                />
+              <Route 
+                 path="/project-tips/create-project/:department_id"
+                 view=CreateProject
                 />
             </Routes>
         </Router>
