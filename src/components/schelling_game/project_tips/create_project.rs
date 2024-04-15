@@ -4,12 +4,10 @@ use crate::components::markdown::markdown_field::MarkdownField;
 use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::project_tips::create_project_sign_in::SignTransaction;
 use crate::services::common_imp::View;
-use crate::services::common_services::polkadot;
 use json::object;
 use leptos::ev::SubmitEvent;
 use leptos::*;
 use leptos_router::*;
-use polkadot::runtime_types::project_tips::types::TippingName;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
@@ -65,7 +63,6 @@ pub fn CreateProject() -> impl IntoView {
     let (post_cid, set_post_cid) = create_signal(String::from(""));
     let (tip_name, set_tip_name) = create_signal(String::from(""));
     let (funding_needed, set_funding_needed) = create_signal::<Option<u128>>(None);
-
 
     let submit_action = create_action(
         |(details, set_current_view, set_post_cid): &(
@@ -181,7 +178,7 @@ pub fn CreateProject() -> impl IntoView {
 
         View::Success => view! {
             <div>
-                <SignTransaction post_cid=post_cid() department_id=department_id/>
+                <SignTransaction post_cid=post_cid() department_id=department_id tip_name=tip_name() funding_needed=funding_needed().unwrap() />
             </div>
         },
     };

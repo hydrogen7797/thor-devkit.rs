@@ -3,14 +3,35 @@ use crate::components::transaction::get_accounts_extension::GetAccountsExtension
 use crate::services::common_services::polkadot;
 use leptos::*;
 use polkadot::runtime_types::pallet_support::Content;
+use polkadot::runtime_types::project_tips::types::TippingName;
 
+fn match_tipping_name(name: &str) -> Option<TippingName> {
+    match name {
+        "SmallTipper" => Some(TippingName::SmallTipper),
+        "BigTipper" => Some(TippingName::BigTipper),
+        "SmallSpender" => Some(TippingName::SmallSpender),
+        "MediumSpender" => Some(TippingName::MediumSpender),
+        "BigSpender" => Some(TippingName::BigSpender),
+        _ => None,
+    }
+}
 #[component]
-pub fn SignTransaction(post_cid: String, department_id: u64) -> impl IntoView {
-    view! { <ExtensionSignIn post_cid=post_cid department_id=department_id/> }
+pub fn SignTransaction(
+    post_cid: String,
+    department_id: u64,
+    tip_name: String,
+    funding_needed: u128,
+) -> impl IntoView {
+    view! { <ExtensionSignIn post_cid=post_cid department_id=department_id tip_name=tip_name funding_needed=funding_needed/> }
 }
 
 #[component]
-pub fn ExtensionSignIn(post_cid: String, department_id: u64) -> impl IntoView {
+pub fn ExtensionSignIn(
+    post_cid: String,
+    department_id: u64,
+    tip_name: String,
+    funding_needed: u128,
+) -> impl IntoView {
     let (account_load, set_account_load) = create_signal(("".to_owned(), "".to_owned()));
 
     let render_html = move || {
@@ -26,6 +47,8 @@ pub fn ExtensionSignIn(post_cid: String, department_id: u64) -> impl IntoView {
                     <ExtensionTransaction
                         post_cid=post_cid.clone()
                         department_id=department_id.clone()
+                        tip_name=tip_name.clone()
+                        funding_needed=funding_needed.clone()
                         account_address=account_load().0
                         account_source=account_load().1
                     />
@@ -42,6 +65,8 @@ pub fn ExtensionSignIn(post_cid: String, department_id: u64) -> impl IntoView {
 pub fn ExtensionTransaction(
     post_cid: String,
     department_id: u64,
+    tip_name: String,
+    funding_needed: u128,
     account_address: String,
     account_source: String,
 ) -> impl IntoView {
@@ -52,6 +77,8 @@ pub fn ExtensionTransaction(
             (
                 post_cid.clone(),
                 department_id.clone(),
+                tip_name.clone(),
+                funding_needed.clone(),
                 account_address.clone(),
                 account_source.clone(),
                 set_error,
@@ -61,23 +88,31 @@ pub fn ExtensionTransaction(
         move |(
             post_cid,
             department_id,
+            tip_name,
+            funding_needed,
             account_address,
             account_source,
             set_error,
             set_extrinsic_success,
         )| async move {
             let content: Content = Content::IPFS(post_cid.as_bytes().to_vec());
-            //     let tx = polkadot::tx()
-            // .project_tips()
-            // .create_project(department_id, content, tipping_name, 10);
-            //     sign_in_with_extension(
-            //         tx,
-            //         account_address,
-            //         account_source,
-            //         set_error,
-            //         set_extrinsic_success,
-            //     )
-            //     .await;
+
+            let tipping_name = match_tipping_name(&tip_name);
+
+            let tx = polkadot::tx().project_tips().create_project(
+                department_id,
+                content,
+                tipping_name.unwrap(),
+                funding_needed,
+            );
+            sign_in_with_extension(
+                tx,
+                account_address,
+                account_source,
+                set_error,
+                set_extrinsic_success,
+            )
+            .await;
         },
     );
 
