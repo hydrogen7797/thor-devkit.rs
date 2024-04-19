@@ -178,7 +178,12 @@ pub fn CreateProject() -> impl IntoView {
 
         View::Success => view! {
             <div>
-                <SignTransaction post_cid=post_cid() department_id=department_id tip_name=tip_name() funding_needed=funding_needed().unwrap() />
+                <SignTransaction
+                    post_cid=post_cid()
+                    department_id=department_id
+                    tip_name=tip_name()
+                    funding_needed=funding_needed().unwrap()
+                />
             </div>
         },
     };

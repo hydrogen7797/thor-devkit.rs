@@ -2,43 +2,16 @@ use crate::components::transaction::extension_sign_in::sign_in_with_extension;
 use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
 use crate::services::common_services::polkadot;
 use leptos::*;
-use polkadot::runtime_types::pallet_support::Content;
-use polkadot::runtime_types::project_tips::types::TippingName;
+use std::str::FromStr;
+use subxt::utils::AccountId32;
 
-fn match_tipping_name(name: &str) -> Option<TippingName> {
-    match name {
-        "SmallTipper" => Some(TippingName::SmallTipper),
-        "BigTipper" => Some(TippingName::BigTipper),
-        "SmallSpender" => Some(TippingName::SmallSpender),
-        "MediumSpender" => Some(TippingName::MediumSpender),
-        "BigSpender" => Some(TippingName::BigSpender),
-        _ => None,
-    }
-}
 #[component]
-pub fn SignTransaction(
-    post_cid: String,
-    department_id: u64,
-    tip_name: String,
-    funding_needed: u128,
-) -> impl IntoView {
-    view! {
-        <ExtensionSignIn
-            post_cid=post_cid
-            department_id=department_id
-            tip_name=tip_name
-            funding_needed=funding_needed
-        />
-    }
+pub fn SignTransaction(user_to_calculate: String) -> impl IntoView {
+    view! { <ExtensionSignIn user_to_calculate=user_to_calculate/> }
 }
 
 #[component]
-pub fn ExtensionSignIn(
-    post_cid: String,
-    department_id: u64,
-    tip_name: String,
-    funding_needed: u128,
-) -> impl IntoView {
+pub fn ExtensionSignIn(user_to_calculate: String) -> impl IntoView {
     let (account_load, set_account_load) = create_signal(("".to_owned(), "".to_owned()));
 
     let render_html = move || {
@@ -52,10 +25,7 @@ pub fn ExtensionSignIn(
             view! {
                 <div>
                     <ExtensionTransaction
-                        post_cid=post_cid.clone()
-                        department_id=department_id.clone()
-                        tip_name=tip_name.clone()
-                        funding_needed=funding_needed.clone()
+                        user_to_calculate=user_to_calculate.clone()
                         account_address=account_load().0
                         account_source=account_load().1
                     />
@@ -65,15 +35,13 @@ pub fn ExtensionSignIn(
             view! { <div>{"Some Error Occured"}</div> }
         }
     };
+
     view! { <div>{move || render_html()}</div> }
 }
 
 #[component]
 pub fn ExtensionTransaction(
-    post_cid: String,
-    department_id: u64,
-    tip_name: String,
-    funding_needed: u128,
+    user_to_calculate: String,
     account_address: String,
     account_source: String,
 ) -> impl IntoView {
@@ -82,10 +50,7 @@ pub fn ExtensionTransaction(
     let transaction_resource = create_local_resource(
         move || {
             (
-                post_cid.clone(),
-                department_id.clone(),
-                tip_name.clone(),
-                funding_needed.clone(),
+                user_to_calculate.clone(),
                 account_address.clone(),
                 account_source.clone(),
                 set_error,
@@ -93,25 +58,18 @@ pub fn ExtensionTransaction(
             )
         },
         move |(
-            post_cid,
-            department_id,
-            tip_name,
-            funding_needed,
+            user_to_calculate,
             account_address,
             account_source,
             set_error,
             set_extrinsic_success,
         )| async move {
-            let content: Content = Content::IPFS(post_cid.as_bytes().to_vec());
+            let account_id32 = AccountId32::from_str(&user_to_calculate.clone()).unwrap();
 
-            let tipping_name = match_tipping_name(&tip_name);
+            let tx = polkadot::tx()
+                .positive_externality()
+                .apply_staking_period(account_id32);
 
-            let tx = polkadot::tx().project_tips().create_project(
-                department_id,
-                content,
-                tipping_name.unwrap(),
-                funding_needed,
-            );
             sign_in_with_extension(
                 tx,
                 account_address,

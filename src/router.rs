@@ -12,12 +12,12 @@ use crate::components::schelling_game::profile_validation::game::schelling_game:
 use crate::components::schelling_game::profile_validation::rpc::evidence_end_block::EvidenceEndBlock;
 use crate::components::schelling_game::profile_validation::view_profile_from_address::ViewProfileFromAddress;
 use crate::components::schelling_game::profile_validation::views::juror_selected_check::JurorSelectedCheck;
+use crate::components::schelling_game::project_tips::create_project::CreateProject;
 use crate::components::tests::block_number::BlockNumber;
 use crate::components::tests::display_error::NumericInput;
 use crate::components::tests::polkadotjs_test::Polkadotjs;
 use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
 use crate::components::upload::upload_video::FileUpload;
-use crate::components::schelling_game::project_tips::create_project::CreateProject;
 use leptos::*;
 use leptos_router::*;
 
@@ -48,10 +48,7 @@ pub fn RouterApp() -> impl IntoView {
                     path="/profile-validation-change-period/:profile_user_account"
                     view=ChangePeriodProfileValidation
                 />
-              <Route 
-                 path="/project-tips/create-project/:department_id"
-                 view=CreateProject
-                />
+                <Route path="/project-tips/create-project/:department_id" view=CreateProject/>
             </Routes>
         </Router>
     }
