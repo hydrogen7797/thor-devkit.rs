@@ -6,6 +6,8 @@ pub mod change_period;
 pub mod change_period_sign_in;
 pub mod commit_vote;
 pub mod commit_vote_sign_in;
+pub mod create_department_fund;
+pub mod create_department_fund_sign_in;
 pub mod draw_jurors;
 pub mod draw_jurors_sign_in;
 pub mod game;
