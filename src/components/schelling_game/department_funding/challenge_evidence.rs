@@ -98,7 +98,6 @@ pub fn ChallengeEvidence(department_required_fund_id: u64) -> impl IntoView {
 
                     </form>
                     <p>{move || pending().then(|| "Loading...")}</p>
-                    <p>"Pending: " <code>{move || format!("{:#?}", pending())}</code></p>
                     <p>{move || cid_value()}</p>
                 </div>
             }
@@ -114,5 +113,5 @@ pub fn ChallengeEvidence(department_required_fund_id: u64) -> impl IntoView {
         },
     };
 
-    view! { <>{move || render_view()}</> }
+    view! { <div>{move || render_view()}</div> }
 }

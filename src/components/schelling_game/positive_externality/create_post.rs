@@ -68,11 +68,11 @@ pub fn CreatePositiveExternalityPost() -> impl IntoView {
                                 for="profile-details"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >
-                                Profile Details
+                                Create a Positive Externality
                             </label>
                             <MarkdownField
                                 set_markdown=set_markdown
-                                name=String::from("challenge-details")
+                                name=String::from("positive-externality-post")
                                 class=String::from(
                                     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
                                 )
@@ -91,7 +91,6 @@ pub fn CreatePositiveExternalityPost() -> impl IntoView {
 
                     </form>
                     <p>{move || pending().then(|| "Loading...")}</p>
-                    <p>"Pending: " <code>{move || format!("{:#?}", pending())}</code></p>
                     <p>{move || cid_value()}</p>
                 </div>
             }
@@ -104,5 +103,5 @@ pub fn CreatePositiveExternalityPost() -> impl IntoView {
         },
     };
 
-    view! { <>{move || render_view()}</> }
+    view! { <div>{move || render_view()}</div> }
 }

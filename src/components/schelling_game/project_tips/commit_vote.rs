@@ -33,7 +33,8 @@ pub fn CommitVote(project_id: u64) -> impl IntoView {
                     <GetPeriod project_id=project_id.clone()/>
                     <CommitEndBlock project_id=project_id.clone()/>
                     <ChangePeriod project_id=project_id.clone()/>
-                    <div></div>
+                    <div>
+                    </div>
                     <form
 
                         id="commit-vote-submit-from"
@@ -76,5 +77,5 @@ pub fn CommitVote(project_id: u64) -> impl IntoView {
         }
     };
 
-    view! { <>{move || render_view()}</> }
+    view! { <div>{move || render_view()}</div> }
 }

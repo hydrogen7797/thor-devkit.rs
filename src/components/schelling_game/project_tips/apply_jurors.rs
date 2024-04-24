@@ -74,5 +74,5 @@ pub fn ApplyJurors(project_id: u64) -> impl IntoView {
         }
     };
 
-    view! { <>{move || render_view()}</> }
+    view! { <div>{move || render_view()}</div> }
 }

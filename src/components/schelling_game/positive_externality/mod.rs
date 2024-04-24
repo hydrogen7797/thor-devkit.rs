@@ -13,6 +13,7 @@ pub mod draw_jurors_sign_in;
 pub mod game;
 pub mod get_incentives;
 pub mod get_incentives_sign_in;
+pub mod home;
 pub mod reveal_vote;
 pub mod reveal_vote_sign_in;
 pub mod rpc;

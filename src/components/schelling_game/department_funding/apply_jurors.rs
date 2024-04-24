@@ -78,5 +78,5 @@ pub fn ApplyJurors(department_required_fund_id: u64) -> impl IntoView {
         }
     };
 
-    view! { <>{move || render_view()}</> }
+    view! { <div>{move || render_view()}</div> }
 }

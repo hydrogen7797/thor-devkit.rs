@@ -96,7 +96,6 @@ pub fn ChallengeEvidence(user_to_calculate: String) -> impl IntoView {
 
                     </form>
                     <p>{move || pending().then(|| "Loading...")}</p>
-                    <p>"Pending: " <code>{move || format!("{:#?}", pending())}</code></p>
                     <p>{move || cid_value()}</p>
                 </div>
             }
@@ -109,5 +108,5 @@ pub fn ChallengeEvidence(user_to_calculate: String) -> impl IntoView {
         },
     };
 
-    view! { <>{move || render_view()}</> }
+    view! { <div>{move || render_view()}</div> }
 }

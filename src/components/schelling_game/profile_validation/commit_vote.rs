@@ -100,5 +100,5 @@ pub fn CommitVote(profile_user_account: String) -> impl IntoView {
         }
     };
 
-    view! { <>{move || render_view()}</> }
+    view! { <div>{move || render_view()}</div> }
 }

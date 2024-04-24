@@ -77,5 +77,5 @@ pub fn ApplyJurors(user_to_calculate: String) -> impl IntoView {
         }
     };
 
-    view! { <>{move || render_view()}</> }
+    view! { <div>{move || render_view()}</div> }
 }

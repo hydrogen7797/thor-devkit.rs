@@ -170,7 +170,6 @@ pub fn CreateDepartmentFund() -> impl IntoView {
 
                     </form>
                     <p>{move || pending().then(|| "Loading...")}</p>
-                    <p>"Pending: " <code>{move || format!("{:#?}", pending())}</code></p>
                     <p>{move || cid_value()}</p>
                 </div>
             }

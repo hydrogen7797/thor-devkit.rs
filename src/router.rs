@@ -3,6 +3,9 @@ use crate::components::accounts::set_phase_from_pass::SetPhraseFromPass;
 use crate::components::balance::transfer_balance::TransferBalance;
 use crate::components::home::Home;
 use crate::components::markdown::markdown_component::MarkdownHtmlView;
+use crate::components::schelling_game::positive_externality::{
+    create_post::CreatePositiveExternalityPost, home::PositiveExternalityHome,
+};
 use crate::components::schelling_game::profile_validation::add_profile::AddProfile;
 use crate::components::schelling_game::profile_validation::add_profile_sign_in::ExtensionSignIn;
 use crate::components::schelling_game::profile_validation::add_profile_stake::AddProfileStake;
@@ -49,6 +52,8 @@ pub fn RouterApp() -> impl IntoView {
                     view=ChangePeriodProfileValidation
                 />
                 <Route path="/project-tips/create-project/:department_id" view=CreateProject/>
+                <Route path="/positive-externality" view=PositiveExternalityHome/>
+                <Route path="/positive-externality/create-post" view=CreatePositiveExternalityPost/>
             </Routes>
         </Router>
     }
