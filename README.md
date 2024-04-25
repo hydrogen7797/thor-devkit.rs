@@ -86,4 +86,15 @@ cargo install subxt-cli
 
 ```bash
 subxt metadata -f bytes > metadata.scale
+
 ```
+
+## Redirects
+adding a _redirects file on the root of your publish directory,
+
+The content of the _redirects file should be the following:
+```
+/* /index.html 200
+```
+
+
