@@ -16,7 +16,7 @@ async fn load_data(profile_user_account: String, set_period: WriteSignal<Option<
 
     let profile_validation_block_storage = polkadot::storage()
         .profile_validation()
-        .profile_validation_block(account_id32.clone());
+        .validation_block(account_id32.clone());
 
     let profile_validation_block = client
         .storage()
