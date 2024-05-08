@@ -63,7 +63,7 @@ pub fn AddProfile() -> impl IntoView {
             }
         },
     );
-    let submitted = submit_action.input();
+    let _submitted = submit_action.input();
     let pending = submit_action.pending();
     let submit_action_value = submit_action.value();
 

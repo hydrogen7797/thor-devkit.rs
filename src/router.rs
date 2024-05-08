@@ -10,20 +10,20 @@ use crate::components::schelling_game::positive_externality::{
     home::PositiveExternalityHome,
 };
 use crate::components::schelling_game::profile_validation::add_profile::AddProfile;
-use crate::components::schelling_game::profile_validation::add_profile_sign_in::ExtensionSignIn;
+
 use crate::components::schelling_game::profile_validation::add_profile_stake::AddProfileStake;
-use crate::components::schelling_game::profile_validation::apply_jurors::ApplyJurors;
+
 use crate::components::schelling_game::profile_validation::change_period_sign_in::SignTransaction as ChangePeriodProfileValidation;
 use crate::components::schelling_game::profile_validation::game::schelling_game::SchellingGame;
-use crate::components::schelling_game::profile_validation::rpc::evidence_end_block::EvidenceEndBlock;
+
 use crate::components::schelling_game::profile_validation::view_profile_from_address::ViewProfileFromAddress;
 use crate::components::schelling_game::profile_validation::views::juror_selected_check::JurorSelectedCheck;
 use crate::components::schelling_game::project_tips::create_project::CreateProject;
 use crate::components::tests::block_number::BlockNumber;
 use crate::components::tests::display_error::NumericInput;
 use crate::components::tests::polkadotjs_test::Polkadotjs;
-use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
-use crate::components::upload::upload_video::FileUpload;
+
+
 use leptos::*;
 use leptos_router::*;
 

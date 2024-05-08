@@ -12,10 +12,10 @@ async fn get_accounts_result() -> Result<Vec<Account>, ErrorString> {
 pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> impl IntoView {
     let (accounts, set_accounts) = create_signal::<Vec<Account>>(vec![]);
     let get_accounts_action = create_action(|()| async move { get_accounts_result().await });
-    let pending_accounts = get_accounts_action.pending();
+    let _pending_accounts = get_accounts_action.pending();
     let get_accounts_value = get_accounts_action.value();
 
-    let onclick_button = move |e: MouseEvent, i| {
+    let onclick_button = move |_e: MouseEvent, i| {
         let accounts = accounts();
         let account: &Account = accounts.get(i).unwrap();
         let account_address = account.address.clone();
@@ -26,7 +26,7 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
             i, account_address, account_source
         ));
     };
-    let get_accounts_click = move |e: MouseEvent| {
+    let get_accounts_click = move |_e: MouseEvent| {
         get_accounts_action.dispatch(());
     };
     let accounts_html = move || {

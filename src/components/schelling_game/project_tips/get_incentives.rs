@@ -2,7 +2,7 @@ use crate::components::schelling_game::project_tips::get_incentives_sign_in::Sig
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
 use leptos::*;
-use leptos_router::*;
+
 
 #[component]
 pub fn GetIncentives(project_id: u64) -> impl IntoView {

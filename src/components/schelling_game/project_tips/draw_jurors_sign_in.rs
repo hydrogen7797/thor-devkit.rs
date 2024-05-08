@@ -2,8 +2,8 @@ use crate::components::transaction::extension_sign_in::sign_in_with_extension;
 use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
 use crate::services::common_services::polkadot;
 use leptos::*;
-use std::str::FromStr;
-use subxt::utils::AccountId32;
+
+
 
 #[component]
 pub fn SignTransaction(iterations: u64, project_id: u64) -> impl IntoView {

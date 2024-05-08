@@ -18,7 +18,7 @@ pub enum PhraseFromPassError {
 #[component]
 pub fn SetPhraseFromPass() -> impl IntoView {
     let (password, set_password) = create_signal(Ok("".to_string()));
-    let (account_store, set_account_store, reset_account_store) =
+    let (account_store, _set_account_store, _reset_account_store) =
         use_local_storage::<AccountStore, JsonCodec>("account-store-state");
 
     let set_password_input = move |ev| {
@@ -38,7 +38,7 @@ pub fn SetPhraseFromPass() -> impl IntoView {
         gloo::console::log!(format!("{:?}", account_store()));
         if let Some(hash) = account_store().hash {
             let mc = new_magic_crypt!(password().unwrap(), 256);
-            let seed = mc.decrypt_base64_to_string(&hash).unwrap();
+            let _seed = mc.decrypt_base64_to_string(&hash).unwrap();
         }
     };
     view! {

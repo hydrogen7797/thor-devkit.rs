@@ -1,12 +1,12 @@
 use crate::components::api::blob_to_bytes::{blob_to_hash_string, file_to_hash_string};
 use crate::components::api::select_ipfs_provider::IPFSProvider;
 use crate::components::api::select_ipfs_provider::{
-    CRUST_GATEWAY, EVERLAND_UPLOAD, WEB3_STORAGE_API_UPLOAD,
+    CRUST_GATEWAY, WEB3_STORAGE_API_UPLOAD,
 };
 use crate::components::api::upload_file_everland::{upload_everland_file, upload_everland_string};
-use crate::constants::auth::{CRUST_TOKEN, EVERLAND_PIN_TOKEN, WEB3_STORAGE_TOKEN};
+use crate::constants::auth::{CRUST_TOKEN, WEB3_STORAGE_TOKEN};
 
-use gloo::console::log;
+
 use gloo::net::http::{Headers, Request};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::JsValue;

@@ -8,7 +8,7 @@ use crate::services::common_imp::View;
 use json::object;
 use leptos::ev::SubmitEvent;
 use leptos::*;
-use leptos_router::*;
+
 
 async fn get_cid_post(
     details: String,
@@ -45,7 +45,7 @@ pub fn ChallengeEvidence(profile_user_account: String) -> impl IntoView {
             async move { get_cid_post(details, set_current_view, set_post_cid).await }
         },
     );
-    let submitted = submit_action.input();
+    let _submitted = submit_action.input();
     let pending = submit_action.pending();
     let submit_action_value = submit_action.value();
 

@@ -1,6 +1,6 @@
 use crate::components::api::ipfs_fetch_response::ipfs_fetch_response;
 use crate::constants::constant::IPFSFetchProvider;
-use gloo::console::log;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

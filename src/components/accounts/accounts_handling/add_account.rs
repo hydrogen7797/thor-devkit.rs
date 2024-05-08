@@ -6,12 +6,12 @@ use leptos::*;
 use leptos_use::storage::use_local_storage;
 use leptos_use::utils::JsonCodec;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
-use wasm_bindgen::JsCast;
-use web_sys::HtmlInputElement;
+
+
 
 #[component]
 pub fn AddAccount() -> impl IntoView {
-    let (account_store, set_account_store, reset_account_store) =
+    let (_account_store, set_account_store, _reset_account_store) =
         use_local_storage::<AccountStore, JsonCodec>("account-store-state");
     let (seed, set_seed) = create_signal("".to_string());
     let (password, set_password) = create_signal("".to_string());

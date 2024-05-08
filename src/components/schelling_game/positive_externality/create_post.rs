@@ -43,7 +43,7 @@ pub fn CreatePositiveExternalityPost() -> impl IntoView {
             async move { get_cid_post(details, set_current_view, set_post_cid).await }
         },
     );
-    let submitted = submit_action.input();
+    let _submitted = submit_action.input();
     let pending = submit_action.pending();
     let submit_action_value = submit_action.value();
 

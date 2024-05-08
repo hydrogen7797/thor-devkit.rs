@@ -6,7 +6,7 @@ use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::*;
-use leptos_router::*;
+
 
 #[component]
 pub fn CommitVote(project_id: u64) -> impl IntoView {

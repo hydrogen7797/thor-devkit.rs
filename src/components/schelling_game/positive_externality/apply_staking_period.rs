@@ -1,6 +1,6 @@
 use crate::components::schelling_game::positive_externality::apply_staking_period_sign_in::SignTransaction;
 use crate::services::common_imp::View;
-use crate::services::error::ErrorString;
+
 use leptos::ev::SubmitEvent;
 use leptos::*;
 

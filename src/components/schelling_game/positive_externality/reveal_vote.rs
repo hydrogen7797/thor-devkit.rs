@@ -6,7 +6,7 @@ use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::*;
-use leptos_router::*;
+
 
 #[component]
 pub fn RevealVote(user_to_calculate: String) -> impl IntoView {

@@ -2,7 +2,7 @@ use crate::components::schelling_game::positive_externality::get_incentives_sign
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
 use leptos::*;
-use leptos_router::*;
+
 
 #[component]
 pub fn GetIncentives(user_to_calculate: String) -> impl IntoView {

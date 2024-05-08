@@ -1,9 +1,9 @@
 use crate::components::api::select_ipfs_provider::EVERLAND_UPLOAD;
-use crate::constants::auth::HF_ACCESS_TOKEN;
+
 use crate::constants::auth::{EVERLAND_CREDENTIALS, EVERLAND_PIN_TOKEN};
-use crate::constants::constant::{EVERLAND_ENDPOINT, HUGGING_FACE_MODEL, NODE_URL};
+use crate::constants::constant::{EVERLAND_ENDPOINT};
 use crate::js_extension_binding;
-use gloo::console::log;
+
 use wasm_bindgen_futures;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Blob, File};
