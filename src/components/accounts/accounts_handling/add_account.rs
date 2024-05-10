@@ -7,8 +7,6 @@ use leptos_use::storage::use_local_storage;
 use leptos_use::utils::JsonCodec;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
 
-
-
 #[component]
 pub fn AddAccount() -> impl IntoView {
     let (_account_store, set_account_store, _reset_account_store) =

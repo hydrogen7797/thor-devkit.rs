@@ -3,8 +3,6 @@ use crate::components::transaction::get_accounts_extension::GetAccountsExtension
 use crate::services::common_services::polkadot;
 use leptos::*;
 
-
-
 #[component]
 pub fn SignTransaction(stake: u128, department_required_fund_id: u64) -> impl IntoView {
     view! { <ExtensionSignIn stake=stake department_required_fund_id=department_required_fund_id/> }

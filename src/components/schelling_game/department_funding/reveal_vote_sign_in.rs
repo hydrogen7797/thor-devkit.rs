@@ -3,8 +3,6 @@ use crate::components::transaction::get_accounts_extension::GetAccountsExtension
 use crate::services::common_services::polkadot;
 use leptos::*;
 
-
-
 #[component]
 pub fn SignTransaction(
     salt: String,

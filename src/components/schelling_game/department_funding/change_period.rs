@@ -1,7 +1,6 @@
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
-
 #[component]
 pub fn ChangePeriod(department_required_fund_id: u64) -> impl IntoView {
     let navigate = leptos_router::use_navigate();

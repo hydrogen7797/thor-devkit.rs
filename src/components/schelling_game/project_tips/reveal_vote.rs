@@ -7,7 +7,6 @@ use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
-
 #[component]
 pub fn RevealVote(project_id: u64) -> impl IntoView {
     // gloo::console::log!(project_id());

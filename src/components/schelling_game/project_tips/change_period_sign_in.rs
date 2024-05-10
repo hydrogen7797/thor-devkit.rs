@@ -4,8 +4,6 @@ use crate::services::common_services::polkadot;
 use leptos::*;
 use leptos_router::*;
 
-
-
 #[component]
 pub fn SignTransaction() -> impl IntoView {
     let params = use_params_map();

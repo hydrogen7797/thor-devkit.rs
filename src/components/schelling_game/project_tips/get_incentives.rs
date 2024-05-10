@@ -3,7 +3,6 @@ use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
-
 #[component]
 pub fn GetIncentives(project_id: u64) -> impl IntoView {
     // gloo::console::log!(project_id());

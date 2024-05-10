@@ -7,7 +7,6 @@ use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
-
 #[component]
 pub fn CommitVote(user_to_calculate: String) -> impl IntoView {
     // gloo::console::log!(user_to_calculate());
@@ -33,8 +32,7 @@ pub fn CommitVote(user_to_calculate: String) -> impl IntoView {
                     <GetPeriod user_to_calculate=user_to_calculate.clone()/>
                     <CommitEndBlock user_to_calculate=user_to_calculate.clone()/>
                     <ChangePeriod user_to_calculate=user_to_calculate.clone()/>
-                    <div>
-                    </div>
+                    <div></div>
                     <form
 
                         id="commit-vote-submit-from"

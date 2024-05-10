@@ -7,7 +7,6 @@ use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
-
 #[component]
 pub fn CommitVote(profile_user_account: String) -> impl IntoView {
     // gloo::console::log!(profile_user_account());

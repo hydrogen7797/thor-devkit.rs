@@ -7,7 +7,6 @@ use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
-
 #[component]
 pub fn DrawJurors(user_to_calculate: String) -> impl IntoView {
     // gloo::console::log!(user_to_calculate());

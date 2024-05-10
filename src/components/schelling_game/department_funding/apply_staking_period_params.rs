@@ -5,9 +5,6 @@ use leptos_router::*;
 #[component]
 pub fn ApplyStakingPeriodParams() -> impl IntoView {
     let params = use_params_map();
-    
-
-    
 
     let department_required_fund_id = move || {
         params.with(|params| {
@@ -18,8 +15,6 @@ pub fn ApplyStakingPeriodParams() -> impl IntoView {
                 .unwrap_or_default()
         })
     };
-
-    
 
     let params_value = untrack(move || department_required_fund_id());
 

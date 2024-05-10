@@ -3,8 +3,6 @@ use crate::components::transaction::get_accounts_extension::GetAccountsExtension
 use crate::services::common_services::polkadot;
 use leptos::*;
 
-
-
 #[component]
 pub fn SignTransaction(iterations: u64, project_id: u64) -> impl IntoView {
     view! { <ExtensionSignIn iterations=iterations project_id=project_id/> }

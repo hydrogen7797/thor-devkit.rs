@@ -2,7 +2,7 @@ use crate::constants::constant::NODE_URL;
 use crate::services::common_services::{extension_signature_for_extrinsic, polkadot};
 use anyhow::anyhow;
 use leptos::*;
-use subxt::ext::codec::{Decode};
+use subxt::ext::codec::Decode;
 use subxt::tx::SubmittableExtrinsic;
 use subxt::utils::{AccountId32, MultiSignature};
 use subxt::{OnlineClient, PolkadotConfig};

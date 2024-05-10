@@ -1,7 +1,7 @@
 use crate::components::api::select_ipfs_provider::EVERLAND_UPLOAD;
 
 use crate::constants::auth::{EVERLAND_CREDENTIALS, EVERLAND_PIN_TOKEN};
-use crate::constants::constant::{EVERLAND_ENDPOINT};
+use crate::constants::constant::EVERLAND_ENDPOINT;
 use crate::js_extension_binding;
 
 use wasm_bindgen_futures;

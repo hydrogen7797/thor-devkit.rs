@@ -1,7 +1,6 @@
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
-
 #[component]
 pub fn ChangePeriod(user_to_calculate: String) -> impl IntoView {
     let navigate = leptos_router::use_navigate();

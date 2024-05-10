@@ -2,7 +2,6 @@ use serde::{Deserialize, Serialize};
 use std::error::Error;
 use std::fmt;
 
-
 // https://docs.rs/thiserror/latest/thiserror/
 
 // use thiserror::Error;

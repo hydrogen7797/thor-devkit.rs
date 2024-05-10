@@ -5,14 +5,18 @@ use crate::components::home::Home;
 use crate::components::markdown::markdown_component::MarkdownHtmlView;
 use crate::components::schelling_game::department_funding::{
     apply_staking_period_params::ApplyStakingPeriodParams as ApplyStakingPeriodForDepartmentFunding,
+    change_period_sign_in::SignTransaction as ChangePeriodDepartmentFunding,
     create_department_fund::CreateDepartmentFund,
     game::schelling_game::SchellingGame as DepartmentFundingSchellingGame,
+    views::juror_selected_check::JurorSelectedCheck as JurorSelectedCheckDepartmentFunding,
 };
 use crate::components::schelling_game::positive_externality::{
     apply_staking_period_params::ApplyStakingPeriodParams as ApplyStakingPeriodForPositiveExternality,
+    change_period_sign_in::SignTransaction as ChangePeriodPositiveExternality,
     create_post::CreatePositiveExternalityPost,
     game::schelling_game::SchellingGame as PositiveExternalitySchellingGame,
     home::PositiveExternalityHome,
+    views::juror_selected_check::JurorSelectedCheck as JurorSelectedCheckPositiveExternality,
 };
 use crate::components::schelling_game::profile_validation::add_profile::AddProfile;
 
@@ -25,7 +29,9 @@ use crate::components::schelling_game::profile_validation::view_profile_from_add
 use crate::components::schelling_game::profile_validation::views::juror_selected_check::JurorSelectedCheck;
 use crate::components::schelling_game::project_tips::{
     apply_staking_period_params::ApplyStakingPeriodParams as ApplyStakingPeriodForProjectTips,
+    change_period_sign_in::SignTransaction as ChangePeriodProjectTips,
     create_project::CreateProject, game::schelling_game::SchellingGame as ProjectTipsSchellingGame,
+    views::juror_selected_check::JurorSelectedCheck as JurorSelectedCheckProjectTips,
 };
 use crate::components::tests::block_number::BlockNumber;
 use crate::components::tests::display_error::NumericInput;
@@ -65,9 +71,19 @@ pub fn RouterApp() -> impl IntoView {
                 // Project tips routes
 
                 <Route path="/project-tips/create-project/:department_id" view=CreateProject/>
-                <Route path="/project-tips/apply-staking-period/:project_id" view=ApplyStakingPeriodForProjectTips />
-                <Route path="/project-tips/schelling-game/:project_id" view=DepartmentFundingSchellingGame/>
-
+                <Route
+                    path="/project-tips/apply-staking-period/:project_id"
+                    view=ApplyStakingPeriodForProjectTips
+                />
+                <Route
+                    path="/project-tips/schelling-game/:project_id"
+                    view=DepartmentFundingSchellingGame
+                />
+                <Route path="/project-tips-change-period/:project_id" view=ChangePeriodProjectTips/>
+                <Route
+                    path="/project-tips-juror-selected/:project_id"
+                    view=JurorSelectedCheckProjectTips
+                />
 
                 // Positive externality routes
 
@@ -75,19 +91,46 @@ pub fn RouterApp() -> impl IntoView {
                 <Route path="/positive-externality/create-post" view=CreatePositiveExternalityPost/>
                 <Route
                     path="/positive-externality/apply-staking-period/:user_to_calculate"
-                    view=ApplyStakingPeriodForPositiveExternality />
+                    view=ApplyStakingPeriodForPositiveExternality
+                />
 
                 <Route
                     path="/positive-externality/schelling-game/:user_to_calculate"
                     view=PositiveExternalitySchellingGame
                 />
 
-               // Department funding routes
-                <Route path="/department-funding/create-department-fund/:department_id" view=CreateDepartmentFund/>
+                <Route
+                    path="/positive-externality-change-period/:user_to_calculate"
+                    view=ChangePeriodPositiveExternality
+                />
+                <Route
+                    path="/positive-externality-juror-selected/:user_to_calculate"
+                    view=JurorSelectedCheckPositiveExternality
+                />
 
-                <Route path="/department-funding/apply-staking-period/:department_id" view=ApplyStakingPeriodForDepartmentFunding />
-                <Route path="/department-funding/schelling-game/:department_id" view=ProjectTipsSchellingGame />
-         </Routes>
+                // Department funding routes
+                <Route
+                    path="/department-funding/create-department-fund/:department_id"
+                    view=CreateDepartmentFund
+                />
+
+                <Route
+                    path="/department-funding/apply-staking-period/:department_id"
+                    view=ApplyStakingPeriodForDepartmentFunding
+                />
+                <Route
+                    path="/department-funding/schelling-game/:department_id"
+                    view=ProjectTipsSchellingGame
+                />
+                <Route
+                    path="/department-funding-change-period/:department_id"
+                    view=ChangePeriodDepartmentFunding
+                />
+                <Route
+                    path="/department-funding-juror-selected/:department_id"
+                    view=JurorSelectedCheckDepartmentFunding
+                />
+            </Routes>
         </Router>
     }
 }

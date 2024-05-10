@@ -9,7 +9,6 @@ use json::object;
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
-
 async fn get_cid_post(
     details: String,
     set_current_view: WriteSignal<View>,
