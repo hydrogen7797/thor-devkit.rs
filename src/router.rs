@@ -77,7 +77,7 @@ pub fn RouterApp() -> impl IntoView {
                 />
                 <Route
                     path="/project-tips/schelling-game/:project_id"
-                    view=DepartmentFundingSchellingGame
+                    view=ProjectTipsSchellingGame
                 />
                 <Route path="/project-tips-change-period/:project_id" view=ChangePeriodProjectTips/>
                 <Route
