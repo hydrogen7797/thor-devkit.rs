@@ -2883,8 +2883,8 @@ h3 {
   justify-content: center;
 }
 
-.gap-8 {
-  gap: 2rem;
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .rounded-box {
@@ -3236,6 +3236,10 @@ h3 {
   .sm\:w-auto {
     width: auto;
   }
+
+  .sm\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 768px) {
@@ -3244,7 +3248,13 @@ h3 {
     margin-right: auto;
   }
 
-  .md\:grid-cols-3 {
+  .md\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

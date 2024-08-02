@@ -21,7 +21,7 @@ pub fn Home() -> impl IntoView {
             // <!-- Features Section -->
             <section class="py-12">
               <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1  sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
                   <div class="bg-white p-6 rounded-lg shadow-md">
                     <div class="flex items-center mb-4">
                       <span class="btn btn-circle btn-primary mr-3">1</span>
