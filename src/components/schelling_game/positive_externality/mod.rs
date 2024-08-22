@@ -15,6 +15,8 @@ pub mod game;
 pub mod get_incentives;
 pub mod get_incentives_sign_in;
 pub mod home;
+pub mod release_positive_externality_fund;
+pub mod release_positive_externality_fund_sign_in;
 pub mod reveal_vote;
 pub mod reveal_vote_sign_in;
 pub mod rpc;

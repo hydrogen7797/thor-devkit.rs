@@ -12,6 +12,8 @@ pub mod create_department_fund_sign_in;
 pub mod draw_jurors;
 pub mod draw_jurors_sign_in;
 pub mod game;
+pub mod get_department_funding;
+pub mod get_department_funding_sign_in;
 pub mod get_incentives;
 pub mod get_incentives_sign_in;
 pub mod reveal_vote;
