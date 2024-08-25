@@ -4,17 +4,7 @@ use leptos_use::{use_element_bounding, UseElementBoundingReturn};
 #[component]
 pub fn Nav() -> impl IntoView {
     let el = create_node_ref::<Button>();
-    let UseElementBoundingReturn {
-        width,
-        height,
-        left,
-        right,
-        top,
-        bottom,
-        x,
-        y,
-        ..
-    } = use_element_bounding(el);
+    let UseElementBoundingReturn { x, y, .. } = use_element_bounding(el);
     let (drop_down, set_drop_down) = create_signal(false);
     let (nav_multi_level, set_nav_multi_level) = create_signal(false);
 
@@ -62,16 +52,25 @@ pub fn Nav() -> impl IntoView {
                         }
                     }>
                         <ul class="flex flex-col font-medium p-4 lg:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
-                            <li>
+                        <li class=move || {
+                                let base_classes = "py-2 px-3 text-white bg-blue-700 rounded lg:bg-transparent lg:text-blue-700 lg:p-0 lg:dark:text-blue-500 dark:bg-blue-600 lg:dark:bg-transparent";
+                                let height_class = if nav_multi_level() == true { "h-24 flex justify-start items-center" } else { "" };
+                                format!("{} {}", base_classes, height_class)
+                            }
+                           >
                                 <a
                                     href="/"
-                                    class="block py-2 px-3 text-white bg-blue-700 rounded lg:bg-transparent lg:text-blue-700 lg:p-0 lg:dark:text-blue-500 dark:bg-blue-600 lg:dark:bg-transparent"
+
                                     aria-current="page"
                                 >
                                     "Home"
                                 </a>
                             </li>
-                            <li>
+                            <li class=move || {
+                                    let base_classes = "";
+                                    let height_class = if nav_multi_level() == true { "h-24 flex justify-start items-center" } else { "" };
+                                    format!("{} {}", base_classes, height_class)
+                                }>
                                 <button
                                     node_ref=el
                                     on:click=move |_| {
@@ -225,34 +224,48 @@ pub fn Nav() -> impl IntoView {
                                     </div>
                                 </div>
                             </li>
-                            <li>
+                            <li class=move || {
+                                    let base_classes = "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent";
+                                    let height_class = if nav_multi_level() == true { "h-24 flex justify-start items-center" } else { "" };
+                                    format!("{} {}", base_classes, height_class)
+                                }>
                                 <a
                                     href="/add-profile"
-                                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
                                 >
                                     "Add Profile"
                                 </a>
                             </li>
-                            <li>
+                            <li class=move || {
+                                    let base_classes = "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent";
+                                    let height_class = if nav_multi_level() == true { "h-24 flex justify-start items-center" } else { "" };
+                                    format!("{} {}", base_classes, height_class)
+                                }>
                                 <a
                                     href="/positive-externality/create-post"
-                                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
+
                                 >
                                     "Positive Externality"
                                 </a>
                             </li>
-                            <li>
+                            <li class=move || {
+                                    let base_classes = "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent";
+                                    let height_class = if nav_multi_level() == true { "h-24 flex justify-start items-center" } else { "" };
+                                    format!("{} {}", base_classes, height_class)
+                                }>
                                 <a
                                     href="#"
-                                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
                                 >
                                     "Departement Funding"
                                 </a>
                             </li>
-                            <li>
+                            <li class=move || {
+                                    let base_classes = "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent";
+                                    let height_class = if nav_multi_level() == true { "h-24 flex justify-start items-center" } else { "" };
+                                    format!("{} {}", base_classes, height_class)
+                                }>
                                 <a
                                     href="#"
-                                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent"
+                                    class=""
                                 >
                                     "Create Project"
                                 </a>
