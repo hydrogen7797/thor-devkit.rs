@@ -1,6 +1,7 @@
 use leptos::html::Button;
 use leptos::*;
 use leptos_use::{use_element_bounding, UseElementBoundingReturn};
+
 #[component]
 pub fn Nav() -> impl IntoView {
     let el = create_node_ref::<Button>();
@@ -11,7 +12,6 @@ pub fn Nav() -> impl IntoView {
     view! {
         <>
             <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-
                 <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
                         <a class="btn btn-ghost text-xl">"Shivarthu"</a>
@@ -81,7 +81,7 @@ pub fn Nav() -> impl IntoView {
                                     data-dropdown-toggle="dropdownNavbar"
                                     class="flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 lg:w-auto dark:text-white lg:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 lg:dark:hover:bg-transparent"
                                 >
-                                    Dropdown
+                                    "Dropdown"
                                     <svg
                                         class="w-2.5 h-2.5 ms-2.5"
                                         aria-hidden="true"
@@ -134,7 +134,7 @@ pub fn Nav() -> impl IntoView {
                                                 href="#"
                                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                             >
-                                                Dashboard
+                                                "Dashboard"
                                             </a>
                                         </li>
                                         <li aria-labelledby="dropdownNavbarLink">
@@ -145,7 +145,7 @@ pub fn Nav() -> impl IntoView {
                                                 type="button"
                                                 class="flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                             >
-                                                Dropdown
+                                                "Dropdown"
                                                 <svg
                                                     class="w-2.5 h-2.5 ms-2.5"
                                                     aria-hidden="true"
@@ -175,7 +175,7 @@ pub fn Nav() -> impl IntoView {
                                                             href="#"
                                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                         >
-                                                            Overview
+                                                            "Overview"
                                                         </a>
                                                     </li>
                                                     <li>
@@ -183,7 +183,7 @@ pub fn Nav() -> impl IntoView {
                                                             href="#"
                                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                         >
-                                                            My downloads
+                                                            "My downloads"
                                                         </a>
                                                     </li>
                                                     <li>
@@ -191,7 +191,7 @@ pub fn Nav() -> impl IntoView {
                                                             href="#"
                                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                         >
-                                                            Billing
+                                                            "Billing"
                                                         </a>
                                                     </li>
                                                     <li>
@@ -199,7 +199,7 @@ pub fn Nav() -> impl IntoView {
                                                             href="#"
                                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                         >
-                                                            Rewards
+                                                            "Rewards"
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -210,7 +210,7 @@ pub fn Nav() -> impl IntoView {
                                                 href="#"
                                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                             >
-                                                Earnings
+                                                "Earnings"
                                             </a>
                                         </li>
                                     </ul>
@@ -219,7 +219,7 @@ pub fn Nav() -> impl IntoView {
                                             href="#"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                         >
-                                            Sign out
+                                            "Sign out"
                                         </a>
                                     </div>
                                 </div>
@@ -255,7 +255,7 @@ pub fn Nav() -> impl IntoView {
                                 <a
                                     href="#"
                                 >
-                                    "Departement Funding"
+                                    "Department Funding"
                                 </a>
                             </li>
                             <li class=move || {

@@ -1,8 +1,8 @@
 use crate::components::api::ipfs_request::ipfs_call_json_string;
 use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 use crate::components::markdown::markdown_field::MarkdownField;
+use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::positive_externality::create_post_sign_in::SignTransaction;
-
 use crate::services::common_imp::View;
 use json::object;
 use leptos::ev::SubmitEvent;
@@ -59,7 +59,7 @@ pub fn CreatePositiveExternalityPost() -> impl IntoView {
     let render_view = move || match current_view() {
         View::Form => {
             view! {
-                <div class="max-w-5xl mx-auto max-md:mx-10">
+                <div class="container mx-auto px-10">
 
                     <form id="challenge-evidence-submit-from" on:submit=submit_click>
 
@@ -103,5 +103,5 @@ pub fn CreatePositiveExternalityPost() -> impl IntoView {
         },
     };
 
-    view! { <div>{move || render_view()}</div> }
+    view! { <div> <Nav/> {move || render_view()}</div> }
 }

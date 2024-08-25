@@ -87,9 +87,9 @@ pub fn AddProfile() -> impl IntoView {
         // if post_cid().is_empty() {
         {
             view! {
-                <div>
+                <div class="container mx-auto px-10">
                     <form
-                        class="max-w-5xl mx-auto max-md:mx-10"
+                        class=""
                         id="add-profile-submit-from"
                         on:submit=submit_click
                     >
