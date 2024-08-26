@@ -14,7 +14,7 @@ pub fn Nav() -> impl IntoView {
             <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
                 <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <a class="btn btn-ghost text-xl">"Shivarthu"</a>
+                        <a class="btn btn-ghost text-xl dark:text-white">"Shivarthu"</a>
                     </a>
                     <button
                         on:click=move |_| {
