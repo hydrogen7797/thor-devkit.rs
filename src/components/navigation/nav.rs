@@ -1,5 +1,11 @@
+use crate::components::login::get_login_account::AccountState;
+use codee::string::JsonSerdeCodec;
 use leptos::html::Button;
 use leptos::*;
+use leptos_use::storage::use_local_storage;
+use leptos_use::{
+    use_clipboard_with_options, use_permission, UseClipboardOptions, UseClipboardReturn,
+};
 use leptos_use::{use_element_bounding, UseElementBoundingReturn};
 
 #[component]
@@ -8,6 +14,14 @@ pub fn Nav() -> impl IntoView {
     let UseElementBoundingReturn { x, y, .. } = use_element_bounding(el);
     let (drop_down, set_drop_down) = create_signal(false);
     let (nav_multi_level, set_nav_multi_level) = create_signal(false);
+    let (account_state, set_account_state, reset_account) =
+        use_local_storage::<AccountState, JsonSerdeCodec>("account-state");
+    let UseClipboardReturn {
+        is_supported,
+        text,
+        copied,
+        copy,
+    } = use_clipboard_with_options(UseClipboardOptions::default().read(true));
 
     view! {
         <>
@@ -279,19 +293,47 @@ pub fn Nav() -> impl IntoView {
                             }>
                                 <a href="#">"Department Funding"</a>
                             </li>
-                            <li class=move || {
-                                let base_classes = "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent";
-                                let height_class = if nav_multi_level() == true {
-                                    "h-24 flex justify-start items-center"
-                                } else {
-                                    ""
-                                };
-                                format!("{} {}", base_classes, height_class)
-                            }>
-                                <a href="#" class="">
-                                    "Create Project"
-                                </a>
-                            </li>
+                            // <li class=move || {
+                            //     let base_classes = "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent";
+                            //     let height_class = if nav_multi_level() == true {
+                            //         "h-24 flex justify-start items-center"
+                            //     } else {
+                            //         ""
+                            //     };
+                            //     format!("{} {}", base_classes, height_class)
+                            // }>
+                            //     <a href="#" class="">
+                            //         "Create Project"
+                            //     </a>
+                            // </li>
+                            <li> {move || {
+
+                                        let full_id = account_state().account_id.clone();
+                                            let shortened_id = if full_id.len() > 8 {
+                                                                           format!("{}...{}", &full_id[..8], &full_id[full_id.len()-4..])
+                                                                       } else {
+                                                                           full_id.clone()
+                                                                       };
+
+                                            view! {
+                                                                           <>
+                                                                           // Display the shortened account ID
+                                                                           <span>{shortened_id}</span>
+
+                                                                           <button on:click={
+                                                                                         let copy = copy.clone();
+                                                                                         move |_| copy(&full_id)
+                                                                                     }>
+                                                                                         <Show when=copied fallback=|| "Copy">
+                                                                                             Copied!
+                                                                                         </Show>
+                                                                                     </button>
+                                                                           </>
+                                                                       }
+
+
+                            }
+                                               }</li>
                         </ul>
                     </div>
                 </div>
