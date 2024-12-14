@@ -1,7 +1,9 @@
 use crate::components::login::get_login_account::AccountState;
 use codee::string::JsonSerdeCodec;
+use icondata;
 use leptos::html::Button;
 use leptos::*;
+use leptos_icons::*;
 use leptos_use::storage::use_local_storage;
 use leptos_use::{
     use_clipboard_with_options, use_permission, UseClipboardOptions, UseClipboardReturn,
@@ -318,20 +320,34 @@ pub fn Nav() -> impl IntoView {
                                     } else {
                                         full_id.clone()
                                     };
-                                    view! {
-                                        <>
+                                    if !shortened_id.is_empty() {
+                                        view! {
                                             // Display the shortened account ID
-                                            <span>{shortened_id}</span>
+                                            <>
+                                                <span>{shortened_id}</span>
 
-                                            <button on:click={
-                                                let copy = copy.clone();
-                                                move |_| copy(&full_id)
-                                            }>
-                                                <Show when={copied} fallback={|| "Copy"}>
-                                                    Copied!
-                                                </Show>
-                                            </button>
-                                        </>
+                                                <button on:click={
+                                                    let copy = copy.clone();
+                                                    move |_| copy(&full_id)
+                                                }>
+                                                    <Show
+                                                        when={copied}
+                                                        fallback={|| {
+                                                            view! { <Icon icon={icondata::AiCopyOutlined}/> }
+                                                        }}
+                                                    >
+
+                                                        Copied!
+                                                    </Show>
+                                                </button>
+                                            </>
+                                        }
+                                    } else {
+                                        view! {
+                                            <>
+                                                <div></div>
+                                            </>
+                                        }
                                     }
                                 }}
 
