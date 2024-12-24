@@ -1,6 +1,6 @@
 use crate::constants::constant::NODE_URL;
 use crate::services::common_services::polkadot;
-use leptos::*;
+use leptos::prelude::*;
 use std::str::FromStr;
 use subxt::utils::AccountId32;
 use subxt::{OnlineClient, PolkadotConfig};

@@ -1,4 +1,4 @@
-use leptos::*;
+use leptos::prelude::*;
 use leptos_use::use_interval_fn;
 use leptos_use::utils::Pausable;
 
@@ -9,7 +9,7 @@ async fn load_data(count: ReadSignal<i32>, set_count: WriteSignal<i32>) {
 
 #[component]
 pub fn BlockNumber() -> impl IntoView {
-    let (count, set_count) = create_signal(0);
+    let (count, set_count) = signal(0);
 
     let Pausable { .. } = use_interval_fn(
         move || {

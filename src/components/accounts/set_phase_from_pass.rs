@@ -1,7 +1,7 @@
 use crate::components::accounts::accounts_store::AccountStore;
 use codee::string::JsonSerdeCodec;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_use::storage::use_local_storage;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
 use serde::{Deserialize, Serialize};
@@ -17,7 +17,7 @@ pub enum PhraseFromPassError {
 
 #[component]
 pub fn SetPhraseFromPass() -> impl IntoView {
-    let (password, set_password) = create_signal(Ok("".to_string()));
+    let (password, set_password) = signal(Ok("".to_string()));
     let (account_store, _set_account_store, _reset_account_store) =
         use_local_storage::<AccountStore, JsonSerdeCodec>("account-store-state");
 

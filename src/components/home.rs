@@ -1,5 +1,5 @@
 use crate::components::navigation::nav::Nav;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn Home() -> impl IntoView {

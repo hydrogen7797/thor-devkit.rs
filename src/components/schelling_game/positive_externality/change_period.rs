@@ -1,5 +1,5 @@
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]

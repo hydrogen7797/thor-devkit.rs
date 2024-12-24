@@ -22,5 +22,6 @@ pub mod rpc;
 pub mod storage;
 pub mod unstaking;
 pub mod unstaking_sign_in;
+pub mod view_profile;
 pub mod view_profile_from_address;
 pub mod views;

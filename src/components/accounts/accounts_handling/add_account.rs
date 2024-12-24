@@ -3,7 +3,7 @@ use crate::components::navigation::nav::Nav;
 use crate::js_extension_binding;
 use codee::string::JsonSerdeCodec;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_use::storage::use_local_storage;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
 
@@ -11,11 +11,11 @@ use magic_crypt::{new_magic_crypt, MagicCryptTrait};
 pub fn AddAccount() -> impl IntoView {
     let (_account_store, set_account_store, _reset_account_store) =
         use_local_storage::<AccountStore, JsonSerdeCodec>("account-store-state");
-    let (seed, set_seed) = create_signal("".to_string());
-    let (password, set_password) = create_signal("".to_string());
-    let (confirm_password, set_confirm_password) = create_signal(String::from(""));
-    let (form_submission, set_form_submission) = create_signal(true);
-    let (error_message, set_error_message) = create_signal(String::from(""));
+    let (seed, set_seed) = signal("".to_string());
+    let (password, set_password) = signal("".to_string());
+    let (confirm_password, set_confirm_password) = signal(String::from(""));
+    let (form_submission, set_form_submission) = signal(true);
+    let (error_message, set_error_message) = signal(String::from(""));
     let is_valid = move || password().as_str() == confirm_password().as_str();
 
     let submit_click = move |e: SubmitEvent| {
@@ -121,13 +121,13 @@ pub fn AddAccount() -> impl IntoView {
                                                     </div>
                                                     <br/>
                                                 </>
-                                            }
+                                            }.into_any()
                                         } else {
                                             view! {
                                                 <>
                                                     <div></div>
                                                 </>
-                                            }
+                                            }.into_any()
                                         }
                                     }}
 
@@ -141,7 +141,7 @@ pub fn AddAccount() -> impl IntoView {
                                 </form>
                             </div>
                         </>
-                    }
+                    }.into_any()
                 } else {
                     view! {
                         <>
@@ -165,7 +165,7 @@ pub fn AddAccount() -> impl IntoView {
 
                             </div>
                         </>
-                    }
+                    }.into_any()
                 }
             }}
         </>

@@ -5,15 +5,15 @@ use crate::components::schelling_game::department_funding::storage::get_period::
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]
 pub fn RevealVote(department_required_fund_id: u64) -> impl IntoView {
     // gloo::console::log!(department_required_fund_id());
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (choice, set_choice) = create_signal::<Result<Option<u128>, ErrorString>>(Ok(None));
-    let (salt, set_salt) = create_signal(String::from(""));
+    let (current_view, set_current_view) = signal(View::Form);
+    let (choice, set_choice) = signal::<Result<Option<u128>, ErrorString>>(Ok(None));
+    let (salt, set_salt) = signal(String::from(""));
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
         if choice().unwrap().is_some() {

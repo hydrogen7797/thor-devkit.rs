@@ -1,5 +1,5 @@
 use crate::components::schelling_game::project_tips::storage::get_period_fn::get_period_fn;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn GetPeriod(project_id: u64) -> impl IntoView {

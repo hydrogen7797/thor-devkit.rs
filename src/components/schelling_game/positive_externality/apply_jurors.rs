@@ -5,13 +5,13 @@ use crate::components::schelling_game::positive_externality::storage::get_period
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn ApplyJurors(user_to_calculate: String) -> impl IntoView {
     // gloo::console::log!(user_to_calculate());
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (juror_stake, set_juror_stake) = create_signal::<Result<u128, ErrorString>>(Ok(0));
+    let (current_view, set_current_view) = signal(View::Form);
+    let (juror_stake, set_juror_stake) = signal::<Result<u128, ErrorString>>(Ok(0));
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
 

@@ -1,5 +1,5 @@
 use crate::components::schelling_game::positive_externality::storage::get_period_fn::get_period_fn;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn GetPeriod(user_to_calculate: String) -> impl IntoView {

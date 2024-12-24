@@ -1,12 +1,12 @@
 use crate::components::schelling_game::project_tips::unstaking_sign_in::SignTransaction;
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn Unstaking(project_id: u64) -> impl IntoView {
     // gloo::console::log!(project_id());
-    let (current_view, set_current_view) = create_signal(View::Form);
+    let (current_view, set_current_view) = signal(View::Form);
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
 

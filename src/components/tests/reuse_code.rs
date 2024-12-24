@@ -1,14 +1,14 @@
 use crate::components::navigation::nav::Nav;
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn ApplyJurors(profile_user_account: String) -> impl IntoView {
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (juror_stake, set_juror_stake) = create_signal::<Option<u32>>(None);
+    let (current_view, set_current_view) = signal(View::Form);
+    let (juror_stake, set_juror_stake) = signal::<Option<u32>>(None);
 
-    let submit_action = create_action(|input: &()| async { todo!() });
+    let submit_action = Action::new(|input: &()| async { todo!() });
 
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();

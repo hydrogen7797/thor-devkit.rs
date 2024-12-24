@@ -1,7 +1,7 @@
 use crate::components::transaction::extension_sign_in::sign_in_with_extension;
 use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
 use crate::services::common_services::polkadot;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn Polkadotjs() -> impl IntoView {
@@ -10,7 +10,7 @@ pub fn Polkadotjs() -> impl IntoView {
 
 #[component]
 pub fn ExtensionSignIn() -> impl IntoView {
-    let (account_load, set_account_load) = create_signal(("".to_owned(), "".to_owned()));
+    let (account_load, set_account_load) = signal(("".to_owned(), "".to_owned()));
 
     let render_html = move || {
         if account_load().0.is_empty() || account_load().1.is_empty() {
@@ -36,32 +36,17 @@ pub fn ExtensionSignIn() -> impl IntoView {
     view! { <div>{move || render_html()}</div> }
 }
 
+async fn load_data(account_address: String, account_source: String, set_error:WriteSignal<String>, set_extrinsic_success:WriteSignal<String>) -> i32 {
+    
+}
 #[component]
 pub fn ExtensionTransaction(account_address: String, account_source: String) -> impl IntoView {
-    let (error, set_error) = create_signal(String::from("hello"));
-    let (extrinsic_success, set_extrinsic_success) = create_signal(String::from("extrinsic"));
-    let transaction_resource = create_local_resource(
-        move || {
-            (
-                account_address.clone(),
-                account_source.clone(),
-                set_error,
-                set_extrinsic_success,
-            )
-        },
-        move |(account_address, account_source, set_error, set_extrinsic_success)| async move {
-            let tx = polkadot::tx().department_funding().pass_period(10);
-
-            sign_in_with_extension(
-                tx,
-                account_address,
-                account_source,
-                set_error,
-                set_extrinsic_success,
-            )
-            .await;
-        },
-    );
+    let (error, set_error) = signal(String::from("hello"));
+    let (extrinsic_success, set_extrinsic_success) = signal(String::from("extrinsic"));
+    let transaction_resource = LocalResource::new(move ||{
+        load_data(account_address.clone(), account_source.clone(), set_error, set_extrinsic_success)
+    });
+    
 
     let loading = transaction_resource.loading();
     let is_loading = move || {

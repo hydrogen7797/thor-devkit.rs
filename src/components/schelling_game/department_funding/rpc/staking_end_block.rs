@@ -2,7 +2,7 @@ use crate::constants::constant::NODE_URL;
 use icondata;
 use jsonrpsee_core::{client::ClientT, rpc_params};
 use jsonrpsee_wasm_client::WasmClientBuilder;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_icons::*;
 use leptos_use::use_interval_fn;
 use leptos_use::utils::Pausable;
@@ -21,9 +21,9 @@ async fn load_data(department_required_fund_id: u64, set_end_period: WriteSignal
 
 #[component]
 pub fn StakingEndBlock(department_required_fund_id: u64) -> impl IntoView {
-    let (end_period, set_end_period) = create_signal::<Option<u32>>(None);
+    let (end_period, set_end_period) = signal::<Option<u32>>(None);
 
-    let action = create_action(
+    let action = Action::new(
         |(department_required_fund_id, set_end_period): &(u64, WriteSignal<Option<u32>>)| {
             let department_required_fund_id = department_required_fund_id.clone();
             let set_end_period = set_end_period.clone();

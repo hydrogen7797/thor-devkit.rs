@@ -2,14 +2,14 @@ use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::departments::remove_member_from_department_sign_in::SignTransaction;
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn RemoveMemberFromDepartment(department_id: u64) -> impl IntoView {
     // gloo::console::log!(user_to_calculate());
-    let (current_view, set_current_view) = create_signal(View::Form);
+    let (current_view, set_current_view) = signal(View::Form);
 
-    let (account_id, set_account_id) = create_signal(String::from(""));
+    let (account_id, set_account_id) = signal(String::from(""));
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
         set_current_view(View::Success);

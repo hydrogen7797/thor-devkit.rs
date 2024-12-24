@@ -2,12 +2,12 @@ use crate::components::schelling_game::project_tips::apply_staking_period_sign_i
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn ApplyStakingPeriod(project_id: u64) -> impl IntoView {
     // gloo::console::log!(project_id());
-    let (current_view, set_current_view) = create_signal(View::Form);
+    let (current_view, set_current_view) = signal(View::Form);
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
 

@@ -4,7 +4,7 @@ use crate::components::schelling_game::profile_validation::fetch_ipfs_profile::{
 use crate::constants::constant::DEFAULT_IPFS_FETCH_PROVIDER;
 use crate::constants::constant::NODE_URL;
 use crate::services::common_services::polkadot;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 use polkadot::runtime_types::pallet_support::Content;
 use std::str::FromStr;

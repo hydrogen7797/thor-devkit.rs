@@ -1,7 +1,7 @@
 use crate::components::transaction::extension_sign_in::sign_in_with_extension;
 use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
 use crate::services::common_services::polkadot;
-use leptos::*;
+use leptos::prelude::*;
 use std::str::FromStr;
 use subxt::utils::AccountId32;
 
@@ -12,7 +12,7 @@ pub fn SignTransaction(hash: [u8; 32], project_id: u64) -> impl IntoView {
 
 #[component]
 pub fn ExtensionSignIn(hash: [u8; 32], project_id: u64) -> impl IntoView {
-    let (account_load, set_account_load) = create_signal(("".to_owned(), "".to_owned()));
+    let (account_load, set_account_load) = signal(("".to_owned(), "".to_owned()));
 
     let render_html = move || {
         if account_load().0.is_empty() || account_load().1.is_empty() {
@@ -47,9 +47,9 @@ pub fn ExtensionTransaction(
     account_address: String,
     account_source: String,
 ) -> impl IntoView {
-    let (error, set_error) = create_signal(String::from(""));
-    let (extrinsic_success, set_extrinsic_success) = create_signal(String::from(""));
-    let transaction_resource = create_local_resource(
+    let (error, set_error) = signal(String::from(""));
+    let (extrinsic_success, set_extrinsic_success) = signal(String::from(""));
+    let transaction_resource = LocalResource::new(
         move || {
             (
                 hash.clone(),

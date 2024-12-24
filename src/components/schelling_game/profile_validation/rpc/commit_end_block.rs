@@ -2,7 +2,7 @@ use crate::constants::constant::NODE_URL;
 use icondata;
 use jsonrpsee_core::{client::ClientT, rpc_params};
 use jsonrpsee_wasm_client::WasmClientBuilder;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_icons::*;
 use leptos_use::use_interval_fn;
 use leptos_use::utils::Pausable;
@@ -21,9 +21,9 @@ async fn load_data(profile_user_account: String, set_end_period: WriteSignal<Opt
 
 #[component]
 pub fn CommitEndBlock(profile_user_account: String) -> impl IntoView {
-    let (end_period, set_end_period) = create_signal::<Option<u32>>(None);
+    let (end_period, set_end_period) = signal::<Option<u32>>(None);
 
-    let action = create_action(
+    let action = Action::new(
         |(profile_user_account, set_end_period): &(String, WriteSignal<Option<u32>>)| {
             let profile_user_account = profile_user_account.clone();
             let set_end_period = set_end_period.clone();

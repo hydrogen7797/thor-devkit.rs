@@ -6,7 +6,7 @@ use crate::components::schelling_game::positive_externality::create_post_sign_in
 use crate::services::common_imp::View;
 use json::object;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 
 async fn get_cid_post(
     details: String,
@@ -26,11 +26,11 @@ async fn get_cid_post(
 
 #[component]
 pub fn CreatePositiveExternalityPost() -> impl IntoView {
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (markdown, set_markdown) = create_signal(String::from(""));
-    let (post_cid, set_post_cid) = create_signal(String::from(""));
+    let (current_view, set_current_view) = signal(View::Form);
+    let (markdown, set_markdown) = signal(String::from(""));
+    let (post_cid, set_post_cid) = signal(String::from(""));
 
-    let submit_action = create_action(
+    let submit_action = Action::new(
         |(details, set_current_view, set_post_cid): &(
             String,
             WriteSignal<View>,

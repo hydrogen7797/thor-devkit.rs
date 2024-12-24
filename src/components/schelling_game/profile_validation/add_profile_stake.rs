@@ -3,7 +3,7 @@ use crate::components::schelling_game::profile_validation::add_profile_stake_sig
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 use crate::components::schelling_game::profile_validation::storage::get_total_fund_for_profile_collected::TotalFundProfileCollected;
 
@@ -19,9 +19,9 @@ pub fn AddProfileStake() -> impl IntoView {
         })
     };
 
-    let (current_view, set_current_view) = create_signal(View::Form);
+    let (current_view, set_current_view) = signal(View::Form);
 
-    let (profile_stake, set_profile_stake) = create_signal::<Result<u128, ErrorString>>(Ok(0));
+    let (profile_stake, set_profile_stake) = signal::<Result<u128, ErrorString>>(Ok(0));
 
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();

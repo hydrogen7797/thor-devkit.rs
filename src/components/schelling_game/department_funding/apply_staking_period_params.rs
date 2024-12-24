@@ -1,6 +1,6 @@
 use crate::components::schelling_game::department_funding::apply_staking_period::ApplyStakingPeriod;
-use leptos::*;
-use leptos_router::*;
+use leptos::prelude::*;
+use leptos_router::hooks::use_params_map;
 
 #[component]
 pub fn ApplyStakingPeriodParams() -> impl IntoView {
@@ -10,7 +10,6 @@ pub fn ApplyStakingPeriodParams() -> impl IntoView {
         params.with(|params| {
             params
                 .get("department_required_fund_id")
-                .cloned()
                 .and_then(|value| value.parse::<u64>().ok())
                 .unwrap_or_default()
         })

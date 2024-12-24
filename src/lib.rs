@@ -6,7 +6,7 @@ mod js_extension_binding;
 
 mod router;
 mod services;
-use leptos::*;
+use leptos::prelude::*;
 use router::RouterApp;
 use wasm_bindgen::JsCast;
 use web_sys::{window, HtmlElement};

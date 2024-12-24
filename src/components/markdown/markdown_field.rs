@@ -1,6 +1,6 @@
 use crate::components::markdown::markdown_to_html::parse_text_to_html;
 use leptos::ev::{Event, KeyboardEvent};
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn MarkdownField(
@@ -9,7 +9,7 @@ pub fn MarkdownField(
     #[prop(default = true)] required: bool,
     #[prop(into)] set_markdown: WriteSignal<String>,
 ) -> impl IntoView {
-    let (html_data, set_html_data) = create_signal(String::from(""));
+    let (html_data, set_html_data) = signal(String::from(""));
     let markdown_changed = move |e: KeyboardEvent| {
         let html = parse_text_to_html(&event_target_value(&e));
         // gloo::console::log!(format!("{}", html));

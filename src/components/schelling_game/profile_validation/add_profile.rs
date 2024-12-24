@@ -7,7 +7,7 @@ use crate::components::upload::upload_video::FileUpload;
 use crate::services::common_imp::View;
 use json::object;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 
 async fn get_cid_post(
     name: String,
@@ -31,17 +31,17 @@ async fn get_cid_post(
 
 #[component]
 pub fn AddProfile() -> impl IntoView {
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (name, set_name) = create_signal(String::from(""));
-    let (markdown, set_markdown) = create_signal(String::from(""));
-    let (video_cid, set_video_cid) = create_signal(String::from(""));
-    let (post_cid, set_post_cid) = create_signal(String::from(""));
-    let (country, set_country) = create_signal(String::from(""));
-    let (state, set_state) = create_signal(String::from(""));
-    let (city, set_city) = create_signal(String::from(""));
-    let (street, set_street) = create_signal(String::from(""));
+    let (current_view, set_current_view) = signal(View::Form);
+    let (name, set_name) = signal(String::from(""));
+    let (markdown, set_markdown) = signal(String::from(""));
+    let (video_cid, set_video_cid) = signal(String::from(""));
+    let (post_cid, set_post_cid) = signal(String::from(""));
+    let (country, set_country) = signal(String::from(""));
+    let (state, set_state) = signal(String::from(""));
+    let (city, set_city) = signal(String::from(""));
+    let (street, set_street) = signal(String::from(""));
 
-    let submit_action = create_action(
+    let submit_action = Action::new(
         |(name, details, profile_video_cid, set_current_view, set_post_cid): &(
             String,
             String,

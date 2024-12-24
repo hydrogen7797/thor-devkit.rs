@@ -1,13 +1,13 @@
 use crate::components::schelling_game::profile_validation::get_incentives_sign_in::SignTransaction;
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]
 pub fn GetIncentives(profile_user_account: String) -> impl IntoView {
     // gloo::console::log!(profile_user_account());
-    let (current_view, set_current_view) = create_signal(View::Form);
+    let (current_view, set_current_view) = signal(View::Form);
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
 

@@ -1,4 +1,4 @@
-use leptos::*;
+use leptos::prelude::*;
 
 use crate::components::navigation::nav::Nav;
 use crate::components::transaction::get_accounts_extension::GetAccountsExtension;
@@ -24,7 +24,7 @@ impl Default for AccountState {
 pub fn GetLoginAccount() -> impl IntoView {
     let (account_state, set_account_state, reset_account) =
         use_local_storage::<AccountState, JsonSerdeCodec>("account-state");
-    let (account_load, set_account_load) = create_signal(("".to_owned(), "".to_owned()));
+    let (account_load, set_account_load) = signal(("".to_owned(), "".to_owned()));
 
     create_effect(move |_| {
         let (account_id, _) = account_load();

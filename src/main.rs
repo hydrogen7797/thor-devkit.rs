@@ -1,4 +1,4 @@
-use leptos::*;
+use leptos::prelude::*;
 use shivarthu_client::App;
 // use wasm_bindgen::JsCast;
 

@@ -3,15 +3,15 @@ use crate::components::navigation::nav::Nav;
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn TransferBalance() -> impl IntoView {
-    let (current_view, set_current_view) = create_signal(View::Form);
+    let (current_view, set_current_view) = signal(View::Form);
 
-    let (dest_account, set_dest_account) = create_signal(String::from(""));
+    let (dest_account, set_dest_account) = signal(String::from(""));
     let (transfer_balance, set_transfer_balance) =
-        create_signal::<Result<u128, ErrorString>>(Ok(0));
+        signal::<Result<u128, ErrorString>>(Ok(0));
 
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();

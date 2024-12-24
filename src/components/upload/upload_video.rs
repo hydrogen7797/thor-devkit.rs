@@ -4,7 +4,7 @@ use crate::constants::constant::DEFAULT_IPFS_FETCH_PROVIDER;
 use crate::services::error::ErrorString;
 use icondata;
 use leptos::ev::{DragEvent, Event};
-use leptos::*;
+use leptos::prelude::*;
 use leptos_icons::*;
 use web_sys::{File, HtmlInputElement};
 
@@ -39,8 +39,8 @@ pub fn FileUpload(
     #[prop(into)] set_cid_props: WriteSignal<String>,
     accept_file_type: String,
 ) -> impl IntoView {
-    let (cid, set_cid) = create_signal(String::from(""));
-    let (spinner, set_spinner) = create_signal(false);
+    let (cid, set_cid) = signal(String::from(""));
+    let (spinner, set_spinner) = signal(false);
     let accept_file_type1 = accept_file_type.clone();
     let accept_file_type2 = accept_file_type.clone();
 
@@ -103,13 +103,12 @@ pub fn FileUpload(
                     on:dragenter={ondragenter}
                 >
                     <div class="text-center">
-                        <div class="mb-4">
+                        <div class="mb-4 inline-block">
                             <Icon
                                 icon={icondata::BsCloudUpload}
                                 width="10em"
                                 height="10em"
                                 style="color: green"
-                                class="inline-block"
                             />
                         </div>
                         <p class="text-lg text-gray-700">
@@ -140,7 +139,7 @@ pub fn FileUpload(
                                 <div class="mb-4 text-center">
                                     <img src="img/rolling.gif" alt="loading" width="40"/>
                                 </div>
-                            }
+                            }.into_any()
                         } else if !cid().is_empty() {
                             view! {
                                 <div>
@@ -159,9 +158,9 @@ pub fn FileUpload(
                                         {"Your browser does not support the video tag."}
                                     </video>
                                 </div>
-                            }
+                            }.into_any()
                         } else {
-                            view! { <div></div> }
+                            view! { <div></div> }.into_any()
                         }
                     }}
 

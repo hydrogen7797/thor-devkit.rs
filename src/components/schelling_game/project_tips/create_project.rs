@@ -6,7 +6,7 @@ use crate::components::schelling_game::project_tips::create_project_sign_in::Sig
 use crate::services::common_imp::View;
 use json::object;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
@@ -58,13 +58,13 @@ pub fn CreateProject() -> impl IntoView {
 
     let department_id = untrack(move || department_id_fn());
 
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (markdown, set_markdown) = create_signal(String::from(""));
-    let (post_cid, set_post_cid) = create_signal(String::from(""));
-    let (tip_name, set_tip_name) = create_signal(String::from(""));
-    let (funding_needed, set_funding_needed) = create_signal::<Option<u128>>(None);
+    let (current_view, set_current_view) = signal(View::Form);
+    let (markdown, set_markdown) = signal(String::from(""));
+    let (post_cid, set_post_cid) = signal(String::from(""));
+    let (tip_name, set_tip_name) = signal(String::from(""));
+    let (funding_needed, set_funding_needed) = signal::<Option<u128>>(None);
 
-    let submit_action = create_action(
+    let submit_action = Action::new(
         |(details, set_current_view, set_post_cid): &(
             String,
             WriteSignal<View>,

@@ -6,8 +6,8 @@ use crate::components::schelling_game::department_funding::draw_jurors::DrawJuro
 use crate::components::schelling_game::department_funding::reveal_vote::RevealVote;
 use crate::components::schelling_game::department_funding::storage::get_period_fn::get_period_fn;
 use crate::services::common_services::polkadot::runtime_types::pallet_schelling_game_shared::types::Period;
-use leptos::*;
-use leptos_router::*;
+use leptos::prelude::*;
+use leptos_router::hooks::use_params_map;
 
 #[component]
 pub fn SchellingGame() -> impl IntoView {
@@ -17,7 +17,6 @@ pub fn SchellingGame() -> impl IntoView {
         params.with(|params| {
             params
                 .get("department_required_fund_id")
-                .cloned()
                 .and_then(|value| value.parse::<u64>().ok())
                 .unwrap_or_default()
         })

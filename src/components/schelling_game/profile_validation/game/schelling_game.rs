@@ -8,7 +8,7 @@ use crate::components::schelling_game::profile_validation::draw_jurors::DrawJuro
 use crate::components::schelling_game::profile_validation::reveal_vote::RevealVote;
 use crate::components::schelling_game::profile_validation::storage::get_period_fn::get_period_fn;
 use crate::services::common_services::polkadot::runtime_types::pallet_schelling_game_shared::types::Period;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]

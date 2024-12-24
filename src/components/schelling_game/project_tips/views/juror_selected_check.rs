@@ -1,6 +1,6 @@
 use crate::components::navigation::nav::Nav;
 use crate::components::schelling_game::project_tips::rpc::juror_selected::JurorSelected;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]
@@ -17,7 +17,7 @@ pub fn JurorSelectedCheck() -> impl IntoView {
         })
     };
 
-    let (check_account, set_check_account) = create_signal(String::from(""));
+    let (check_account, set_check_account) = signal(String::from(""));
 
     let account = untrack(move || project_id());
 

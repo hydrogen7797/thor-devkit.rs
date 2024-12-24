@@ -1,7 +1,8 @@
 use crate::services::common_services::{get_accounts, Account};
 use crate::services::error::ErrorString;
 use leptos::ev::MouseEvent;
-use leptos::*;
+use leptos::prelude::*;
+use leptos::task::spawn_local;
 
 async fn get_accounts_result() -> Result<Vec<Account>, ErrorString> {
     let accounts = get_accounts().await;
@@ -10,10 +11,8 @@ async fn get_accounts_result() -> Result<Vec<Account>, ErrorString> {
 
 #[component]
 pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> impl IntoView {
-    let (accounts, set_accounts) = create_signal::<Vec<Account>>(vec![]);
-    let get_accounts_action = create_action(|()| async move { get_accounts_result().await });
-    let _pending_accounts = get_accounts_action.pending();
-    let get_accounts_value = get_accounts_action.value();
+    let (accounts, set_accounts) = signal::<Vec<Account>>(vec![]);
+    let (error, set_error) = signal(String::from(""));
 
     let onclick_button = move |_e: MouseEvent, i| {
         let accounts = accounts();
@@ -27,14 +26,20 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
         ));
     };
     let get_accounts_click = move |_e: MouseEvent| {
-        get_accounts_action.dispatch(());
+        spawn_local({
+
+    
+            async move {
+                match get_accounts_result().await {
+                    Ok(result) => set_accounts(result),
+                    Err(err) => set_error(err.0),
+                }
+            }
+        });
     };
     let accounts_html = move || {
-        let accounts_option = get_accounts_value();
-        let html_element = match accounts_option {
-            Some(accounts_result) => match accounts_result {
-                Ok(accounts_value) => {
-                    if accounts_value.is_empty() {
+        let html_element = 
+                    if accounts().is_empty() {
                         view! {
                             <div>
                                 <br/>
@@ -42,9 +47,8 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
                                     {"No Web3 extension accounts found. Install Talisman, SubWallet or the Polkadot.js extension and add an account."}
                                 </div>
                             </div>
-                        }
+                        }.into_any()
                     } else {
-                        set_accounts(accounts_value.clone());
                         view! {
                             <div>
                                 <br/>
@@ -52,7 +56,7 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
                                     <b>{"Select an account you want to use for signing:"}</b>
                                 </div>
                                 {move || {
-                                    accounts_value
+                                    accounts()
                                         .iter()
                                         .enumerate()
                                         .map(|(i, account)| {
@@ -61,13 +65,13 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
                                                     <button
                                                         class="btn btn-outline btn-info btn-block my-3"
                                                         on:click={move |e| { onclick_button(e, i) }}
-                                                        id={&account.address}
+                                                        id={account.address.clone()}
                                                     >
-                                                        {&account.source}
+                                                     {account.source.clone()}
                                                         {" | "}
-                                                        {&account.name}
+                                                        {account.name.clone()}
                                                         <br/>
-                                                        <small>{&account.address}</small>
+                                                        <small>{account.address.clone()}</small>
                                                     </button>
                                                 </div>
                                             }
@@ -76,16 +80,7 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
                                 }}
 
                             </div>
-                        }
-                    }
-                }
-                Err(err) => view! {
-                    <div>
-                        <div class="error">{"Error: "} {format!("{:?}", err.0)}</div>
-                    </div>
-                },
-            },
-            None => view! { <div></div> },
+                        }.into_any()
         };
         html_element
     };

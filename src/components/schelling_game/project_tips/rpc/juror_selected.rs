@@ -1,7 +1,7 @@
 use crate::constants::constant::NODE_URL;
 use jsonrpsee_core::{client::ClientT, rpc_params};
 use jsonrpsee_wasm_client::WasmClientBuilder;
-use leptos::*;
+use leptos::prelude::*;
 
 async fn load_data(project_id: u64, check_account: String) -> bool {
     let client = WasmClientBuilder::default().build(NODE_URL).await.unwrap();

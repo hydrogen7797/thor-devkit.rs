@@ -1,6 +1,6 @@
 use crate::constants::constant::NODE_URL;
 use crate::services::common_services::polkadot;
-use leptos::*;
+use leptos::prelude::*;
 use polkadot::runtime_types::pallet_schelling_game_shared::types::Period;
 use polkadot::runtime_types::pallet_sortition_sum_game::types::SumTreeName;
 use std::str::FromStr;
@@ -48,9 +48,9 @@ async fn load_data(user_to_calculate: String, set_period: WriteSignal<Option<Per
 }
 
 pub fn get_period_fn(user_to_calculate: String) -> ReadSignal<Option<Period>> {
-    let (period, set_period) = create_signal::<Option<Period>>(None);
+    let (period, set_period) = signal::<Option<Period>>(None);
 
-    let action = create_action(
+    let action = Action::new(
         |(user_to_calculate, set_period): &(String, WriteSignal<Option<Period>>)| {
             let user_to_calculate = user_to_calculate.clone();
             let set_period = set_period.clone();

@@ -1,4 +1,4 @@
-use leptos::*;
+use leptos::prelude::*;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
@@ -12,7 +12,7 @@ pub enum NumberError {
 
 #[component]
 pub fn NumericInput() -> impl IntoView {
-    let (value, set_value) = create_signal(Ok(0));
+    let (value, set_value) = signal(Ok(0));
 
     let on_input = move |ev| {
         let result_value = event_target_value(&ev).parse::<i32>();

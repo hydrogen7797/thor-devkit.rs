@@ -6,8 +6,8 @@ use crate::components::schelling_game::department_funding::create_department_fun
 use crate::services::common_imp::View;
 use json::object;
 use leptos::ev::SubmitEvent;
-use leptos::*;
-use leptos_router::*;
+use leptos::prelude::*;
+use leptos_router::hooks::use_params_map;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
@@ -50,7 +50,6 @@ pub fn CreateDepartmentFund() -> impl IntoView {
         params.with(|params| {
             params
                 .get("department_id")
-                .cloned()
                 .and_then(|value| value.parse::<u64>().ok())
                 .unwrap_or_default()
         })
@@ -58,32 +57,41 @@ pub fn CreateDepartmentFund() -> impl IntoView {
 
     let department_id = untrack(move || department_id_fn());
 
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (markdown, set_markdown) = create_signal(String::from(""));
-    let (post_cid, set_post_cid) = create_signal(String::from(""));
-    let (tip_name, set_tip_name) = create_signal(String::from(""));
-    let (funding_needed, set_funding_needed) = create_signal::<Option<u128>>(None);
+    let (current_view, set_current_view) = signal(View::Form);
+    let (markdown, set_markdown) = signal(String::from(""));
+    let (post_cid, set_post_cid) = signal(String::from(""));
+    let (tip_name, set_tip_name) = signal(String::from(""));
+    let (funding_needed, set_funding_needed) = signal::<Option<u128>>(None);
 
-    let submit_action = create_action(
+
+    let submit_action:  Action<
+    (String, WriteSignal<View>, WriteSignal<String>),
+    (),
+    LocalStorage, 
+> = Action::new_unsync(
         |(details, set_current_view, set_post_cid): &(
             String,
             WriteSignal<View>,
             WriteSignal<String>,
         )| {
-            let details = details.to_owned();
+            let details = details.clone();
             let set_current_view = set_current_view.clone();
             let set_post_cid = set_post_cid.clone();
-
-            async move { get_cid_post(details, set_current_view, set_post_cid).await }
+    
+            async move { 
+                get_cid_post(details, set_current_view, set_post_cid).await;
+            }
         },
     );
+
+    
     let _submitted = submit_action.input();
     let pending = submit_action.pending();
     let submit_action_value = submit_action.value();
 
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
-        submit_action.dispatch((markdown(), set_current_view, set_post_cid));
+        submit_action.dispatch((markdown.get(), set_current_view, set_post_cid));
     };
 
     let funding_needed_changed = move |value: String| {
@@ -174,7 +182,7 @@ pub fn CreateDepartmentFund() -> impl IntoView {
                     <p>{move || pending().then(|| "Loading...")}</p>
                     <p>{move || cid_value()}</p>
                 </div>
-            }
+            }.into_any()
         }
 
         View::Success => view! {
@@ -186,13 +194,13 @@ pub fn CreateDepartmentFund() -> impl IntoView {
                     funding_needed={funding_needed().unwrap()}
                 />
             </div>
-        },
+        }.into_any(),
     };
 
     view! {
         <>
             <Nav/>
-            {move || render_view()}
+            {render_view()}
         </>
     }
 }

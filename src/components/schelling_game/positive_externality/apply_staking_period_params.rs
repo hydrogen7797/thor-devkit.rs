@@ -1,5 +1,5 @@
 use crate::components::schelling_game::positive_externality::apply_staking_period::ApplyStakingPeriod;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]

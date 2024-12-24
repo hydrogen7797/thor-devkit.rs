@@ -2,7 +2,7 @@ use crate::constants::constant::NODE_URL;
 use icondata;
 use jsonrpsee_core::{client::ClientT, rpc_params};
 use jsonrpsee_wasm_client::WasmClientBuilder;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_icons::*;
 use leptos_use::use_interval_fn;
 use leptos_use::utils::Pausable;
@@ -18,9 +18,9 @@ async fn load_data(project_id: u64, set_drawing_period: WriteSignal<Option<(u64,
 
 #[component]
 pub fn DrawingEndBlock(project_id: u64) -> impl IntoView {
-    let (drawing_period, set_drawing_period) = create_signal::<Option<(u64, u64, bool)>>(None);
+    let (drawing_period, set_drawing_period) = signal::<Option<(u64, u64, bool)>>(None);
 
-    let action = create_action(
+    let action = Action::new(
         |(project_id, set_drawing_period): &(u64, WriteSignal<Option<(u64, u64, bool)>>)| {
             let project_id = project_id.clone();
             let set_drawing_period = set_drawing_period.clone();

@@ -6,7 +6,7 @@ use crate::components::schelling_game::project_tips::draw_jurors::DrawJurors;
 use crate::components::schelling_game::project_tips::reveal_vote::RevealVote;
 use crate::components::schelling_game::project_tips::storage::get_period_fn::get_period_fn;
 use crate::services::common_services::polkadot::runtime_types::pallet_schelling_game_shared::types::Period;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]

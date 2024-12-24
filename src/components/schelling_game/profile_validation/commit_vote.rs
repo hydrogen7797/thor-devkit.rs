@@ -5,15 +5,15 @@ use crate::components::schelling_game::profile_validation::storage::get_period::
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]
 pub fn CommitVote(profile_user_account: String) -> impl IntoView {
     // gloo::console::log!(profile_user_account());
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (hash, set_hash) = create_signal::<Result<Option<[u8; 32]>, ErrorString>>(Ok(None));
-    let (commit_vote, set_commit_vote) = create_signal(String::from(""));
+    let (current_view, set_current_view) = signal(View::Form);
+    let (hash, set_hash) = signal::<Result<Option<[u8; 32]>, ErrorString>>(Ok(None));
+    let (commit_vote, set_commit_vote) = signal(String::from(""));
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
         if !commit_vote().is_empty() {

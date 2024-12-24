@@ -5,15 +5,15 @@ use crate::components::schelling_game::positive_externality::storage::get_period
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]
 pub fn RevealVote(user_to_calculate: String) -> impl IntoView {
     // gloo::console::log!(user_to_calculate());
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (choice, set_choice) = create_signal::<Result<Option<i64>, ErrorString>>(Ok(None));
-    let (salt, set_salt) = create_signal(String::from(""));
+    let (current_view, set_current_view) = signal(View::Form);
+    let (choice, set_choice) = signal::<Result<Option<i64>, ErrorString>>(Ok(None));
+    let (salt, set_salt) = signal(String::from(""));
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
         if choice().unwrap().is_some() {

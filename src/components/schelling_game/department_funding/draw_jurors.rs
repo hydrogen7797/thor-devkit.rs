@@ -5,14 +5,14 @@ use crate::components::schelling_game::department_funding::storage::get_period::
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]
 pub fn DrawJurors(department_required_fund_id: u64) -> impl IntoView {
     // gloo::console::log!(department_required_fund_id());
-    let (current_view, set_current_view) = create_signal(View::Form);
-    let (iterations, set_iterations) = create_signal::<Result<u64, ErrorString>>(Ok(0));
+    let (current_view, set_current_view) = signal(View::Form);
+    let (iterations, set_iterations) = signal::<Result<u64, ErrorString>>(Ok(0));
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
 

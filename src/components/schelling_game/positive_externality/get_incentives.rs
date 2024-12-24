@@ -1,13 +1,13 @@
 use crate::components::schelling_game::positive_externality::get_incentives_sign_in::SignTransaction;
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]
 pub fn GetIncentives(user_to_calculate: String) -> impl IntoView {
     // gloo::console::log!(user_to_calculate());
-    let (current_view, set_current_view) = create_signal(View::Form);
+    let (current_view, set_current_view) = signal(View::Form);
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
 

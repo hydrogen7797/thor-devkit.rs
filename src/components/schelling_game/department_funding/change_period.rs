@@ -1,10 +1,10 @@
 use leptos::ev::SubmitEvent;
-use leptos::*;
-use leptos_router::*;
+use leptos::prelude::*;
+use leptos_router::hooks::use_navigate;
 
 #[component]
 pub fn ChangePeriod(department_required_fund_id: u64) -> impl IntoView {
-    let navigate = leptos_router::use_navigate();
+    let navigate = use_navigate();
 
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();

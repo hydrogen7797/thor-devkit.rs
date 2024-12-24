@@ -1,5 +1,5 @@
 use crate::components::schelling_game::profile_validation::apply_staking_period::ApplyStakingPeriod;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 
 #[component]
