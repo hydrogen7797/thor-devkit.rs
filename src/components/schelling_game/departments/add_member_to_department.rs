@@ -49,7 +49,7 @@ pub fn AddMemberToDepartment(department_id: u64) -> impl IntoView {
                         </button>
                     </form>
                 </div>
-            }
+            }.into_any()
         }
         View::Success => {
             view! {
@@ -60,7 +60,7 @@ pub fn AddMemberToDepartment(department_id: u64) -> impl IntoView {
                     />
 
                 </div>
-            }
+            }.into_any()
         }
     };
 

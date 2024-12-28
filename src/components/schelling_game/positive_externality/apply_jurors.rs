@@ -1,7 +1,7 @@
 use crate::components::schelling_game::positive_externality::apply_jurors_sign_in::SignTransaction;
+use crate::components::schelling_game::positive_externality::storage::get_period::GetPeriod;
 use crate::components::schelling_game::positive_externality::change_period::ChangePeriod;
 use crate::components::schelling_game::positive_externality::rpc::staking_end_block::StakingEndBlock;
-use crate::components::schelling_game::positive_externality::storage::get_period::GetPeriod;
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -9,6 +9,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn ApplyJurors(user_to_calculate: String) -> impl IntoView {
+
     // gloo::console::log!(user_to_calculate());
     let (current_view, set_current_view) = signal(View::Form);
     let (juror_stake, set_juror_stake) = signal::<Result<u128, ErrorString>>(Ok(0));
@@ -28,14 +29,16 @@ pub fn ApplyJurors(user_to_calculate: String) -> impl IntoView {
     let render_view = move || match current_view() {
         View::Form => {
             view! {
-                <div class="container mx-auto px-10">
-                    <GetPeriod user_to_calculate={user_to_calculate.clone()}/>
-                    <StakingEndBlock user_to_calculate={user_to_calculate.clone()}/>
-                    <ChangePeriod user_to_calculate={user_to_calculate.clone()}/>
+                <div
+                class="max-w-5xl mx-auto max-md:mx-10"
+                >
+                <GetPeriod user_to_calculate=user_to_calculate.clone() /> 
+                <StakingEndBlock user_to_calculate=user_to_calculate.clone() />
+                <ChangePeriod user_to_calculate=user_to_calculate.clone() />
                     <form
-
+                        
                         id="apply-juror-submit-from"
-                        on:submit={submit_click}
+                        on:submit=submit_click
                     >
                         <div class="mb-5">
                             <label
@@ -49,7 +52,7 @@ pub fn ApplyJurors(user_to_calculate: String) -> impl IntoView {
                                 id="juror-stake"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                on:input={move |e| stake_value(event_target_value(&e))}
+                                on:input=move |e| stake_value(event_target_value(&e))
                             />
                         </div>
                         <button
@@ -62,20 +65,24 @@ pub fn ApplyJurors(user_to_calculate: String) -> impl IntoView {
                         </button>
                     </form>
                 </div>
-            }
+            }.into_any()
         }
         View::Success => {
             view! {
                 <div>
                     <SignTransaction
-                        stake={juror_stake().unwrap()}
-                        user_to_calculate={user_to_calculate.clone()}
+                        stake=juror_stake().unwrap()
+                        user_to_calculate=user_to_calculate.clone()
                     />
 
                 </div>
-            }
+            }.into_any()
         }
     };
 
-    view! { <div>{move || render_view()}</div> }
+    view! {
+        <div>
+            {move || render_view()}
+        </div>
+    }
 }

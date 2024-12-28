@@ -26,7 +26,7 @@ async fn load_data(
 pub fn DrawingEndBlock(user_to_calculate: String) -> impl IntoView {
     let (drawing_period, set_drawing_period) = signal::<Option<(u64, u64, bool)>>(None);
 
-    let action = Action::new(
+    let action: Action<(String, WriteSignal<Option<(u64, u64, bool)>>), (), LocalStorage> = Action::new_unsync(
         |(user_to_calculate, set_drawing_period): &(
             String,
             WriteSignal<Option<(u64, u64, bool)>>,
@@ -53,19 +53,18 @@ pub fn DrawingEndBlock(user_to_calculate: String) -> impl IntoView {
                             {"Drawing Period ends: "}
                             <span id="end-period-time">{move || drawing_period().unwrap().2}</span>
                         </div>
-                    }
+                    }.into_any()
                 } else {
                     view! {
                         <div>
                             {"Drawing Period ends: "} <span id="end-period-time">
                                 <Icon
-                                    icon={icondata::ImSpinner6}
+                                    icon=icondata::ImSpinner6
                                     style="color: green"
-                                    class="inline-block"
                                 />
                             </span>
                         </div>
-                    }
+                    }.into_any()
                 }
             }}
 

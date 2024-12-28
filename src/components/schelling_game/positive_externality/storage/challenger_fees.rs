@@ -30,7 +30,7 @@ async fn load_data(user_to_calculate: String, set_challenger_fee: WriteSignal<Op
 pub fn ChallengerFees(user_to_calculate: String) -> impl IntoView {
     let (challenger_fee, set_challenger_fee) = signal::<Option<u128>>(None);
 
-    let action = Action::new(
+    let action: Action<(String,WriteSignal<Option<u128>>), (), LocalStorage>= Action::new_unsync(
         |(user_to_calculate, set_challenger_fee): &(String, WriteSignal<Option<u128>>)| {
             let user_to_calculate = user_to_calculate.clone();
             let set_challenger_fee = set_challenger_fee.clone();

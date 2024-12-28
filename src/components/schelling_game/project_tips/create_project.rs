@@ -7,7 +7,7 @@ use crate::services::common_imp::View;
 use json::object;
 use leptos::ev::SubmitEvent;
 use leptos::prelude::*;
-use leptos_router::*;
+use leptos_router::hooks::use_params_map;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
@@ -50,7 +50,6 @@ pub fn CreateProject() -> impl IntoView {
         params.with(|params| {
             params
                 .get("department_id")
-                .cloned()
                 .and_then(|value| value.parse::<u64>().ok())
                 .unwrap_or_default()
         })
@@ -64,7 +63,7 @@ pub fn CreateProject() -> impl IntoView {
     let (tip_name, set_tip_name) = signal(String::from(""));
     let (funding_needed, set_funding_needed) = signal::<Option<u128>>(None);
 
-    let submit_action = Action::new(
+    let submit_action: Action<(String,WriteSignal<View>, WriteSignal<String>), (), LocalStorage>= Action::new_unsync(
         |(details, set_current_view, set_post_cid): &(
             String,
             WriteSignal<View>,
@@ -173,7 +172,7 @@ pub fn CreateProject() -> impl IntoView {
                     <p>{move || pending().then(|| "Loading...")}</p>
                     <p>{move || cid_value()}</p>
                 </div>
-            }
+            }.into_any()
         }
 
         View::Success => view! {
@@ -185,7 +184,7 @@ pub fn CreateProject() -> impl IntoView {
                     funding_needed={funding_needed().unwrap()}
                 />
             </div>
-        },
+        }.into_any(),
     };
 
     view! {

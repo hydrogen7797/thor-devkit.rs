@@ -33,7 +33,7 @@ pub fn CreateDepartment() -> impl IntoView {
     let (markdown, set_markdown) = signal(String::from(""));
     let (post_cid, set_post_cid) = signal(String::from(""));
 
-    let submit_action = Action::new(
+    let submit_action: Action<(String, String ,WriteSignal<View>, WriteSignal<String>), (), LocalStorage> = Action::new_unsync(
         |(details, title, set_current_view, set_post_cid): &(
             String,
             String,
@@ -115,14 +115,14 @@ pub fn CreateDepartment() -> impl IntoView {
                     <p>{move || pending().then(|| "Loading...")}</p>
                     <p>{move || cid_value()}</p>
                 </div>
-            }
+            }.into_any()
         }
 
         View::Success => view! {
             <div>
                 <SignTransaction post_cid={post_cid()}/>
             </div>
-        },
+        }.into_any(),
     };
 
     view! {

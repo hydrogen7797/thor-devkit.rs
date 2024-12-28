@@ -1,28 +1,25 @@
 use leptos::ev::SubmitEvent;
 use leptos::prelude::*;
-use leptos_router::*;
+use leptos_router::hooks::use_navigate;
 
 #[component]
 pub fn ChangePeriod(profile_user_account: String) -> impl IntoView {
-    let navigate = leptos_router::use_navigate();
+    let navigate = use_navigate();
 
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
         navigate(
-            &format!(
-                "profile-validation-change-period/{}",
-                profile_user_account.clone()
-            ),
+            &format!("profile-validation-change-period/{}", profile_user_account.clone()),
             Default::default(),
         );
     };
 
     view! {
-        <div class="container mx-auto px-10">
+        <div  class="max-w-5xl mx-auto max-md:mx-10">
             <form
-
+               
                 id="change-period-submit-from"
-                on:submit={submit_click}
+                on:submit=submit_click
             >
                 <button
                     type="submit"

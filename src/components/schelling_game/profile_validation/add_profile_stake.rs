@@ -4,7 +4,7 @@ use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
 use leptos::prelude::*;
-use leptos_router::*;
+use leptos_router::hooks::use_params_map;
 use crate::components::schelling_game::profile_validation::storage::get_total_fund_for_profile_collected::TotalFundProfileCollected;
 
 #[component]
@@ -14,7 +14,6 @@ pub fn AddProfileStake() -> impl IntoView {
         params.with(|params| {
             params
                 .get("profile_user_account")
-                .cloned()
                 .unwrap_or_default()
         })
     };
@@ -69,7 +68,7 @@ pub fn AddProfileStake() -> impl IntoView {
                         </button>
                     </form>
                 </div>
-            }
+            }.into_any()
         }
         View::Success => {
             view! {
@@ -80,7 +79,7 @@ pub fn AddProfileStake() -> impl IntoView {
                     />
 
                 </div>
-            }
+            }.into_any()
         }
     };
 

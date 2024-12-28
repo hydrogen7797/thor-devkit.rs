@@ -23,7 +23,7 @@ async fn load_data(user_to_calculate: String, set_end_period: WriteSignal<Option
 pub fn VoteEndBlock(user_to_calculate: String) -> impl IntoView {
     let (end_period, set_end_period) = signal::<Option<u32>>(None);
 
-    let action = Action::new(
+    let action : Action<(String,WriteSignal<Option<u32>>), (), LocalStorage> = Action::new_unsync(
         |(user_to_calculate, set_end_period): &(String, WriteSignal<Option<u32>>)| {
             let user_to_calculate = user_to_calculate.clone();
             let set_end_period = set_end_period.clone();
@@ -47,19 +47,18 @@ pub fn VoteEndBlock(user_to_calculate: String) -> impl IntoView {
                             {"Vote Period ends: "}
                             <span id="end-period-time">{move || end_period()}</span>
                         </div>
-                    }
+                    }.into_any()
                 } else {
                     view! {
                         <div>
                             {"Vote Period ends: "} <span id="end-period-time">
                                 <Icon
-                                    icon={icondata::ImSpinner6}
+                                    icon=icondata::ImSpinner6
                                     style="color: green"
-                                    class="inline-block"
                                 />
                             </span>
                         </div>
-                    }
+                    }.into_any()
                 }
             }}
 

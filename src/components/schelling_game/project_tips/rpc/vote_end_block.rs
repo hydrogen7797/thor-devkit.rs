@@ -10,7 +10,10 @@ use leptos_use::utils::Pausable;
 async fn load_data(project_id: u64, set_end_period: WriteSignal<Option<u32>>) {
     let client = WasmClientBuilder::default().build(NODE_URL).await.unwrap();
     let result: Option<u32> = client
-        .request("projecttips_voteendblock", rpc_params![project_id])
+        .request(
+            "projecttips_voteendblock",
+            rpc_params![project_id],
+        )
         .await
         .unwrap();
     set_end_period(result);
@@ -20,7 +23,7 @@ async fn load_data(project_id: u64, set_end_period: WriteSignal<Option<u32>>) {
 pub fn VoteEndBlock(project_id: u64) -> impl IntoView {
     let (end_period, set_end_period) = signal::<Option<u32>>(None);
 
-    let action = Action::new(
+    let action : Action<(u64,WriteSignal<Option<u32>>), (), LocalStorage> = Action::new_unsync(
         |(project_id, set_end_period): &(u64, WriteSignal<Option<u32>>)| {
             let project_id = project_id.clone();
             let set_end_period = set_end_period.clone();
@@ -44,19 +47,18 @@ pub fn VoteEndBlock(project_id: u64) -> impl IntoView {
                             {"Vote Period ends: "}
                             <span id="end-period-time">{move || end_period()}</span>
                         </div>
-                    }
+                    }.into_any()
                 } else {
                     view! {
                         <div>
                             {"Vote Period ends: "} <span id="end-period-time">
                                 <Icon
-                                    icon={icondata::ImSpinner6}
+                                    icon=icondata::ImSpinner6
                                     style="color: green"
-                                    class="inline-block"
                                 />
                             </span>
                         </div>
-                    }
+                    }.into_any()
                 }
             }}
 

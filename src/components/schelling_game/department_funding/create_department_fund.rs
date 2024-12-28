@@ -63,28 +63,23 @@ pub fn CreateDepartmentFund() -> impl IntoView {
     let (tip_name, set_tip_name) = signal(String::from(""));
     let (funding_needed, set_funding_needed) = signal::<Option<u128>>(None);
 
+    let submit_action: Action<(String, WriteSignal<View>, WriteSignal<String>), (), LocalStorage> =
+        Action::new_unsync(
+            |(details, set_current_view, set_post_cid): &(
+                String,
+                WriteSignal<View>,
+                WriteSignal<String>,
+            )| {
+                let details = details.clone();
+                let set_current_view = set_current_view.clone();
+                let set_post_cid = set_post_cid.clone();
 
-    let submit_action:  Action<
-    (String, WriteSignal<View>, WriteSignal<String>),
-    (),
-    LocalStorage, 
-> = Action::new_unsync(
-        |(details, set_current_view, set_post_cid): &(
-            String,
-            WriteSignal<View>,
-            WriteSignal<String>,
-        )| {
-            let details = details.clone();
-            let set_current_view = set_current_view.clone();
-            let set_post_cid = set_post_cid.clone();
-    
-            async move { 
-                get_cid_post(details, set_current_view, set_post_cid).await;
-            }
-        },
-    );
+                async move {
+                    get_cid_post(details, set_current_view, set_post_cid).await;
+                }
+            },
+        );
 
-    
     let _submitted = submit_action.input();
     let pending = submit_action.pending();
     let submit_action_value = submit_action.value();
@@ -104,7 +99,8 @@ pub fn CreateDepartmentFund() -> impl IntoView {
         submit_action_value();
     };
 
-    let render_view = move || match current_view() {
+    let render_view = move || {
+        match current_view() {
         View::Form =>
         // if post_cid().is_empty() {
         {
@@ -195,12 +191,13 @@ pub fn CreateDepartmentFund() -> impl IntoView {
                 />
             </div>
         }.into_any(),
+    }
     };
 
     view! {
         <>
             <Nav/>
-            {render_view()}
+            {move || render_view()}
         </>
     }
 }

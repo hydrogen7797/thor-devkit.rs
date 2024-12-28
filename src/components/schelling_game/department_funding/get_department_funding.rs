@@ -2,7 +2,6 @@ use crate::components::schelling_game::department_funding::get_department_fundin
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
 use leptos::prelude::*;
-use leptos_router::hooks::use_params_map;
 
 #[component]
 pub fn GetDepartmentFunding(department_required_fund_id: u64) -> impl IntoView {
@@ -28,7 +27,7 @@ pub fn GetDepartmentFunding(department_required_fund_id: u64) -> impl IntoView {
                         </button>
                     </form>
                 </div>
-            }
+            }.into_any()
         }
         View::Success => {
             view! {
@@ -37,7 +36,7 @@ pub fn GetDepartmentFunding(department_required_fund_id: u64) -> impl IntoView {
                         .clone()}/>
 
                 </div>
-            }
+            }.into_any()
         }
     };
 

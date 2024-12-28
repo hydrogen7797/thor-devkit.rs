@@ -28,7 +28,7 @@ pub fn ReleasePositiveExternalityFund(user_to_calculate: String) -> impl IntoVie
                         </button>
                     </form>
                 </div>
-            }
+            }.into_any()
         }
         View::Success => {
             view! {
@@ -36,7 +36,7 @@ pub fn ReleasePositiveExternalityFund(user_to_calculate: String) -> impl IntoVie
                     <SignTransaction user_to_calculate={user_to_calculate.clone()}/>
 
                 </div>
-            }
+            }.into_any()
         }
     };
 

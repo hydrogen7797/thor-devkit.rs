@@ -28,7 +28,7 @@ pub fn GetProjectFunding(project_id: u64) -> impl IntoView {
                         </button>
                     </form>
                 </div>
-            }
+            }.into_any()
         }
         View::Success => {
             view! {
@@ -36,7 +36,7 @@ pub fn GetProjectFunding(project_id: u64) -> impl IntoView {
                     <SignTransaction project_id={project_id.clone()}/>
 
                 </div>
-            }
+            }.into_any()
         }
     };
 

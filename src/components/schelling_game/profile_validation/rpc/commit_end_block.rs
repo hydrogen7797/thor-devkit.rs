@@ -23,7 +23,7 @@ async fn load_data(profile_user_account: String, set_end_period: WriteSignal<Opt
 pub fn CommitEndBlock(profile_user_account: String) -> impl IntoView {
     let (end_period, set_end_period) = signal::<Option<u32>>(None);
 
-    let action = Action::new(
+    let action: Action<(String, WriteSignal<Option<u32>>), (), LocalStorage> = Action::new_unsync(
         |(profile_user_account, set_end_period): &(String, WriteSignal<Option<u32>>)| {
             let profile_user_account = profile_user_account.clone();
             let set_end_period = set_end_period.clone();
@@ -47,19 +47,18 @@ pub fn CommitEndBlock(profile_user_account: String) -> impl IntoView {
                             {"Commit Period ends: "}
                             <span id="end-period-time">{move || end_period()}</span>
                         </div>
-                    }
+                    }.into_any()
                 } else {
                     view! {
                         <div>
                             {"Commit Period ends: "} <span id="end-period-time">
                                 <Icon
-                                    icon={icondata::ImSpinner6}
+                                    icon=icondata::ImSpinner6
                                     style="color: green"
-                                    class="inline-block"
                                 />
                             </span>
                         </div>
-                    }
+                    }.into_any()
                 }
             }}
 

@@ -7,12 +7,7 @@ use subxt::utils::AccountId32;
 
 #[component]
 pub fn SignTransaction(iterations: u64, department_required_fund_id: u64) -> impl IntoView {
-    view! {
-        <ExtensionSignIn
-            iterations={iterations}
-            department_required_fund_id={department_required_fund_id}
-        />
-    }
+    view! { <ExtensionSignIn iterations=iterations department_required_fund_id=department_required_fund_id/> }
 }
 
 #[component]
@@ -23,26 +18,56 @@ pub fn ExtensionSignIn(iterations: u64, department_required_fund_id: u64) -> imp
         if account_load().0.is_empty() || account_load().1.is_empty() {
             view! {
                 <div>
-                    <GetAccountsExtension set_account_load={set_account_load}/>
+                    <GetAccountsExtension set_account_load=set_account_load/>
                 </div>
-            }
+            }.into_any()
         } else if !account_load().0.is_empty() && !account_load().1.is_empty() {
             view! {
                 <div>
                     <ExtensionTransaction
-                        iterations={iterations}
-                        department_required_fund_id={department_required_fund_id.clone()}
-                        account_address={account_load().0}
-                        account_source={account_load().1}
+                        iterations=iterations
+                        department_required_fund_id=department_required_fund_id.clone()
+                        account_address=account_load().0
+                        account_source=account_load().1
                     />
                 </div>
-            }
+            }.into_any()
         } else {
-            view! { <div>{"Some Error Occured"}</div> }
+            view! { <div>{"Some Error Occured"}</div> }.into_any()
         }
     };
 
     view! { <div>{move || render_html()}</div> }
+}
+
+async fn transaction(
+    iterations: u64,
+    department_required_fund_id: u64,
+    account_address: String,
+    account_source: String,
+    set_error:WriteSignal<String>,
+    set_extrinsic_success:WriteSignal<String>
+) {
+
+    
+
+    
+
+    let tx = polkadot::tx()
+        .department_funding()
+        .draw_jurors(department_required_fund_id, iterations);
+
+    
+
+    sign_in_with_extension(
+        tx,
+        account_address,
+        account_source,
+        set_error,
+        set_extrinsic_success,
+    )
+    .await;
+
 }
 
 #[component]
@@ -55,8 +80,7 @@ pub fn ExtensionTransaction(
     let (error, set_error) = signal(String::from(""));
     let (extrinsic_success, set_extrinsic_success) = signal(String::from(""));
     let transaction_resource = LocalResource::new(
-        move || {
-            (
+        move || transaction(
                 iterations,
                 department_required_fund_id.clone(),
                 account_address.clone(),
@@ -64,53 +88,32 @@ pub fn ExtensionTransaction(
                 set_error,
                 set_extrinsic_success,
             )
-        },
-        move |(
-            iterations,
-            department_required_fund_id,
-            account_address,
-            account_source,
-            set_error,
-            set_extrinsic_success,
-        )| async move {
-            let tx = polkadot::tx()
-                .department_funding()
-                .draw_jurors(department_required_fund_id, iterations);
-
-            sign_in_with_extension(
-                tx,
-                account_address,
-                account_source,
-                set_error,
-                set_extrinsic_success,
-            )
-            .await;
-        },
     );
 
-    let loading = transaction_resource.loading();
-    let is_loading = move || {
-        if loading() {
-            view! {
+    
+let async_result = move || {
+        transaction_resource
+            .get()
+            .as_deref()
+            .map(|_| view!{<div></div>}.into_any())
+            // This loading state will only show before the first load
+            .unwrap_or_else(|| view! {
                 <div class="alert">
                     <span class="loading loading-spinner"></span>
                     "Loading... Please sign with extension."
                 </div>
             }
-        } else {
-            view! { <div class="alert">"Idle."</div> }
-        }
+            .into_any())
     };
-
-    let error_fn = move || {
+let error_fn = move || {
         if !error().is_empty() {
             view! {
                 <div role="alert" class="alert alert-error">
                     {move || error()}
                 </div>
-            }
+            }.into_any()
         } else {
-            view! { <div></div> }
+            view! { <div></div> }.into_any()
         }
     };
 
@@ -120,22 +123,22 @@ pub fn ExtensionTransaction(
                 <div role="alert" class="alert alert-success">
                     {move || extrinsic_success()}
                 </div>
-            }
+            }.into_any()
         } else {
-            view! { <div></div> }
+            view! { <div></div> }.into_any()
         }
     };
 
     view! {
         <div class="md:container md:mx-auto">
-            <div>{move || transaction_resource.get()}</div>
+            <div>{async_result}</div>
             <br/>
-            <div>{move || is_loading()}</div>
             <br/>
             <div>{move || error_fn()}</div>
             <br/>
             <div>{move || extrinsic_success_fn()}</div>
 
         </div>
-    }
+    } 
+
 }

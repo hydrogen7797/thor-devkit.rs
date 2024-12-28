@@ -1,6 +1,6 @@
 use crate::components::schelling_game::profile_validation::apply_staking_period::ApplyStakingPeriod;
 use leptos::prelude::*;
-use leptos_router::*;
+use leptos_router::hooks::use_params_map;
 
 #[component]
 pub fn ApplyStakingPeriodParams() -> impl IntoView {
@@ -10,7 +10,6 @@ pub fn ApplyStakingPeriodParams() -> impl IntoView {
         params.with(|params| {
             params
                 .get("profile_user_account")
-                .cloned()
                 .unwrap_or_default()
         })
     };
@@ -22,7 +21,7 @@ pub fn ApplyStakingPeriodParams() -> impl IntoView {
 
     view! {
         <div>
-            <ApplyStakingPeriod profile_user_account={params_value}/>
+            <ApplyStakingPeriod profile_user_account=params_value/>
         </div>
     }
 }

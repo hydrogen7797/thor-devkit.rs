@@ -2,10 +2,10 @@ use crate::components::schelling_game::department_funding::get_incentives_sign_i
 use crate::services::common_imp::View;
 use leptos::ev::SubmitEvent;
 use leptos::prelude::*;
-use leptos_router::*;
 
 #[component]
 pub fn GetIncentives(department_required_fund_id: u64) -> impl IntoView {
+   
     // gloo::console::log!(department_required_fund_id());
     let (current_view, set_current_view) = signal(View::Form);
     let submit_click = move |e: SubmitEvent| {
@@ -17,8 +17,11 @@ pub fn GetIncentives(department_required_fund_id: u64) -> impl IntoView {
     let render_view = move || match current_view() {
         View::Form => {
             view! {
-                <div class="container mx-auto px-10">
-                    <form id="get-incentives-submit-from" on:submit={submit_click}>
+                <div class="max-w-5xl mx-auto max-md:mx-10">
+                    <form
+                        id="get-incentives-submit-from"
+                        on:submit=submit_click
+                    >
                         <button
                             type="submit"
                             id="get-incentives-submit"
@@ -28,18 +31,22 @@ pub fn GetIncentives(department_required_fund_id: u64) -> impl IntoView {
                         </button>
                     </form>
                 </div>
-            }
+            }.into_any()
         }
         View::Success => {
             view! {
                 <div>
-                    <SignTransaction department_required_fund_id={department_required_fund_id
-                        .clone()}/>
+                    <SignTransaction department_required_fund_id=department_required_fund_id.clone()/>
 
                 </div>
-            }
+            }.into_any()
         }
+       
     };
 
-    view! { <div>{move || render_view()}</div> }
+    view! {
+        <div>
+            {move || render_view()}
+        </div>
+    }
 }

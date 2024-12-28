@@ -21,41 +21,42 @@ pub fn JurorSelected(
     profile_user_account: String,
     check_account: ReadSignal<String>,
 ) -> impl IntoView {
-    let async_data = create_resource(
-        move || (profile_user_account.clone(), check_account().clone()),
-        |(profile_user_account, check_account)| async move {
-            load_data(profile_user_account, check_account).await
-        },
+    let async_data =LocalResource::new(
+        move || load_data(profile_user_account.clone(), check_account().clone()),
+       
     );
+
+    let async_result = move || {
+        async_data
+            .get()
+            .as_deref()
+            .map(|data| {
+                if *data == false {
+                    view! {
+                        <div role="alert" class="alert alert-error">
+                            <p>Value: {data.clone()} , you are not selected as juror</p>
+                        </div>
+                    }.into_any()
+                } else {
+                    view! {
+                        <div role="alert" class="alert alert-success">
+                            <p>Value: {data.clone()} , you are selected as juror</p>
+                        </div>
+                    }.into_any()
+                }
+            })
+            // This loading state will only show before the first load
+            .unwrap_or_else(|| view! {
+                <div class="alert">
+                    <span class="loading loading-spinner"></span>
+                    "Loading... Please sign with extension."
+                </div>
+            }
+            .into_any())
+    };
     view! {
         <div>
-            {move || match async_data.get() {
-                None => {
-                    view! {
-                        <p>
-                            <span class="loading loading-dots loading-xs"></span>
-                        </p>
-                    }
-                        .into_view()
-                }
-                Some(data) => {
-                    if data == false {
-                        view! {
-                            <div role="alert" class="alert alert-error">
-                                <p>Value: {data} , you are not selected as juror</p>
-                            </div>
-                        }
-                            .into_view()
-                    } else {
-                        view! {
-                            <div role="alert" class="alert alert-success">
-                                <p>Value: {data} , you are selected as juror</p>
-                            </div>
-                        }
-                            .into_view()
-                    }
-                }
-            }}
+            {async_result}
 
         </div>
     }

@@ -41,7 +41,7 @@ pub fn AddProfile() -> impl IntoView {
     let (city, set_city) = signal(String::from(""));
     let (street, set_street) = signal(String::from(""));
 
-    let submit_action = Action::new(
+    let submit_action : Action<(String, String, String ,WriteSignal<View>, WriteSignal<String>), (), LocalStorage> = Action::new_unsync(
         |(name, details, profile_video_cid, set_current_view, set_post_cid): &(
             String,
             String,
@@ -217,7 +217,7 @@ pub fn AddProfile() -> impl IntoView {
                     <p>{move || pending().then(|| "Loading...")}</p>
                     <p>{move || cid_value()}</p>
                 </div>
-            }
+            }.into_any()
         }
 
         View::Success => view! {
@@ -230,7 +230,7 @@ pub fn AddProfile() -> impl IntoView {
                     street={street()}
                 />
             </div>
-        },
+        }.into_any(),
     };
 
     view! {

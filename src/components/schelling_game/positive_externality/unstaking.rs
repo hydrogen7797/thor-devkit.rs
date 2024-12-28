@@ -5,6 +5,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn Unstaking(user_to_calculate: String) -> impl IntoView {
+   
     // gloo::console::log!(user_to_calculate());
     let (current_view, set_current_view) = signal(View::Form);
     let submit_click = move |e: SubmitEvent| {
@@ -16,8 +17,11 @@ pub fn Unstaking(user_to_calculate: String) -> impl IntoView {
     let render_view = move || match current_view() {
         View::Form => {
             view! {
-                <div class="container mx-auto px-10">
-                    <form id="unstaking-submit-from" on:submit={submit_click}>
+                <div class="max-w-5xl mx-auto max-md:mx-10">
+                    <form
+                        id="unstaking-submit-from"
+                        on:submit=submit_click
+                    >
                         <button
                             type="submit"
                             id="unstaking-submit"
@@ -27,17 +31,22 @@ pub fn Unstaking(user_to_calculate: String) -> impl IntoView {
                         </button>
                     </form>
                 </div>
-            }
+            }.into_any()
         }
         View::Success => {
             view! {
                 <div>
-                    <SignTransaction user_to_calculate={user_to_calculate.clone()}/>
+                    <SignTransaction user_to_calculate=user_to_calculate.clone()/>
 
                 </div>
-            }
+            }.into_any()
         }
+       
     };
 
-    view! { <div>{move || render_view()}</div> }
+    view! {
+        <div>
+            {move || render_view()}
+        </div>
+    }
 }

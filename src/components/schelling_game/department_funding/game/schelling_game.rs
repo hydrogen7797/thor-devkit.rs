@@ -9,9 +9,13 @@ use crate::services::common_services::polkadot::runtime_types::pallet_schelling_
 use leptos::prelude::*;
 use leptos_router::hooks::use_params_map;
 
+
 #[component]
 pub fn SchellingGame() -> impl IntoView {
     let params = use_params_map();
+    
+
+    
 
     let department_required_fund_id = move || {
         params.with(|params| {
@@ -22,11 +26,13 @@ pub fn SchellingGame() -> impl IntoView {
         })
     };
 
+    
+
     let account = untrack(move || department_required_fund_id());
 
     view! {
         <div>
-            <SchellingGameComponent department_required_fund_id={account}/>
+            <SchellingGameComponent department_required_fund_id=account/>
         </div>
     }
 }
@@ -43,33 +49,37 @@ pub fn SchellingGameComponent(department_required_fund_id: u64) -> impl IntoView
                 // let period_read_signal = period();
                 if let Some(period) = period() {
                     let view = match period {
-                        Period::Evidence => view! { <div></div> },
+                        Period::Evidence => view! {
+                            <div>
+                            
+                            </div>
+                        }.into_any(),
                         Period::Staking => {
                             view! {
                                 <div>
-                                    <ApplyJurors department_required_fund_id={department_required_fund_id()}/>
+                                    <ApplyJurors department_required_fund_id=department_required_fund_id()/>
                                 </div>
-                            }
+                            }.into_any()
                         }
                         Period::Drawing => view! {
                             <div>
-                                <DrawJurors department_required_fund_id={department_required_fund_id()}/>
+                                <DrawJurors department_required_fund_id=department_required_fund_id()/>
                             </div>
-                        },
+                        }.into_any(),
                         Period::Commit => view! {
                             <div>
-                                <CommitVote department_required_fund_id={department_required_fund_id()}/>
+                                <CommitVote department_required_fund_id=department_required_fund_id()/>
                             </div>
-                        },
+                        }.into_any(),
                         Period::Vote => view! {
                             <div>
-                                <RevealVote department_required_fund_id={department_required_fund_id()}/>
+                                <RevealVote department_required_fund_id=department_required_fund_id()/>
                             </div>
-                        },
-                        Period::Appeal => view! { <div></div> },
+                        }.into_any(),
+                        Period::Appeal => view! { <div></div> }.into_any(),
                         Period::Execution => {
                             view! { <div>You are in Execution phase. Get your incentives</div> }
-                        }
+                        }.into_any()
                     };
                     view
                 } else {
@@ -78,7 +88,7 @@ pub fn SchellingGameComponent(department_required_fund_id: u64) -> impl IntoView
                             <p>{format!("{:?}", period())}</p>
                             <p>{"No period"}</p>
                         </div>
-                    }
+                    }.into_any()
                 }
             }
         }
