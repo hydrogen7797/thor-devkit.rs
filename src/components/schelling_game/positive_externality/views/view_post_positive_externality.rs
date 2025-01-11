@@ -3,47 +3,34 @@ use crate::constants::constant::IPFSFetchProvider;
 use crate::constants::constant::DEFAULT_IPFS_FETCH_PROVIDER;
 use crate::constants::constant::NODE_URL;
 use crate::services::common_services::polkadot;
-use leptos::ev::SubmitEvent;
-use leptos::html;
 use leptos::prelude::*;
 use leptos::task::spawn_local;
-use polkadot::runtime_types::pallet_positive_externality::types::Post;
 use polkadot::runtime_types::pallet_support::Content;
 use serde::{Deserialize, Serialize};
 use subxt::{OnlineClient, PolkadotConfig};
 
 #[component]
-pub fn ViewPost(id: u64) -> impl IntoView {
+pub fn ViewPostPositiveExternality(id: u64) -> impl IntoView {
     let (data_post, set_data_post) = signal("".to_string());
 
     Effect::new(move |_| {
         spawn_local(async move {
             let data = get_post_data(id).await;
 
-            let content = data.content;
+            gloo::console::log!(data.clone(), "In data");
 
-            let mut resp_option: Option<PositiveExternalityResponse> = None;
+            set_data_post(data);
 
-            if let Content::IPFS(ipfsdata) = content {
-                let ipfs_hash = String::from_utf8(ipfsdata).unwrap();
-                gloo::console::log!("ipfs_hash", ipfs_hash.clone());
-
-                let resp = ipfs_fetch(&ipfs_hash, DEFAULT_IPFS_FETCH_PROVIDER).await;
-                resp_option = Some(resp.clone());
-            }
-
-            let text = resp_option.unwrap().details;
-            set_data_post(text);
         });
     });
     view! {
         <div>
-        {data_post()}
+        {data_post}
         </div>
     }
 }
 
-async fn get_post_data(id: u64) -> Post {
+async fn get_post_data(id: u64) -> String {
     let client = OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
         .await
         .unwrap();
@@ -60,7 +47,22 @@ async fn get_post_data(id: u64) -> Post {
         .unwrap();
 
     let post = value.unwrap();
-    post
+
+    let content = post.content;
+    let mut resp_option: Option<PositiveExternalityResponse> = None;
+
+    if let Content::IPFS(ipfsdata) = content {
+        let ipfs_hash = String::from_utf8(ipfsdata).unwrap();
+        gloo::console::log!("ipfs_hash", ipfs_hash.clone());
+
+        let resp = ipfs_fetch(&ipfs_hash, DEFAULT_IPFS_FETCH_PROVIDER).await;
+        resp_option = Some(resp.clone());
+    }
+
+    let text = resp_option.unwrap().details;
+    
+    text
+    // "hello2".to_string()
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

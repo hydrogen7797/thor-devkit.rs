@@ -7,7 +7,7 @@ use leptos::html;
 use jsonrpsee_core::{client::ClientT, rpc_params};
 use jsonrpsee_wasm_client::WasmClientBuilder;
 use leptos_router::hooks::use_params_map;
-
+use crate::components::schelling_game::positive_externality::views::view_post_positive_externality::ViewPostPositiveExternality;
 
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -37,6 +37,10 @@ pub fn ViewPositiveExternality() -> impl IntoView {
                 .unwrap_or_default()
         })
     };
+
+    let user_value = untrack( || user());
+
+    gloo::console::log!(user_value);
 
     // Fetch paginated posts when `page` or `page_size` changes
     Effect::new(move |_| {
@@ -97,7 +101,7 @@ pub fn ViewPositiveExternality() -> impl IntoView {
                         posts
                             .into_iter()
                             .map(|post| {
-                                view! { <div class="p-2 border rounded">{post}</div> }
+                                view! { <div class="p-2 border rounded"><ViewPostPositiveExternality id={post}/></div> }
                             })
                             .collect_view()
                             .into_any()
@@ -175,6 +179,9 @@ async fn paginate_posts_by_address(
         .await
         .unwrap();
 
+        gloo::console::log!("allposte", all_posts_length.clone());
+
+
         let posts: Option<Vec<u64>> = client
         .request(
             "positiveexternality_paginateposts",
@@ -182,6 +189,9 @@ async fn paginate_posts_by_address(
         )
         .await
         .unwrap();
+
+        gloo::console::log!("posts", posts.clone());
+
 
 
     Ok((posts, all_posts_length))

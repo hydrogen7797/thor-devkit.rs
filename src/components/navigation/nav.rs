@@ -1,8 +1,17 @@
+use crate::components::login::get_login_account::AccountState;
 use leptos::prelude::*;
+use leptos_icons::*;
+use leptos_use::storage::use_local_storage;
+use leptos_use::{
+    use_clipboard_with_options, use_permission, UseClipboardOptions, UseClipboardReturn,
+};
+
+use codee::string::JsonSerdeCodec;
 
 #[component]
 pub fn Nav() -> impl IntoView {
     let (nav_open, set_nav_open) = signal(false);
+   
 
     view! {
         {}
@@ -48,7 +57,18 @@ pub fn Nav() -> impl IntoView {
 fn navbar_items() -> impl IntoView {
     let (submenu_open, set_submenu_open) = signal(false);
 
-    let (disobedience_open, set_disobedience_open) = signal(false);
+    let (department_open, set_department_open) = signal(false);
+
+    let (positive_externality_open, set_positive_externality_open) = signal(false);
+
+    let (account_state, set_account_state, reset_account) =
+    use_local_storage::<AccountState, JsonSerdeCodec>("account-state");
+let UseClipboardReturn {
+    is_supported,
+    text,
+    copied,
+    copy,
+} = use_clipboard_with_options(UseClipboardOptions::default().read(true));
 
     view! {
         <>
@@ -110,7 +130,7 @@ fn navbar_items() -> impl IntoView {
 
             <div class="relative">
                 <button
-                    on:click=move |_| set_disobedience_open.update(|n| *n = !*n)
+                    on:click=move |_| set_department_open.update(|n| *n = !*n)
                     class="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >
                     "Departments"
@@ -130,7 +150,7 @@ fn navbar_items() -> impl IntoView {
                     </svg>
                 </button>
                 <div class=move || {
-                    if disobedience_open() {
+                    if department_open() {
                         "relative w-full mt-2 space-y-1 bg-white rounded shadow dark:bg-gray-800 lg:absolute lg:w-auto"
                     } else {
                         "hidden"
@@ -145,12 +165,95 @@ fn navbar_items() -> impl IntoView {
                     </a>
                 </div>
             </div>
-            <a
-                href="/"
-                class="block py-2 px-4 text-gray-700 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
-                "Positive Externality"
-            </a>
+            <div class="relative">
+                <button
+                    on:click=move |_| set_positive_externality_open.update(|n| *n = !*n)
+                    class="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >
+                    "Positive Externality"
+                    <svg
+                        class="inline w-4 h-4 ml-2"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 10 6"
+                    >
+                        <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M1 1l4 4 4-4"
+                        ></path>
+                    </svg>
+                </button>
+                <div class=move || {
+                    if positive_externality_open() {
+                        "relative w-full mt-2 space-y-1 bg-white rounded shadow dark:bg-gray-800 lg:absolute lg:w-auto"
+                    } else {
+                        "hidden"
+                    }
+                }>
+
+                    <a
+                        href="/positive-externality/create-post"
+                        class="block py-2 w-full px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    >
+                        "Create Positive Externality"
+                    </a>
+                    <a
+                    href=format!("/positive-externality-view/{}",account_state().account_id.clone())
+                    class="block py-2 w-full px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                >
+                    "View Positive Externality"
+                </a>
+                </div>
+            </div>
+            <div  class="block py-2 px-4 text-gray-700 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                {move || {
+                                    let full_id = account_state().account_id.clone();
+                                    let shortened_id = if full_id.len() > 8 {
+                                        format!(
+                                            "{}...{}",
+                                            &full_id[..8],
+                                            &full_id[full_id.len() - 4..],
+                                        )
+                                    } else {
+                                        full_id.clone()
+                                    };
+                                    if !shortened_id.is_empty() {
+                                        view! {
+                                            // Display the shortened account ID
+                                            <>
+                                                <span>{shortened_id}</span>
+
+                                                <button on:click={
+                                                    let copy = copy.clone();
+                                                    move |_| copy(&full_id)
+                                                }>
+                                                    <Show
+                                                        when=copied
+                                                        fallback=|| {
+                                                            view! { <Icon icon=icondata::AiCopyOutlined/> }
+                                                        }
+                                                    >
+
+                                                        Copied!
+                                                    </Show>
+                                                </button>
+                                            </>
+                                        }.into_any()
+                                    } else {
+                                        view! {
+                                            // Display the shortened account ID
+
+                                            <>
+                                                <div></div>
+                                            </>
+                                        }.into_any()
+                                    }
+                                }}
+
+                            </div>
         </>
     }
 }
