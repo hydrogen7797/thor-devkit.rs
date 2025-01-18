@@ -33,7 +33,11 @@ pub fn CreateDepartment() -> impl IntoView {
     let (markdown, set_markdown) = signal(String::from(""));
     let (post_cid, set_post_cid) = signal(String::from(""));
 
-    let submit_action: Action<(String, String ,WriteSignal<View>, WriteSignal<String>), (), LocalStorage> = Action::new_unsync(
+    let submit_action: Action<
+        (String, String, WriteSignal<View>, WriteSignal<String>),
+        (),
+        LocalStorage,
+    > = Action::new_unsync(
         |(details, title, set_current_view, set_post_cid): &(
             String,
             String,
@@ -61,13 +65,14 @@ pub fn CreateDepartment() -> impl IntoView {
         submit_action_value();
     };
 
-    let render_view = move || match current_view() {
+    let render_view = move || {
+        match current_view() {
         View::Form => {
             view! {
                 <div class="container mx-auto px-10">
                     <h2 class="text-gray-900 dark:text-white">"Create a department"</h2>
-                    <br/>
-                    <form id="create-department" on:submit=submit_click>
+                    <br />
+                    <form id="create-department" on:submit={submit_click}>
 
                         <div class="mb-5">
                             <label
@@ -81,8 +86,8 @@ pub fn CreateDepartment() -> impl IntoView {
                                 id="title"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                prop:value=move || title()
-                                on:input=move |e| set_title(event_target_value(&e))
+                                prop:value={move || title()}
+                                on:input={move |e| set_title(event_target_value(&e))}
                             />
                         </div>
 
@@ -94,11 +99,11 @@ pub fn CreateDepartment() -> impl IntoView {
                                 "Department Details"
                             </label>
                             <MarkdownField
-                                set_markdown=set_markdown
-                                name=String::from("department-details")
-                                class=String::from(
+                                set_markdown={set_markdown}
+                                name={String::from("department-details")}
+                                class={String::from(
                                     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-                                )
+                                )}
                             />
 
                         </div>
@@ -120,14 +125,15 @@ pub fn CreateDepartment() -> impl IntoView {
 
         View::Success => view! {
             <div>
-                <SignTransaction post_cid=post_cid()/>
+                <SignTransaction post_cid={post_cid()} />
             </div>
         }.into_any(),
+    }
     };
 
     view! {
         <div>
-            <Nav/>
+            <Nav />
             {move || render_view()}
         </div>
     }

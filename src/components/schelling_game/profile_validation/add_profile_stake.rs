@@ -10,13 +10,8 @@ use crate::components::schelling_game::profile_validation::storage::get_total_fu
 #[component]
 pub fn AddProfileStake() -> impl IntoView {
     let params = use_params_map();
-    let profile_user_account = move || {
-        params.with(|params| {
-            params
-                .get("profile_user_account")
-                .unwrap_or_default()
-        })
-    };
+    let profile_user_account =
+        move || params.with(|params| params.get("profile_user_account").unwrap_or_default());
 
     let (current_view, set_current_view) = signal(View::Form);
 
@@ -35,15 +30,16 @@ pub fn AddProfileStake() -> impl IntoView {
         set_profile_stake(Ok(stake));
     };
 
-    let render_view = move || match current_view() {
+    let render_view = move || {
+        match current_view() {
         View::Form => {
             view! {
                 <div class="container mx-auto px-10">
                     <div>
-                        <TotalFundProfileCollected profile_user_account=profile_user_account()/>
+                        <TotalFundProfileCollected profile_user_account={profile_user_account()} />
                     </div>
-                    <br/>
-                    <form id="profile-stake-submit-from" on:submit=submit_click>
+                    <br />
+                    <form id="profile-stake-submit-from" on:submit={submit_click}>
                         <div class="mb-5">
                             <label
                                 for="profile-stake"
@@ -56,7 +52,7 @@ pub fn AddProfileStake() -> impl IntoView {
                                 id="profile-stake"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                on:input=move |e| stake_value(event_target_value(&e))
+                                on:input={move |e| stake_value(event_target_value(&e))}
                             />
                         </div>
                         <button
@@ -74,18 +70,19 @@ pub fn AddProfileStake() -> impl IntoView {
             view! {
                 <div>
                     <SignTransaction
-                        stake=profile_stake().unwrap()
-                        profile_user_account=profile_user_account()
+                        stake={profile_stake().unwrap()}
+                        profile_user_account={profile_user_account()}
                     />
 
                 </div>
             }.into_any()
         }
+    }
     };
 
     view! {
         <>
-            <Nav/>
+            <Nav />
             {move || render_view()}
         </>
     }

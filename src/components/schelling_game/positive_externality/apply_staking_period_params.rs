@@ -5,23 +5,15 @@ use leptos_router::hooks::use_params_map;
 #[component]
 pub fn ApplyStakingPeriodParams() -> impl IntoView {
     let params = use_params_map();
-    
-    let user_to_calculate = move || {
-        params.with(|params| {
-            params
-                .get("user_to_calculate")
-                .unwrap_or_default()
-        })
-    };
-    
 
-    
+    let user_to_calculate =
+        move || params.with(|params| params.get("user_to_calculate").unwrap_or_default());
 
     let params_value = untrack(move || user_to_calculate());
 
     view! {
         <div>
-            <ApplyStakingPeriod user_to_calculate=params_value/>
+            <ApplyStakingPeriod user_to_calculate={params_value} />
         </div>
     }
 }

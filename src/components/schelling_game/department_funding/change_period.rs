@@ -9,7 +9,10 @@ pub fn ChangePeriod(department_required_fund_id: u64) -> impl IntoView {
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
         navigate(
-            &format!("department-funding-change-period/{}", department_required_fund_id.clone()),
+            &format!(
+                "department-funding-change-period/{}",
+                department_required_fund_id.clone()
+            ),
             Default::default(),
         );
     };
@@ -19,7 +22,7 @@ pub fn ChangePeriod(department_required_fund_id: u64) -> impl IntoView {
             <form
 
                 id="change-period-submit-from"
-                on:submit=submit_click
+                on:submit={submit_click}
             >
                 <button
                     type="submit"

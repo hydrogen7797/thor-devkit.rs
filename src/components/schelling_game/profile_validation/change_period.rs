@@ -9,7 +9,10 @@ pub fn ChangePeriod(profile_user_account: String) -> impl IntoView {
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
         navigate(
-            &format!("profile-validation-change-period/{}", profile_user_account.clone()),
+            &format!(
+                "profile-validation-change-period/{}",
+                profile_user_account.clone()
+            ),
             Default::default(),
         );
     };
@@ -19,7 +22,7 @@ pub fn ChangePeriod(profile_user_account: String) -> impl IntoView {
             <form
 
                 id="change-period-submit-from"
-                on:submit=submit_click
+                on:submit={submit_click}
             >
                 <button
                     type="submit"

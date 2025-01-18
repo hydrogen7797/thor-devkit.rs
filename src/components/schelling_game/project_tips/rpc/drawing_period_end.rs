@@ -7,16 +7,10 @@ use leptos_icons::*;
 use leptos_use::use_interval_fn;
 use leptos_use::utils::Pausable;
 
-async fn load_data(
-    project_id: u64,
-    set_drawing_period: WriteSignal<Option<(u64, u64, bool)>>,
-) {
+async fn load_data(project_id: u64, set_drawing_period: WriteSignal<Option<(u64, u64, bool)>>) {
     let client = WasmClientBuilder::default().build(NODE_URL).await.unwrap();
     let result: (u64, u64, bool) = client
-        .request(
-            "projecttips_drawingperiodend",
-            rpc_params![project_id],
-        )
+        .request("projecttips_drawingperiodend", rpc_params![project_id])
         .await
         .unwrap();
     set_drawing_period(Some(result));
@@ -26,16 +20,14 @@ async fn load_data(
 pub fn DrawingEndBlock(project_id: u64) -> impl IntoView {
     let (drawing_period, set_drawing_period) = signal::<Option<(u64, u64, bool)>>(None);
 
-    let action: Action<(u64, WriteSignal<Option<(u64, u64, bool)>>), (), LocalStorage> = Action::new_unsync(
-        |(project_id, set_drawing_period): &(
-            u64,
-            WriteSignal<Option<(u64, u64, bool)>>,
-        )| {
-            let project_id = project_id.clone();
-            let set_drawing_period = set_drawing_period.clone();
-            async move { load_data(project_id, set_drawing_period).await }
-        },
-    );
+    let action: Action<(u64, WriteSignal<Option<(u64, u64, bool)>>), (), LocalStorage> =
+        Action::new_unsync(
+            |(project_id, set_drawing_period): &(u64, WriteSignal<Option<(u64, u64, bool)>>)| {
+                let project_id = project_id.clone();
+                let set_drawing_period = set_drawing_period.clone();
+                async move { load_data(project_id, set_drawing_period).await }
+            },
+        );
 
     let Pausable { .. } = use_interval_fn(
         move || {
@@ -59,7 +51,7 @@ pub fn DrawingEndBlock(project_id: u64) -> impl IntoView {
                     view! {
                         <div>
                             {"Drawing Period ends: "} <span id="end-period-time">
-                                <Icon icon=icondata::ImSpinner6 style="color: green"/>
+                                <Icon icon={icondata::ImSpinner6} style="color: green" />
                             </span>
                         </div>
                     }

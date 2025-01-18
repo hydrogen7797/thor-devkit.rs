@@ -10,10 +10,7 @@ use leptos_use::utils::Pausable;
 async fn load_data(project_id: u64, set_end_period: WriteSignal<Option<u32>>) {
     let client = WasmClientBuilder::default().build(NODE_URL).await.unwrap();
     let result: Option<u32> = client
-        .request(
-            "projecttips_commitendblock",
-            rpc_params![project_id],
-        )
+        .request("projecttips_commitendblock", rpc_params![project_id])
         .await
         .unwrap();
     set_end_period(result);
@@ -53,7 +50,7 @@ pub fn CommitEndBlock(project_id: u64) -> impl IntoView {
                     view! {
                         <div>
                             {"Commit Period ends: "} <span id="end-period-time">
-                                <Icon icon=icondata::ImSpinner6 style="color: green"/>
+                                <Icon icon={icondata::ImSpinner6} style="color: green" />
                             </span>
                         </div>
                     }

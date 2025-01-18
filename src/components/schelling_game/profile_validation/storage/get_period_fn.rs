@@ -8,18 +8,13 @@ use subxt::utils::AccountId32;
 use subxt::{OnlineClient, PolkadotConfig};
 
 async fn load_data(profile_user_account: String, set_period: WriteSignal<Option<Period>>) {
-
     let client = OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
         .await
         .unwrap();
 
-     
-        
+    let account_id32 = AccountId32::from_str(&profile_user_account).unwrap();
 
-        let account_id32 = AccountId32::from_str(&profile_user_account).unwrap();
-
-
-        let profile_validation_block_storage = polkadot::storage()
+    let profile_validation_block_storage = polkadot::storage()
         .profile_validation()
         .validation_block(account_id32.clone());
 
@@ -49,35 +44,19 @@ async fn load_data(profile_user_account: String, set_period: WriteSignal<Option<
         gloo::console::log!(format!("period in block: {:?}", period));
         set_period(period);
     }
-
-        
-
-
-        
-
-
-        
-
-
-        
-
-
-    
-       
-    
-   
 }
 
 pub fn get_period_fn(profile_user_account: String) -> ReadSignal<Option<Period>> {
     let (period, set_period) = signal::<Option<Period>>(None);
 
-    let action: Action<(String, WriteSignal<Option<Period>>), (), LocalStorage> = Action::new_unsync(
-        |(profile_user_account, set_period): &(String, WriteSignal<Option<Period>>)| {
-            let profile_user_account = profile_user_account.clone();
-            let set_period = set_period.clone();
-            async move { load_data(profile_user_account, set_period).await }
-        },
-    );
+    let action: Action<(String, WriteSignal<Option<Period>>), (), LocalStorage> =
+        Action::new_unsync(
+            |(profile_user_account, set_period): &(String, WriteSignal<Option<Period>>)| {
+                let profile_user_account = profile_user_account.clone();
+                let set_period = set_period.clone();
+                async move { load_data(profile_user_account, set_period).await }
+            },
+        );
 
     action.dispatch((profile_user_account.clone(), set_period));
 

@@ -1,7 +1,7 @@
-use crate::components::schelling_game::profile_validation::draw_jurors_sign_in::SignTransaction;
-use crate::components::schelling_game::profile_validation::storage::get_period::GetPeriod;
 use crate::components::schelling_game::profile_validation::change_period::ChangePeriod;
+use crate::components::schelling_game::profile_validation::draw_jurors_sign_in::SignTransaction;
 use crate::components::schelling_game::profile_validation::rpc::drawing_period_end::DrawingEndBlock;
+use crate::components::schelling_game::profile_validation::storage::get_period::GetPeriod;
 use crate::services::common_imp::View;
 use crate::services::error::ErrorString;
 use leptos::ev::SubmitEvent;
@@ -9,7 +9,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn DrawJurors(profile_user_account: String) -> impl IntoView {
-     // gloo::console::log!(profile_user_account());
+    // gloo::console::log!(profile_user_account());
     let (current_view, set_current_view) = signal(View::Form);
     let (iterations, set_iterations) = signal::<Result<u64, ErrorString>>(Ok(0));
     let submit_click = move |e: SubmitEvent| {
@@ -25,15 +25,16 @@ pub fn DrawJurors(profile_user_account: String) -> impl IntoView {
         set_iterations(Ok(iteration_value));
     };
 
-    let render_view = move || match current_view() {
+    let render_view = move || {
+        match current_view() {
         View::Form => {
             view! {
                 <div class="max-w-5xl mx-auto max-md:mx-10">
-                    <GetPeriod profile_user_account=profile_user_account.clone()/>
-                    <DrawingEndBlock profile_user_account=profile_user_account.clone()/>
-                    <ChangePeriod profile_user_account=profile_user_account.clone()/>
+                    <GetPeriod profile_user_account={profile_user_account.clone()} />
+                    <DrawingEndBlock profile_user_account={profile_user_account.clone()} />
+                    <ChangePeriod profile_user_account={profile_user_account.clone()} />
 
-                    <form id="draw-juror-submit-from" on:submit=submit_click>
+                    <form id="draw-juror-submit-from" on:submit={submit_click}>
                         <div class="mb-5">
                             <label
                                 for="draw-jurors"
@@ -46,7 +47,7 @@ pub fn DrawJurors(profile_user_account: String) -> impl IntoView {
                                 id="iterations"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                on:input=move |e| iteration_function(event_target_value(&e))
+                                on:input={move |e| iteration_function(event_target_value(&e))}
                             />
                         </div>
                         <button
@@ -65,14 +66,15 @@ pub fn DrawJurors(profile_user_account: String) -> impl IntoView {
             view! {
                 <div>
                     <SignTransaction
-                        iterations=iterations().unwrap()
-                        profile_user_account=profile_user_account.clone()
+                        iterations={iterations().unwrap()}
+                        profile_user_account={profile_user_account.clone()}
                     />
 
                 </div>
             }.into_any()
         }
 
+    }
     };
 
     view! { <div>{move || render_view()}</div> }

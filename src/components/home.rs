@@ -5,7 +5,7 @@ use leptos::prelude::*;
 pub fn Home() -> impl IntoView {
     view! {
         <>
-            <Nav/>
+            <Nav />
 
             // <!-- Hero Section -->
             <section class="bg-white dark:bg-slate-800 py-12">

@@ -9,7 +9,10 @@ pub fn ChangePeriod(user_to_calculate: String) -> impl IntoView {
     let submit_click = move |e: SubmitEvent| {
         e.prevent_default();
         navigate(
-            &format!("positive-externality-change-period/{}", user_to_calculate.clone()),
+            &format!(
+                "positive-externality-change-period/{}",
+                user_to_calculate.clone()
+            ),
             Default::default(),
         );
     };
@@ -19,7 +22,7 @@ pub fn ChangePeriod(user_to_calculate: String) -> impl IntoView {
             <form
 
                 id="change-period-submit-from"
-                on:submit=submit_click
+                on:submit={submit_click}
             >
                 <button
                     type="submit"

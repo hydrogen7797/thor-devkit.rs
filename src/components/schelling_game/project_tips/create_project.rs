@@ -36,7 +36,7 @@ async fn get_cid_post(
 #[component]
 pub fn SelectOption(is: &'static str, tip_name: ReadSignal<String>) -> impl IntoView {
     view! {
-        <option value=is selected=move || tip_name() == is>
+        <option value={is} selected={move || tip_name() == is}>
             {is}
         </option>
     }
@@ -63,19 +63,20 @@ pub fn CreateProject() -> impl IntoView {
     let (tip_name, set_tip_name) = signal(String::from(""));
     let (funding_needed, set_funding_needed) = signal::<Option<u128>>(None);
 
-    let submit_action: Action<(String,WriteSignal<View>, WriteSignal<String>), (), LocalStorage>= Action::new_unsync(
-        |(details, set_current_view, set_post_cid): &(
-            String,
-            WriteSignal<View>,
-            WriteSignal<String>,
-        )| {
-            let details = details.to_owned();
-            let set_current_view = set_current_view.clone();
-            let set_post_cid = set_post_cid.clone();
+    let submit_action: Action<(String, WriteSignal<View>, WriteSignal<String>), (), LocalStorage> =
+        Action::new_unsync(
+            |(details, set_current_view, set_post_cid): &(
+                String,
+                WriteSignal<View>,
+                WriteSignal<String>,
+            )| {
+                let details = details.to_owned();
+                let set_current_view = set_current_view.clone();
+                let set_post_cid = set_post_cid.clone();
 
-            async move { get_cid_post(details, set_current_view, set_post_cid).await }
-        },
-    );
+                async move { get_cid_post(details, set_current_view, set_post_cid).await }
+            },
+        );
     let _submitted = submit_action.input();
     let pending = submit_action.pending();
     let submit_action_value = submit_action.value();
@@ -95,7 +96,8 @@ pub fn CreateProject() -> impl IntoView {
         submit_action_value();
     };
 
-    let render_view = move || match current_view() {
+    let render_view = move || {
+        match current_view() {
         View::Form =>
         // if post_cid().is_empty() {
         {
@@ -104,7 +106,7 @@ pub fn CreateProject() -> impl IntoView {
                     <form
                         class="container mx-auto px-10"
                         id="add-profile-submit-from"
-                        on:submit=submit_click
+                        on:submit={submit_click}
                     >
                         <div class="mb-5">
                             <label
@@ -114,20 +116,20 @@ pub fn CreateProject() -> impl IntoView {
                                 Profile Details
                             </label>
                             <MarkdownField
-                                set_markdown=set_markdown
-                                name=String::from("profile-details")
-                                class=String::from(
+                                set_markdown={set_markdown}
+                                name={String::from("profile-details")}
+                                class={String::from(
                                     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-                                )
+                                )}
                             />
 
                         </div>
 
                         <select
-                            on:change=move |ev| {
+                            on:change={move |ev| {
                                 let new_value = event_target_value(&ev);
                                 set_tip_name(new_value);
-                            }
+                            }}
 
                             id="tipperselect"
                             class="select select-info w-full max-w-xs"
@@ -135,11 +137,11 @@ pub fn CreateProject() -> impl IntoView {
                             <option disabled selected>
                                 Select the tipper
                             </option>
-                            <SelectOption tip_name is="SmallTipper"/>
-                            <SelectOption tip_name is="BigTipper"/>
-                            <SelectOption tip_name is="SmallSpender"/>
-                            <SelectOption tip_name is="MediumSpender"/>
-                            <SelectOption tip_name is="BigSpender"/>
+                            <SelectOption tip_name is="SmallTipper" />
+                            <SelectOption tip_name is="BigTipper" />
+                            <SelectOption tip_name is="SmallSpender" />
+                            <SelectOption tip_name is="MediumSpender" />
+                            <SelectOption tip_name is="BigSpender" />
                         </select>
 
                         <div class="mb-5">
@@ -154,12 +156,12 @@ pub fn CreateProject() -> impl IntoView {
                                 id="funding-needed"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                on:input=move |ev| funding_needed_changed(event_target_value(&ev))
+                                on:input={move |ev| funding_needed_changed(event_target_value(&ev))}
                             />
                         </div>
 
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <button
                             type="submit"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -178,18 +180,19 @@ pub fn CreateProject() -> impl IntoView {
         View::Success => view! {
             <div>
                 <SignTransaction
-                    post_cid=post_cid()
-                    department_id=department_id
-                    tip_name=tip_name()
-                    funding_needed=funding_needed().unwrap()
+                    post_cid={post_cid()}
+                    department_id={department_id}
+                    tip_name={tip_name()}
+                    funding_needed={funding_needed().unwrap()}
                 />
             </div>
         }.into_any(),
+    }
     };
 
     view! {
         <>
-            <Nav/>
+            <Nav />
             {move || render_view()}
         </>
     }

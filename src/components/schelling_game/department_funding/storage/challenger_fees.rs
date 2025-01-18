@@ -38,7 +38,7 @@ pub fn ChallengerFees(department_required_fund_id: u64) -> impl IntoView {
         },
     );
 
-    create_effect(move |_| {
+    Effect::new(move |_| {
         action.dispatch((department_required_fund_id.clone(), set_challenger_fee));
     });
 

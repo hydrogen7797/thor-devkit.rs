@@ -53,7 +53,7 @@ pub fn CommitEndBlock(department_required_fund_id: u64) -> impl IntoView {
                     view! {
                         <div>
                             {"Commit Period ends: "} <span id="end-period-time">
-                                <Icon icon=icondata::ImSpinner6 style="color: green"/>
+                                <Icon icon={icondata::ImSpinner6} style="color: green" />
                             </span>
                         </div>
                     }

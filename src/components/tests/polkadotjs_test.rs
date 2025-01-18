@@ -5,7 +5,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn Polkadotjs() -> impl IntoView {
-    view! { <ExtensionSignIn/> }
+    view! { <ExtensionSignIn /> }
 }
 
 #[component]
@@ -16,18 +16,20 @@ pub fn ExtensionSignIn() -> impl IntoView {
         if account_load().0.is_empty() || account_load().1.is_empty() {
             view! {
                 <div>
-                    <GetAccountsExtension set_account_load=set_account_load/>
+                    <GetAccountsExtension set_account_load={set_account_load} />
                 </div>
-            }.into_any()
+            }
+            .into_any()
         } else if !account_load().0.is_empty() && !account_load().1.is_empty() {
             view! {
                 <div>
                     <ExtensionTransaction
-                        account_address=account_load().0
-                        account_source=account_load().1
+                        account_address={account_load().0}
+                        account_source={account_load().1}
                     />
                 </div>
-            }.into_any()
+            }
+            .into_any()
         } else {
             view! { <div>{"Some Error Occured"}</div> }.into_any()
         }
@@ -36,24 +38,34 @@ pub fn ExtensionSignIn() -> impl IntoView {
     view! { <div>{move || render_html()}</div> }
 }
 
-async fn load_data(account_address: String, account_source: String, set_error:WriteSignal<String>, set_extrinsic_success:WriteSignal<String>) {
+async fn load_data(
+    account_address: String,
+    account_source: String,
+    set_error: WriteSignal<String>,
+    set_extrinsic_success: WriteSignal<String>,
+) {
     let tx = polkadot::tx().department_funding().pass_period(10);
 
-            sign_in_with_extension(
-                tx,
-                account_address,
-                account_source,
-                set_error,
-                set_extrinsic_success,
-            )
-            .await;
+    sign_in_with_extension(
+        tx,
+        account_address,
+        account_source,
+        set_error,
+        set_extrinsic_success,
+    )
+    .await;
 }
 #[component]
 pub fn ExtensionTransaction(account_address: String, account_source: String) -> impl IntoView {
     let (error, set_error) = signal(String::from("hello"));
     let (extrinsic_success, set_extrinsic_success) = signal(String::from("extrinsic"));
-    let transaction_resource = LocalResource::new(move ||{
-        load_data(account_address.clone(), account_source.clone(), set_error, set_extrinsic_success)
+    let transaction_resource = LocalResource::new(move || {
+        load_data(
+            account_address.clone(),
+            account_source.clone(),
+            set_error,
+            set_extrinsic_success,
+        )
     });
 
     let async_result = move || {
@@ -62,15 +74,16 @@ pub fn ExtensionTransaction(account_address: String, account_source: String) -> 
             .as_deref()
             .map(|_| view! { <div></div> }.into_any())
             // This loading state will only show before the first load
-            .unwrap_or_else(|| view! {
-                <div class="alert">
-                    <span class="loading loading-spinner"></span>
-                    "Loading... Please sign with extension."
-                </div>
-            }
-            .into_any())
+            .unwrap_or_else(|| {
+                view! {
+                    <div class="alert">
+                        <span class="loading loading-spinner"></span>
+                        "Loading... Please sign with extension."
+                    </div>
+                }
+                .into_any()
+            })
     };
-    
 
     view! {
         <div>

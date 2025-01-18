@@ -11,7 +11,6 @@ use codee::string::JsonSerdeCodec;
 #[component]
 pub fn Nav() -> impl IntoView {
     let (nav_open, set_nav_open) = signal(false);
-   
 
     view! {
         {}
@@ -20,10 +19,9 @@ pub fn Nav() -> impl IntoView {
 
                 {} <a href="#" class="text-xl font-semibold dark:text-white">
                     "Shivarthu"
-                </a>
-                {}
+                </a> {}
                 <button
-                    on:click=move |_| set_nav_open.update(|n| *n = !*n)
+                    on:click={move |_| set_nav_open.update(|n| *n = !*n)}
                     class="lg:hidden inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 >
                     <span class="sr-only">"Toggle Menu"</span>
@@ -45,7 +43,9 @@ pub fn Nav() -> impl IntoView {
             </div>
 
             {}
-            <div class=move || { if nav_open() { "block lg:hidden" } else { "hidden lg:hidden" } }>
+            <div class={move || {
+                if nav_open() { "block lg:hidden" } else { "hidden lg:hidden" }
+            }}>
 
                 <div class="px-4 py-3 space-y-2 text-xl">{navbar_items()}</div>
             </div>
@@ -60,15 +60,14 @@ fn navbar_items() -> impl IntoView {
 
     let (positive_externality_open, set_positive_externality_open) = signal(false);
 
-
     let (account_state, set_account_state, reset_account) =
-    use_local_storage::<AccountState, JsonSerdeCodec>("account-state");
-let UseClipboardReturn {
-    is_supported,
-    text,
-    copied,
-    copy,
-} = use_clipboard_with_options(UseClipboardOptions::default().read(true));
+        use_local_storage::<AccountState, JsonSerdeCodec>("account-state");
+    let UseClipboardReturn {
+        is_supported,
+        text,
+        copied,
+        copy,
+    } = use_clipboard_with_options(UseClipboardOptions::default().read(true));
 
     view! {
         <>
@@ -80,7 +79,7 @@ let UseClipboardReturn {
             </a>
             <div class="relative">
                 <button
-                    on:click=move |_| set_submenu_open.update(|n| *n = !*n)
+                    on:click={move |_| set_submenu_open.update(|n| *n = !*n)}
                     class="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >
                     "Profile Validation"
@@ -99,13 +98,13 @@ let UseClipboardReturn {
                         ></path>
                     </svg>
                 </button>
-                <div class=move || {
+                <div class={move || {
                     if submenu_open() {
                         "relative w-full mt-2 space-y-1 bg-white rounded shadow dark:bg-gray-800 lg:absolute lg:w-auto"
                     } else {
                         "hidden"
                     }
-                }>
+                }}>
 
                     <a
                         href="/"
@@ -130,7 +129,7 @@ let UseClipboardReturn {
 
             <div class="relative">
                 <button
-                    on:click=move |_| set_department_open.update(|n| *n = !*n)
+                    on:click={move |_| set_department_open.update(|n| *n = !*n)}
                     class="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >
                     "Departments"
@@ -149,13 +148,13 @@ let UseClipboardReturn {
                         ></path>
                     </svg>
                 </button>
-                <div class=move || {
+                <div class={move || {
                     if department_open() {
                         "relative w-full mt-2 space-y-1 bg-white rounded shadow dark:bg-gray-800 lg:absolute lg:w-auto"
                     } else {
                         "hidden"
                     }
-                }>
+                }}>
 
                     <a
                         href="/"
@@ -167,7 +166,7 @@ let UseClipboardReturn {
             </div>
             <div class="relative">
                 <button
-                    on:click=move |_| set_positive_externality_open.update(|n| *n = !*n)
+                    on:click={move |_| set_positive_externality_open.update(|n| *n = !*n)}
                     class="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >
                     "Positive Externality"
@@ -186,13 +185,13 @@ let UseClipboardReturn {
                         ></path>
                     </svg>
                 </button>
-                <div class=move || {
+                <div class={move || {
                     if positive_externality_open() {
                         "relative w-full mt-2 space-y-1 bg-white rounded shadow dark:bg-gray-800 lg:absolute lg:w-auto"
                     } else {
                         "hidden"
                     }
-                }>
+                }}>
 
                     <a
                         href="/positive-externality/create-post"
@@ -201,28 +200,40 @@ let UseClipboardReturn {
                         "Create Positive Externality"
                     </a>
                     <a
-                        href=move || {
+                        href={move || {
                             format!(
                                 "/positive-externality-view/{}",
                                 account_state().account_id.clone(),
                             )
-                        }
+                        }}
 
                         class="block py-2 w-full px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                     >
                         "View Positive Externality"
                     </a>
                     <a
-                        href=move || {
+                        href={move || {
                             format!(
                                 "/positive-externality-view-latest/{}",
                                 account_state().account_id.clone(),
                             )
-                        }
+                        }}
 
                         class="block py-2 w-full px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                     >
                         "View Positive Externality Latest"
+                    </a>
+                    <a
+                        href={move || {
+                            format!(
+                                "/positive-externality/apply-staking-period/{}",
+                                account_state().account_id.clone(),
+                            )
+                        }}
+
+                        class="block py-2 w-full px-4 text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    >
+                        "Apply Staking Period"
                     </a>
                 </div>
             </div>
@@ -242,7 +253,6 @@ let UseClipboardReturn {
                     };
                     if !shortened_id.is_empty() {
                         view! {
-                            // Display the shortened account ID
                             <>
                                 <span>{shortened_id}</span>
 
@@ -251,10 +261,10 @@ let UseClipboardReturn {
                                     move |_| copy(&full_id)
                                 }>
                                     <Show
-                                        when=copied
-                                        fallback=|| {
-                                            view! { <Icon icon=icondata::AiCopyOutlined/> }
-                                        }
+                                        when={copied}
+                                        fallback={|| {
+                                            view! { <Icon icon={icondata::AiCopyOutlined} /> }
+                                        }}
                                     >
 
                                         Copied!
@@ -265,16 +275,6 @@ let UseClipboardReturn {
                             .into_any()
                     } else {
                         view! {
-                            // Display the shortened account ID
-
-                            // Display the shortened account ID
-
-                            // Display the shortened account ID
-
-                            // Display the shortened account ID
-
-                            // Display the shortened account ID
-
                             <>
                                 <div></div>
                             </>

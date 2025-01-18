@@ -38,7 +38,7 @@ pub fn ChallengerFees(user_to_calculate: String) -> impl IntoView {
         },
     );
 
-    create_effect(move |_| {
+    Effect::new(move |_| {
         action.dispatch((user_to_calculate.clone(), set_challenger_fee));
     });
 

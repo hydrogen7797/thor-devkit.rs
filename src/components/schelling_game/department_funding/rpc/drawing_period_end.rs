@@ -26,16 +26,17 @@ async fn load_data(
 pub fn DrawingEndBlock(department_required_fund_id: u64) -> impl IntoView {
     let (drawing_period, set_drawing_period) = signal::<Option<(u64, u64, bool)>>(None);
 
-    let action: Action<(u64, WriteSignal<Option<(u64, u64, bool)>>), (), LocalStorage> = Action::new_unsync(
-        |(department_required_fund_id, set_drawing_period): &(
-            u64,
-            WriteSignal<Option<(u64, u64, bool)>>,
-        )| {
-            let department_required_fund_id = department_required_fund_id.clone();
-            let set_drawing_period = set_drawing_period.clone();
-            async move { load_data(department_required_fund_id, set_drawing_period).await }
-        },
-    );
+    let action: Action<(u64, WriteSignal<Option<(u64, u64, bool)>>), (), LocalStorage> =
+        Action::new_unsync(
+            |(department_required_fund_id, set_drawing_period): &(
+                u64,
+                WriteSignal<Option<(u64, u64, bool)>>,
+            )| {
+                let department_required_fund_id = department_required_fund_id.clone();
+                let set_drawing_period = set_drawing_period.clone();
+                async move { load_data(department_required_fund_id, set_drawing_period).await }
+            },
+        );
 
     let Pausable { .. } = use_interval_fn(
         move || {
@@ -59,7 +60,7 @@ pub fn DrawingEndBlock(department_required_fund_id: u64) -> impl IntoView {
                     view! {
                         <div>
                             {"Drawing Period ends: "} <span id="end-period-time">
-                                <Icon icon=icondata::ImSpinner6 style="color: green"/>
+                                <Icon icon={icondata::ImSpinner6} style="color: green" />
                             </span>
                         </div>
                     }

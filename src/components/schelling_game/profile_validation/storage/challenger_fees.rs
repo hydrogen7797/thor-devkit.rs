@@ -30,7 +30,7 @@ async fn load_data(profile_user_account: String, set_challenger_fee: WriteSignal
 pub fn ChallengerFees(profile_user_account: String) -> impl IntoView {
     let (challenger_fee, set_challenger_fee) = signal::<Option<u128>>(None);
 
-    let action: Action<(String,WriteSignal<Option<u128>>), (), LocalStorage>= Action::new_unsync(
+    let action: Action<(String, WriteSignal<Option<u128>>), (), LocalStorage> = Action::new_unsync(
         |(profile_user_account, set_challenger_fee): &(String, WriteSignal<Option<u128>>)| {
             let profile_user_account = profile_user_account.clone();
             let set_challenger_fee = set_challenger_fee.clone();
@@ -38,7 +38,7 @@ pub fn ChallengerFees(profile_user_account: String) -> impl IntoView {
         },
     );
 
-    create_effect(move |_| {
+    Effect::new(move |_| {
         action.dispatch((profile_user_account.clone(), set_challenger_fee));
     });
 

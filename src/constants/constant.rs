@@ -17,7 +17,8 @@ pub struct IPFSFetchProvider<'a> {
 pub const IPFS_WEB3: &str = "https://w3s.link/ipfs/";
 pub const IPFS_CLOUDFLARE: &str = "https://cloudflare-ipfs.com/ipfs/";
 pub const IPFS_IO: &str = "https://gateway.ipfs.io/ipfs/";
-pub const IPFS_4EVER_DEDICATED: &str = "https://42683ff2b1a2ac5ad2fef0ee01995d78.ipfs.4everland.link/ipfs/";
+pub const IPFS_4EVER_DEDICATED: &str =
+    "https://42683ff2b1a2ac5ad2fef0ee01995d78.ipfs.4everland.link/ipfs/";
 
 pub const EVERLAND_ENDPOINT: &str = "https://endpoint.4everland.co";
 

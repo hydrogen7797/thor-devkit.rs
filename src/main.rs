@@ -8,5 +8,5 @@ fn main() {
     //     .unwrap()
     //     .dyn_into::<web_sys::HtmlElement>() // Casting to web_sys::HtmlElement
     //     .expect("Element with id 'root' is not an HtmlElement");
-    mount_to_body(|| view! { <App/> })
+    mount_to_body(|| view! { <App /> })
 }

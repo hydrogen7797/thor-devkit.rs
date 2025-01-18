@@ -27,8 +27,6 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
     };
     let get_accounts_click = move |_e: MouseEvent| {
         spawn_local({
-
-    
             async move {
                 match get_accounts_result().await {
                     Ok(result) => set_accounts(result),
@@ -38,49 +36,49 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
         });
     };
     let accounts_html = move || {
-        let html_element = 
-                    if accounts().is_empty() {
-                        view! {
-                            <div>
-                                <br/>
-                                <div>
-                                    {"No Web3 extension accounts found. Install Talisman, SubWallet or the Polkadot.js extension and add an account."}
-                                </div>
-                            </div>
-                        }.into_any()
-                    } else {
-                        view! {
-                            <div>
-                                <br/>
-                                <div class="mb">
-                                    <b>{"Select an account you want to use for signing:"}</b>
-                                </div>
-                                {move || {
-                                    accounts()
-                                        .iter()
-                                        .enumerate()
-                                        .map(|(i, account)| {
-                                            view! {
-                                                <div>
-                                                    <button
-                                                        class="btn btn-outline btn-info btn-block my-3"
-                                                        on:click=move |e| { onclick_button(e, i) }
-                                                        id=account.address.clone()
-                                                    >
-                                                        {account.source.clone()}
-                                                        {" | "}
-                                                        {account.name.clone()}
-                                                        <br/>
-                                                        <small>{account.address.clone()}</small>
-                                                    </button>
-                                                </div>
-                                            }
-                                        })
-                                        .collect_view()
-                                }}
+        let html_element = if accounts().is_empty() {
+            view! {
+                <div>
+                    <br />
+                    <div>
+                        {"No Web3 extension accounts found. Install Talisman, SubWallet or the Polkadot.js extension and add an account."}
+                    </div>
+                </div>
+            }.into_any()
+        } else {
+            view! {
+                <div>
+                    <br />
+                    <div class="mb">
+                        <b>{"Select an account you want to use for signing:"}</b>
+                    </div>
+                    {move || {
+                        accounts()
+                            .iter()
+                            .enumerate()
+                            .map(|(i, account)| {
+                                view! {
+                                    <div>
+                                        <button
+                                            class="btn btn-outline btn-info btn-block my-3"
+                                            on:click={move |e| { onclick_button(e, i) }}
+                                            id={account.address.clone()}
+                                        >
+                                            {account.source.clone()}
+                                            {" | "}
+                                            {account.name.clone()}
+                                            <br />
+                                            <small>{account.address.clone()}</small>
+                                        </button>
+                                    </div>
+                                }
+                            })
+                            .collect_view()
+                    }}
 
-                            </div>
-                        }.into_any()
+                </div>
+            }
+            .into_any()
         };
         html_element
     };
@@ -89,7 +87,11 @@ pub fn GetAccountsExtension(set_account_load: WriteSignal<(String, String)>) -> 
         <>
             <div class="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
                 <div>
-                    <button on:click=get_accounts_click class="btn btn-warning" id="select-account">
+                    <button
+                        on:click={get_accounts_click}
+                        class="btn btn-warning"
+                        id="select-account"
+                    >
                         {"=> Select an Account for Signing"}
                     </button>
                 </div>

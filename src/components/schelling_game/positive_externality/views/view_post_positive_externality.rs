@@ -20,7 +20,6 @@ pub fn ViewPostPositiveExternality(id: u64) -> impl IntoView {
             gloo::console::log!(data.clone(), "In data");
 
             set_data_post(data);
-
         });
     });
     view! { <div>{data_post}</div> }
@@ -56,7 +55,7 @@ async fn get_post_data(id: u64) -> String {
     }
 
     let text = resp_option.unwrap().details;
-    
+
     text
     // "hello2".to_string()
 }

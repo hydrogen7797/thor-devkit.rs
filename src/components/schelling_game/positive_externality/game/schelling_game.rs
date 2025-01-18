@@ -9,27 +9,18 @@ use crate::services::common_services::polkadot::runtime_types::pallet_schelling_
 use leptos::prelude::*;
 use leptos_router::hooks::use_params_map;
 
-
 #[component]
 pub fn SchellingGame() -> impl IntoView {
     let params = use_params_map();
-    
-    let user_to_calculate = move || {
-        params.with(|params| {
-            params
-                .get("user_to_calculate")
-                .unwrap_or_default()
-        })
-    };
-    
 
-    
+    let user_to_calculate =
+        move || params.with(|params| params.get("user_to_calculate").unwrap_or_default());
 
     let account = untrack(move || user_to_calculate());
 
     view! {
         <div>
-            <SchellingGameComponent user_to_calculate=account/>
+            <SchellingGameComponent user_to_calculate={account} />
         </div>
     }
 }
@@ -46,33 +37,37 @@ pub fn SchellingGameComponent(user_to_calculate: String) -> impl IntoView {
                 // let period_read_signal = period();
                 if let Some(period) = period() {
                     let view = match period {
-                        Period::Evidence => view! { <div></div> }.into_any(),
-                        Period::Staking => {
-                            view! {
-                                <div>
-                                    <ApplyJurors user_to_calculate=user_to_calculate()/>
-                                </div>
-                            }.into_any()
+                        Period::Evidence => view! { <div></div> }
+                        .into_any(),
+                        Period::Staking => view! {
+                            <div>
+                                <ApplyJurors user_to_calculate={user_to_calculate()} />
+                            </div>
                         }
+                        .into_any(),
                         Period::Drawing => view! {
                             <div>
-                                <DrawJurors user_to_calculate=user_to_calculate()/>
+                                <DrawJurors user_to_calculate={user_to_calculate()} />
                             </div>
-                        }.into_any(),
+                        }
+                        .into_any(),
                         Period::Commit => view! {
                             <div>
-                                <CommitVote user_to_calculate=user_to_calculate()/>
+                                <CommitVote user_to_calculate={user_to_calculate()} />
                             </div>
-                        }.into_any(),
+                        }
+                        .into_any(),
                         Period::Vote => view! {
                             <div>
-                                <RevealVote user_to_calculate=user_to_calculate()/>
+                                <RevealVote user_to_calculate={user_to_calculate()} />
                             </div>
-                        }.into_any(),
+                        }
+                        .into_any(),
                         Period::Appeal => view! { <div></div> }.into_any(),
                         Period::Execution => {
                             view! { <div>You are in Execution phase. Get your incentives</div> }
-                        }.into_any()
+                        }
+                        .into_any(),
                     };
                     view
                 } else {
@@ -81,7 +76,8 @@ pub fn SchellingGameComponent(user_to_calculate: String) -> impl IntoView {
                             <p>{format!("{:?}", period())}</p>
                             <p>{"No period"}</p>
                         </div>
-                    }.into_any()
+                    }
+                    .into_any()
                 }
             }
         }
@@ -89,7 +85,7 @@ pub fn SchellingGameComponent(user_to_calculate: String) -> impl IntoView {
 
     view! {
         <div>
-            <Nav/>
+            <Nav />
             // {move || account()}
             // {move || format!("{:?}", period())}
             {move || myview()}

@@ -23,7 +23,7 @@ async fn load_data(department_required_fund_id: u64, set_end_period: WriteSignal
 pub fn StakingEndBlock(department_required_fund_id: u64) -> impl IntoView {
     let (end_period, set_end_period) = signal::<Option<u32>>(None);
 
-    let action: Action<(u64,WriteSignal<Option<u32>>), (), LocalStorage> = Action::new_unsync(
+    let action: Action<(u64, WriteSignal<Option<u32>>), (), LocalStorage> = Action::new_unsync(
         |(department_required_fund_id, set_end_period): &(u64, WriteSignal<Option<u32>>)| {
             let department_required_fund_id = department_required_fund_id.clone();
             let set_end_period = set_end_period.clone();
@@ -53,7 +53,7 @@ pub fn StakingEndBlock(department_required_fund_id: u64) -> impl IntoView {
                     view! {
                         <div>
                             {"Staking Period ends: "} <span id="end-period-time">
-                                <Icon icon=icondata::ImSpinner6 style="color: green"/>
+                                <Icon icon={icondata::ImSpinner6} style="color: green" />
                             </span>
                         </div>
                     }

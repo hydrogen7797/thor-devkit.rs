@@ -7,7 +7,7 @@ use subxt::utils::AccountId32;
 
 #[component]
 pub fn SignTransaction(profile_user_account: String) -> impl IntoView {
-    view! { <ExtensionSignIn profile_user_account=profile_user_account/> }
+    view! { <ExtensionSignIn profile_user_account={profile_user_account} /> }
 }
 
 #[component]
@@ -18,16 +18,16 @@ pub fn ExtensionSignIn(profile_user_account: String) -> impl IntoView {
         if account_load().0.is_empty() || account_load().1.is_empty() {
             view! {
                 <div>
-                    <GetAccountsExtension set_account_load=set_account_load/>
+                    <GetAccountsExtension set_account_load={set_account_load} />
                 </div>
             }.into_any()
         } else if !account_load().0.is_empty() && !account_load().1.is_empty() {
             view! {
                 <div>
                     <ExtensionTransaction
-                        profile_user_account=profile_user_account.clone()
-                        account_address=account_load().0
-                        account_source=account_load().1
+                        profile_user_account={profile_user_account.clone()}
+                        account_address={account_load().0}
+                        account_source={account_load().1}
                     />
                 </div>
             }.into_any()
@@ -49,21 +49,21 @@ async fn transaction(
     
     let account_id32 = AccountId32::from_str(&profile_user_account.clone()).unwrap();
 
-    // let tx = polkadot::tx()
-    //     .profile_validation()
-    //     .add_incentive_count(account_id32);
+    let tx = polkadot::tx()
+        .profile_validation()
+        .add_incentive_count(account_id32);
     
 
     
 
-    // sign_in_with_extension(
-    //     tx,
-    //     account_address,
-    //     account_source,
-    //     set_error,
-    //     set_extrinsic_success,
-    // )
-    // .await;
+    sign_in_with_extension(
+        tx,
+        account_address,
+        account_source,
+        set_error,
+        set_extrinsic_success,
+    )
+    .await;
 }
 
 #[component]
@@ -125,10 +125,10 @@ let error_fn = move || {
     view! {
         <div class="md:container md:mx-auto">
             <div>{async_result}</div>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <div>{move || error_fn()}</div>
-            <br/>
+            <br />
             <div>{move || extrinsic_success_fn()}</div>
 
         </div>

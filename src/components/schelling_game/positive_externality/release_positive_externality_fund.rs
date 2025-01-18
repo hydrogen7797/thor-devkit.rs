@@ -14,11 +14,12 @@ pub fn ReleasePositiveExternalityFund(user_to_calculate: String) -> impl IntoVie
         set_current_view(View::Success);
     };
 
-    let render_view = move || match current_view() {
+    let render_view = move || {
+        match current_view() {
         View::Form => {
             view! {
                 <div class="container mx-auto px-10">
-                    <form id="get-incentives-submit-from" on:submit=submit_click>
+                    <form id="get-incentives-submit-from" on:submit={submit_click}>
                         <button
                             type="submit"
                             id="get-incentives-submit"
@@ -33,11 +34,12 @@ pub fn ReleasePositiveExternalityFund(user_to_calculate: String) -> impl IntoVie
         View::Success => {
             view! {
                 <div>
-                    <SignTransaction user_to_calculate=user_to_calculate.clone()/>
+                    <SignTransaction user_to_calculate={user_to_calculate.clone()} />
 
                 </div>
             }.into_any()
         }
+    }
     };
 
     view! { <div>{move || render_view()}</div> }

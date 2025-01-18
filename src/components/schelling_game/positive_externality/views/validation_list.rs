@@ -1,49 +1,38 @@
-use leptos::prelude::*;
+use crate::components::navigation::nav::Nav;
 use crate::constants::constant::NODE_URL;
-use leptos::ev::SubmitEvent;
-use serde::{Deserialize, Serialize};
-use leptos::task::spawn_local;
-use leptos::html;
 use jsonrpsee_core::{client::ClientT, rpc_params};
 use jsonrpsee_wasm_client::WasmClientBuilder;
-use leptos_router::hooks::use_params_map;
-use crate::components::schelling_game::positive_externality::views::view_post_positive_externality::ViewPostPositiveExternality;
-use crate::components::navigation::nav::Nav;
+use leptos::ev::SubmitEvent;
+use leptos::html;
+use leptos::prelude::*;
+use leptos::task::spawn_local;
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone)]
 struct PaginatedPosts {
-    posts: Vec<u64>,
+    accounts: Vec<String>,
     current_page: u64,
     total_pages: u64,
 }
 
 #[component]
-pub fn ViewPositiveExternalityLatest() -> impl IntoView {
+pub fn ValidationList() -> impl IntoView {
     let (page, set_page) = signal(1);
     let (page_size, set_page_size) = signal(10);
-    let (posts, set_posts) = signal::<Option<Vec<u64>>>(None);
+    let (posts, set_posts) = signal::<Option<Vec<String>>>(None);
     let (total_posts_length, set_total_posts_length) = signal(0);
     let (total_pages, set_total_pages) = signal(0);
     let input_element_page: NodeRef<html::Input> = NodeRef::new();
 
     let input_element_page_size: NodeRef<html::Input> = NodeRef::new();
 
-    let params = use_params_map();
-
-    let user = move || params.with(|params| params.get("user").unwrap_or_default());
-
-    let user_value = untrack(|| user());
-
-    gloo::console::log!(user_value);
-
     // Fetch paginated posts when `page` or `page_size` changes
     Effect::new(move |_| {
-        let user = user(); // Replace with actual user ID
         let page = page();
         let page_size = page_size();
 
         spawn_local(async move {
-            let result = paginate_posts_by_address(user, page, page_size).await;
+            let result = validation_list_length(page, page_size).await;
             match result {
                 Ok((Some(posts), total_length)) => {
                     set_posts.set(Some(posts.clone()));
@@ -103,11 +92,7 @@ pub fn ViewPositiveExternalityLatest() -> impl IntoView {
                             posts
                                 .into_iter()
                                 .map(|post| {
-                                    view! {
-                                        <div class="p-2 border rounded">
-                                            <ViewPostPositiveExternality id={post} />
-                                        </div>
-                                    }
+                                    view! { <div class="p-2 border rounded">{post}</div> }
                                 })
                                 .collect_view()
                                 .into_any()
@@ -173,31 +158,27 @@ pub fn ViewPositiveExternalityLatest() -> impl IntoView {
 }
 
 // Mock API function (replace with your actual API call)
-async fn paginate_posts_by_address(
-    user: String,
+async fn validation_list_length(
     page: u64,
     page_size: u64,
-) -> Result<(Option<Vec<u64>>, u64), String> {
+) -> Result<(Option<Vec<String>>, u64), String> {
     let client = WasmClientBuilder::default().build(NODE_URL).await.unwrap();
-    let all_posts_length: u64 = client
-        .request(
-            "positiveexternality_postbyaddresslength",
-            rpc_params![user.clone()],
-        )
+    let validation_list_length: u64 = client
+        .request("positiveexternality_validationlistlength", rpc_params![])
         .await
         .unwrap();
 
-    gloo::console::log!("allposte", all_posts_length.clone());
+    gloo::console::log!("allpost", validation_list_length.clone());
 
-    let posts: Option<Vec<u64>> = client
+    let accounts: Option<Vec<String>> = client
         .request(
             "positiveexternality_paginateposts_latest",
-            rpc_params![user, page, page_size],
+            rpc_params![page, page_size],
         )
         .await
         .unwrap();
 
-    gloo::console::log!("posts", posts.clone());
+    gloo::console::log!("accounts", accounts.clone());
 
-    Ok((posts, all_posts_length))
+    Ok((accounts, validation_list_length))
 }

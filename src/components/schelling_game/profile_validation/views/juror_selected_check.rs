@@ -6,17 +6,10 @@ use leptos_router::hooks::use_params_map;
 #[component]
 pub fn JurorSelectedCheck() -> impl IntoView {
     let params = use_params_map();
-    
-    let profile_user_account = move || {
-        params.with(|params| {
-            params
-                .get("profile_user_account")
-                .unwrap_or_default()
-        })
-    };
-    
 
-    
+    let profile_user_account =
+        move || params.with(|params| params.get("profile_user_account").unwrap_or_default());
+
     let (check_account, set_check_account) = signal(String::from(""));
 
     let account = untrack(move || profile_user_account());
@@ -28,20 +21,20 @@ pub fn JurorSelectedCheck() -> impl IntoView {
 
     view! {
         <div>
-            <Nav/>
+            <Nav />
             <div class="max-w-5xl mx-auto max-md:mx-10">
                 <h1>Check if an account selected as juror:</h1>
-                <br/>
+                <br />
                 <input
                     type="text"
                     placeholder="Enter account address here"
                     id="juror-address-checking"
                     class="input input-bordered w-full max-w-xs"
-                    on:input=on_account
+                    on:input={on_account}
                 />
-                <br/>
-                <br/>
-                <JurorSelected profile_user_account=account check_account=check_account/>
+                <br />
+                <br />
+                <JurorSelected profile_user_account={account} check_account={check_account} />
             </div>
         </div>
     }

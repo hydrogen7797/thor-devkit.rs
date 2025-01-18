@@ -41,7 +41,17 @@ pub fn AddProfile() -> impl IntoView {
     let (city, set_city) = signal(String::from(""));
     let (street, set_street) = signal(String::from(""));
 
-    let submit_action : Action<(String, String, String ,WriteSignal<View>, WriteSignal<String>), (), LocalStorage> = Action::new_unsync(
+    let submit_action: Action<
+        (
+            String,
+            String,
+            String,
+            WriteSignal<View>,
+            WriteSignal<String>,
+        ),
+        (),
+        LocalStorage,
+    > = Action::new_unsync(
         |(name, details, profile_video_cid, set_current_view, set_post_cid): &(
             String,
             String,
@@ -86,13 +96,14 @@ pub fn AddProfile() -> impl IntoView {
         submit_action_value();
     };
 
-    let render_view = move || match current_view() {
+    let render_view = move || {
+        match current_view() {
         View::Form =>
         // if post_cid().is_empty() {
         {
             view! {
                 <div class="container mx-auto px-10">
-                    <form class="" id="add-profile-submit-from" on:submit=submit_click>
+                    <form class="" id="add-profile-submit-from" on:submit={submit_click}>
 
                         <div class="mb-5">
                             <label
@@ -106,8 +117,8 @@ pub fn AddProfile() -> impl IntoView {
                                 id="profile-name"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                prop:value=move || name()
-                                on:input=move |e| set_name(event_target_value(&e))
+                                prop:value={move || name()}
+                                on:input={move |e| set_name(event_target_value(&e))}
                             />
                         </div>
                         <div class="mb-5">
@@ -118,11 +129,11 @@ pub fn AddProfile() -> impl IntoView {
                                 Profile Details
                             </label>
                             <MarkdownField
-                                set_markdown=set_markdown
-                                name=String::from("profile-details")
-                                class=String::from(
+                                set_markdown={set_markdown}
+                                name={String::from("profile-details")}
+                                class={String::from(
                                     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-                                )
+                                )}
                             />
 
                         </div>
@@ -139,8 +150,8 @@ pub fn AddProfile() -> impl IntoView {
                                 id="country"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                prop:value=move || country()
-                                on:input=move |e| set_country(event_target_value(&e))
+                                prop:value={move || country()}
+                                on:input={move |e| set_country(event_target_value(&e))}
                             />
                         </div>
 
@@ -156,8 +167,8 @@ pub fn AddProfile() -> impl IntoView {
                                 id="state"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                prop:value=move || state()
-                                on:input=move |e| set_state(event_target_value(&e))
+                                prop:value={move || state()}
+                                on:input={move |e| set_state(event_target_value(&e))}
                             />
                         </div>
                         <div class="mb-5">
@@ -172,8 +183,8 @@ pub fn AddProfile() -> impl IntoView {
                                 id="city"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
-                                prop:value=move || city()
-                                on:input=move |e| set_city(event_target_value(&e))
+                                prop:value={move || city()}
+                                on:input={move |e| set_city(event_target_value(&e))}
                             />
                         </div>
                         <div class="mb-5">
@@ -187,8 +198,8 @@ pub fn AddProfile() -> impl IntoView {
                                 type="text"
                                 id="street"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                prop:value=move || street()
-                                on:input=move |e| set_street(event_target_value(&e))
+                                prop:value={move || street()}
+                                on:input={move |e| set_street(event_target_value(&e))}
                             />
                         </div>
 
@@ -200,8 +211,8 @@ pub fn AddProfile() -> impl IntoView {
                                 Profile Video
                             </label>
                             <FileUpload
-                                set_cid_props=set_video_cid
-                                accept_file_type=String::from("video/mp4")
+                                set_cid_props={set_video_cid}
+                                accept_file_type={String::from("video/mp4")}
                             />
                         </div>
 
@@ -223,19 +234,20 @@ pub fn AddProfile() -> impl IntoView {
         View::Success => view! {
             <div>
                 <SignTransaction
-                    post_cid=post_cid()
-                    country=country()
-                    state=state()
-                    city=city()
-                    street=street()
+                    post_cid={post_cid()}
+                    country={country()}
+                    state={state()}
+                    city={city()}
+                    street={street()}
                 />
             </div>
         }.into_any(),
+    }
     };
 
     view! {
         <>
-            <Nav/>
+            <Nav />
             {move || render_view()}
         </>
     }

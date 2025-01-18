@@ -7,7 +7,7 @@ use subxt::utils::AccountId32;
 
 #[component]
 pub fn SignTransaction(dest_account: String, transfer_balance: u128) -> impl IntoView {
-    view! { <ExtensionSignIn dest_account=dest_account transfer_balance=transfer_balance/> }
+    view! { <ExtensionSignIn dest_account={dest_account} transfer_balance={transfer_balance} /> }
 }
 
 #[component]
@@ -18,20 +18,22 @@ pub fn ExtensionSignIn(dest_account: String, transfer_balance: u128) -> impl Int
         if account_load().0.is_empty() || account_load().1.is_empty() {
             view! {
                 <div>
-                    <GetAccountsExtension set_account_load=set_account_load/>
+                    <GetAccountsExtension set_account_load={set_account_load} />
                 </div>
-            }.into_any()
+            }
+            .into_any()
         } else if !account_load().0.is_empty() && !account_load().1.is_empty() {
             view! {
                 <div>
                     <ExtensionTransaction
-                        dest_account=dest_account.clone()
-                        transfer_balance=transfer_balance
-                        account_address=account_load().0
-                        account_source=account_load().1
+                        dest_account={dest_account.clone()}
+                        transfer_balance={transfer_balance}
+                        account_address={account_load().0}
+                        account_source={account_load().1}
                     />
                 </div>
-            }.into_any()
+            }
+            .into_any()
         } else {
             view! { <div>{"Some Error Occured"}</div> }.into_any()
         }
@@ -45,25 +47,23 @@ async fn transaction(
     transfer_balance: u128,
     account_address: String,
     account_source: String,
-    set_error:WriteSignal<String>,
-    set_extrinsic_success:WriteSignal<String>
+    set_error: WriteSignal<String>,
+    set_extrinsic_success: WriteSignal<String>,
 ) {
-
     let account_id32 = AccountId32::from_str(&dest_account).unwrap();
 
-            let tx = polkadot::tx().balances().transfer_allow_death(
-                subxt::utils::MultiAddress::Id(account_id32),
-                transfer_balance,
-            );
-            sign_in_with_extension(
-                tx,
-                account_address,
-                account_source,
-                set_error,
-                set_extrinsic_success,
-            )
-            .await;
-
+    let tx = polkadot::tx().balances().transfer_allow_death(
+        subxt::utils::MultiAddress::Id(account_id32),
+        transfer_balance,
+    );
+    sign_in_with_extension(
+        tx,
+        account_address,
+        account_source,
+        set_error,
+        set_extrinsic_success,
+    )
+    .await;
 }
 
 #[component]
@@ -75,18 +75,16 @@ pub fn ExtensionTransaction(
 ) -> impl IntoView {
     let (error, set_error) = signal(String::from("hello"));
     let (extrinsic_success, set_extrinsic_success) = signal(String::from("extrinsic"));
-    let transaction_resource = LocalResource::new(
-        move || transaction
-            (
-                dest_account.clone(),
-                transfer_balance,
-                account_address.clone(),
-                account_source.clone(),
-                set_error,
-                set_extrinsic_success,
-            )
-
-    );
+    let transaction_resource = LocalResource::new(move || {
+        transaction(
+            dest_account.clone(),
+            transfer_balance,
+            account_address.clone(),
+            account_source.clone(),
+            set_error,
+            set_extrinsic_success,
+        )
+    });
 
     let async_result = move || {
         transaction_resource
@@ -94,13 +92,15 @@ pub fn ExtensionTransaction(
             .as_deref()
             .map(|_| view! { <div></div> }.into_any())
             // This loading state will only show before the first load
-            .unwrap_or_else(|| view! {
-                <div class="alert">
-                    <span class="loading loading-spinner"></span>
-                    "Loading... Please sign with extension."
-                </div>
-            }
-            .into_any())
+            .unwrap_or_else(|| {
+                view! {
+                    <div class="alert">
+                        <span class="loading loading-spinner"></span>
+                        "Loading... Please sign with extension."
+                    </div>
+                }
+                .into_any()
+            })
     };
 
     view! {
