@@ -32,7 +32,7 @@ pub fn UserStakedValue(
             .as_deref()
             .map(|data| {
                     view! {
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded" role="alert">
                             <p>Your staked amount: {data.clone()}</p>
                         </div>
                     }

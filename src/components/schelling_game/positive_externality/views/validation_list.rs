@@ -92,7 +92,7 @@ pub fn ValidationList() -> impl IntoView {
         <>
             <Nav />
             <div class="p-4 space-y-4">
-                <h1 class="text-2xl font-bold">Paginated Posts</h1>
+                <h1 class="text-2xl font-bold text-blue-600 bg-blue-100 p-4 rounded-lg shadow-md dark:bg-gray-700 dark:text-white">Validation List</h1>
 
                 // Display posts
                 <div class="space-y-2">
@@ -103,13 +103,15 @@ pub fn ValidationList() -> impl IntoView {
                                 .map(|account| {
                                     view! {
                                         <>
-                                            <div class="p-2 border rounded">
+                                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded border text-[10px] sm:text-base">
                                                 <a href={format!(
                                                     "/positive-externality/schelling-game/{}",
                                                     account.clone(),
                                                 )}>{account.clone()}</a>
                                             </div>
+                                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded" role="alert">
                                             <GetPeriod user_to_calculate={account.clone()} />
+                                            </div>
                                             <HasUserStaked user_to_calculate={account.clone()} account_state={account_state} />
                                             <UserStakedValue user_to_calculate={account.clone()} account_state={account_state} />
                                         </>
@@ -124,7 +126,10 @@ pub fn ValidationList() -> impl IntoView {
                 </div>
 
                 // Pagination controls
-                <div class="flex items-center justify-between">
+                { move || match accounts(){
+                    Some(accounts_values) => { if !accounts_values.is_empty() { view! {
+
+                        <div class="flex items-center justify-between">
                     <button
                         class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
                         on:click={move |_| go_to_page(page() - 1)}
@@ -145,34 +150,49 @@ pub fn ValidationList() -> impl IntoView {
                     </button>
                 </div>
 
-                // Page selector
-                <form on:submit={update_page} class="flex items-center space-x-2">
-                    <label class="text-gray-700">Page Number:</label>
-                    <input
-                        type="number"
-                        class="p-2 border rounded"
-                        node_ref={input_element_page}
-                        value={move || { page().to_string() }}
-                    />
-                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">
-                        "Update"
-                    </button>
-                </form>
-                <br />
+                 <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">        
+                 <form on:submit={update_page} class="w-full sm:w-auto">
+                 <div class="flex items-center space-x-2">
+                     <label class="w-24 text-gray-700 font-medium">
+                         "Page Number:"
+                     </label>
+                     <input
+                         type="number"
+                         class="w-full p-2 border rounded sm:w-auto"
+                         node_ref={input_element_page}
+                         value={move || { page().to_string() }}
+                     />
+                     <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">
+                         "Update"
+                     </button>
+                 </div>
+             </form>
 
-                // Page size selector
-                <form on:submit={update_page_size} class="flex items-center space-x-2">
-                    <label class="text-gray-700">Page Size:</label>
-                    <input
-                        type="number"
-                        class="p-2 border rounded"
-                        node_ref={input_element_page_size}
-                        value={move || { page_size().to_string() }}
-                    />
-                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">
-                        Update
-                    </button>
-                </form>
+             // Page size form
+             <form on:submit={update_page_size} class="w-full sm:w-auto">
+                 <div class="flex items-center space-x-2">
+                     <label class="w-24 text-gray-700 font-medium">
+                         "Page Size:"
+                     </label>
+                     <input
+                         type="number"
+                         class="w-full p-2 border rounded sm:w-auto"
+                         node_ref={input_element_page_size}
+                         value={move || { page_size().to_string() }}
+                     />
+                     <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">
+                         Update
+                     </button>
+                 </div>
+             </form>
+                </div>
+
+                      }.into_any()} else {
+                        view!{}.into_any()
+                      }}
+                    None => view! {}.into_any()
+                }}
+                
             </div>
         </>
     }
