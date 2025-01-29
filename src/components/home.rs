@@ -1,11 +1,16 @@
 use crate::components::navigation::nav::Nav;
 use leptos::prelude::*;
+use crate::pages::milestone::MilestoneTimeline;
+use crate::pages::features::Features;
+use crate::pages::background::Background;
 
 #[component]
 pub fn Home() -> impl IntoView {
     view! {
         <>
             <Nav />
+
+            <Background />
 
             // <!-- Hero Section -->
             <section class="bg-white dark:bg-slate-800 py-12">
@@ -61,6 +66,10 @@ pub fn Home() -> impl IntoView {
                     </div>
                 </div>
             </section>
+
+            <MilestoneTimeline/>
+
+            <Features/>
 
             // <!-- Footer -->
             <footer class="bg-white dark:bg-slate-800 py-6">

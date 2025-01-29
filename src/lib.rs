@@ -1,6 +1,6 @@
 mod components;
 mod constants;
-
+mod pages;
 #[allow(long_running_const_eval)]
 mod js_extension_binding;
 
