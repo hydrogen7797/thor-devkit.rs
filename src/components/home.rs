@@ -22,7 +22,7 @@ pub fn Home() -> impl IntoView {
                         <p class="text-gray-600 mb-8 text-lg dark:text-white">
                             "Welcome to Shivarthu, a platform that empowers individuals to take part in community governance while earning funding for their contributions. Our decentralized governance model allows for transparent and equitable decision-making, ensuring that everyone has a voice in shaping the future of their community. By participating in our governance process, you can help drive forward initiatives that matter to you and make a real impact. Plus, with our funding incentives, you'll be rewarded for your dedication and hard work. Join us today and be a part of something truly transformative. Together, we can build stronger, more resilient communities that thrive on the power of collective action."
                         </p>
-                        <a href="#" class="btn btn-primary dark:text-white">
+                        <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Test Net
                         </a>
                     </div>
