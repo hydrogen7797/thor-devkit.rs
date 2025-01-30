@@ -34,7 +34,14 @@ pub fn Home() -> impl IntoView {
                     <div class="grid grid-cols-1  sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="bg-white p-6 rounded-lg shadow-md dark:bg-slate-800">
                             <div class="flex items-center mb-4">
-                                <span class="btn btn-circle btn-primary mr-3">1</span>
+                            <div class="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full mr-3">
+                            <span class="flex items-center justify-center w-6 h-6 font-bold text-white ounded-full text-xs">
+                              1
+                            </span>
+                          </div>
+                          
+                          
+                          
                                 <h3 class="text-xl font-bold dark:text-white">
                                     "Authentication of Users"
                                 </h3>
@@ -45,7 +52,11 @@ pub fn Home() -> impl IntoView {
                         </div>
                         <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md">
                             <div class="flex items-center mb-4">
-                                <span class="btn btn-circle btn-primary mr-3">2</span>
+                            <div class="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full mr-3">
+                            <span class="flex items-center justify-center w-6 h-6 font-bold text-white  rounded-full text-xs">
+                              2
+                            </span>
+                          </div>
                                 <h3 class="text-xl font-bold dark:text-white">
                                     "Empower Your Team"
                                 </h3>
@@ -56,7 +67,11 @@ pub fn Home() -> impl IntoView {
                         </div>
                         <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md">
                             <div class="flex items-center mb-4">
-                                <span class="btn btn-circle btn-primary mr-3">3</span>
+                            <div class="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full mr-3">
+                            <span class="flex items-center justify-center w-6 h-6 font-bold text-white  rounded-full text-xs">
+                              3
+                            </span>
+                          </div>
                                 <h3 class="text-xl font-bold dark:text-white">"Wisdom of Crowd"</h3>
                             </div>
                             <p class="text-gray-600 text-lg dark:text-white">
