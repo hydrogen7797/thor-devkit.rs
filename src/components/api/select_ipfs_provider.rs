@@ -2,6 +2,7 @@ pub enum IPFSProvider {
     Crust,
     Web3Storage,
     Everland,
+    Iroh,
 }
 
 // https://github.com/crustio/crust-apps/blob/master/packages/apps-config/src/ipfs-gateway-endpoints/index.ts
@@ -14,4 +15,4 @@ pub const WEB3_STORAGE_API_UPLOAD: &str = "https://api.web3.storage/upload";
 
 pub const EVERLAND_UPLOAD: &str = "https://api.4everland.dev";
 
-pub const DEFAULT_IPFS_PROVIDER: IPFSProvider = IPFSProvider::Everland;
+pub const DEFAULT_IPFS_PROVIDER: IPFSProvider = IPFSProvider::Iroh;

@@ -2,11 +2,15 @@ pub const NODE_URL: &str = "ws://127.0.0.1:9944";
 
 pub const HUGGING_FACE_MODEL: &str = "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5";
 
+pub const IROH_UPLOAD_SERVER: &str = "http://localhost:3000/upload"; // Change if needed
+
+
 pub enum IPFSFetchProviderKind {
     CloudFlare,
     Web3Storage,
     IpfsIO,
     ForEverDedicated,
+    Iroh
 }
 
 pub struct IPFSFetchProvider<'a> {
@@ -22,7 +26,9 @@ pub const IPFS_4EVER_DEDICATED: &str =
 
 pub const EVERLAND_ENDPOINT: &str = "https://endpoint.4everland.co";
 
+pub const IROH_GATEWAY: &str = "http://localhost:4444/blob/";
+                                                         
 pub const DEFAULT_IPFS_FETCH_PROVIDER: IPFSFetchProvider = IPFSFetchProvider {
-    kind: IPFSFetchProviderKind::Web3Storage,
-    address: IPFS_WEB3,
+    kind: IPFSFetchProviderKind::Iroh,
+    address: IROH_GATEWAY,
 };

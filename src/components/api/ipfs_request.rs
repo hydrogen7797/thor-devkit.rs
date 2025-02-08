@@ -8,6 +8,8 @@ use gloo::net::http::{Headers, Request};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::JsValue;
 use web_sys::{Blob, File, FormData};
+
+use crate::components::api::iroh::iroh_api::{upload_file_iroh, upload_json_string_iroh};
 #[derive(Serialize, Deserialize)]
 pub struct IPFSResponse {
     pub Name: String,
@@ -25,6 +27,7 @@ pub async fn ipfs_call(ipfs_provider: IPFSProvider, file: File, name: String) ->
         IPFSProvider::Crust => ipfs_call_crust(file, name).await,
         IPFSProvider::Web3Storage => ipfs_call_web3storage(file, name).await,
         IPFSProvider::Everland => ipfs_call_everland(file, name).await,
+        IPFSProvider::Iroh => upload_file_iroh(file, name).await,
     }
 }
 
@@ -37,6 +40,8 @@ pub async fn ipfs_call_json_string(
         IPFSProvider::Crust => ipfs_call_json_string_crust(data, name).await,
         IPFSProvider::Web3Storage => ipfs_call_json_string_web3storage(data, name).await,
         IPFSProvider::Everland => ipfs_call_json_string_everland(data, name).await,
+        IPFSProvider::Iroh => upload_json_string_iroh(data, name).await,
+
     }
 }
 
