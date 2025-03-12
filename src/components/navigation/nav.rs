@@ -69,14 +69,33 @@ fn navbar_items() -> impl IntoView {
         copy,
     } = use_clipboard_with_options(UseClipboardOptions::default().read(true));
 
+    let (is_dark_mode, set_is_dark_mode) = signal(false);
+    let toggle_dark_mode = move |_| {
+        set_is_dark_mode.update(|dark| *dark = !*dark);
+        let document = web_sys::window().unwrap().document().unwrap();
+        let local_storage = web_sys::window().unwrap().local_storage().unwrap().unwrap();
+
+        if is_dark_mode.get() {
+            document
+                .document_element()
+                .unwrap()
+                .class_list()
+                .add_1("dark")
+                .unwrap();
+            local_storage.set_item("currentTheme", "dark").unwrap();
+        } else {
+            document
+                .document_element()
+                .unwrap()
+                .class_list()
+                .remove_1("dark")
+                .unwrap();
+            local_storage.set_item("currentTheme", "light").unwrap();
+        }
+    };
+
     view! {
         <>
-            <a
-                href="/"
-                class="block py-2 px-4 text-gray-700 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
-                "Home"
-            </a>
             <div class="relative">
                 <button
                     on:click={move |_| set_submenu_open.update(|n| *n = !*n)}
@@ -200,7 +219,7 @@ fn navbar_items() -> impl IntoView {
                 "All Positive Externality"
             </a>
 
-               
+
 
                     <a
                         href="/positive-externality-validation-list"
@@ -314,6 +333,13 @@ fn navbar_items() -> impl IntoView {
                 }}
 
             </div>
+
+            <button
+            class="block py-2 px-4 text-gray-700 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                on:click=toggle_dark_mode
+            >
+                "Dark Mode"
+            </button>
         </>
     }
 }

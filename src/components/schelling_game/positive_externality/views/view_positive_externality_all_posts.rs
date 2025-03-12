@@ -27,7 +27,6 @@ pub fn ViewPositiveExternalityAllPosts() -> impl IntoView {
 
     let input_element_page_size: NodeRef<html::Input> = NodeRef::new();
 
-
     // Fetch paginated posts when `page` or `page_size` changes
     Effect::new(move |_| {
         let page = page();
@@ -121,12 +120,12 @@ pub fn ViewPositiveExternalityAllPosts() -> impl IntoView {
                 >
                     "Previous"
                 </button>
-                <span class="text-gray-700">
+                <span class="dark:text-white text-gray-800">
                     "Page " {page} " of " {total_pages} " (Total Posts: " {total_posts_length}
                     ")"
                 </span>
                 <button
-                    class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+                    class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50 dark:text-white text-gray-800"
                     on:click={move |_| { go_to_page(page() + 1) }}
                     disabled={move || { page() >= total_pages() }}
                 >
@@ -134,15 +133,15 @@ pub fn ViewPositiveExternalityAllPosts() -> impl IntoView {
                 </button>
             </div>
 
-             <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">        
+             <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
              <form on:submit={update_page} class="w-full sm:w-auto">
              <div class="flex items-center space-x-2">
-                 <label class="w-24 text-gray-700 font-medium">
+                 <label class="w-24 dark:text-white text-gray-800 font-medium">
                      "Page Number:"
                  </label>
                  <input
                      type="number"
-                     class="w-full p-2 border rounded sm:w-auto"
+                     class="w-full p-2 border rounded sm:w-auto dark:text-white text-gray-800"
                      node_ref={input_element_page}
                      value={move || { page().to_string() }}
                  />
@@ -155,12 +154,12 @@ pub fn ViewPositiveExternalityAllPosts() -> impl IntoView {
          // Page size form
          <form on:submit={update_page_size} class="w-full sm:w-auto">
              <div class="flex items-center space-x-2">
-                 <label class="w-24 text-gray-700 font-medium">
+                 <label class="w-24 dark:text-white text-gray-800 font-medium">
                      "Page Size:"
                  </label>
                  <input
                      type="number"
-                     class="w-full p-2 border rounded sm:w-auto"
+                     class="w-full p-2 border rounded sm:w-auto dark:text-white text-gray-800"
                      node_ref={input_element_page_size}
                      value={move || { page_size().to_string() }}
                  />
@@ -182,16 +181,10 @@ pub fn ViewPositiveExternalityAllPosts() -> impl IntoView {
 }
 
 // Mock API function (replace with your actual API call)
-async fn paginate_posts(
-    page: u64,
-    page_size: u64,
-) -> Result<(Option<Vec<u64>>, u64), String> {
+async fn paginate_posts(page: u64, page_size: u64) -> Result<(Option<Vec<u64>>, u64), String> {
     let client = WasmClientBuilder::default().build(NODE_URL).await.unwrap();
     let all_posts_length: u64 = client
-        .request(
-            "all_postlength",
-            rpc_params![],
-        )
+        .request("all_postlength", rpc_params![])
         .await
         .unwrap();
 

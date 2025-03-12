@@ -22,7 +22,7 @@ pub fn ViewPostPositiveExternality(id: u64) -> impl IntoView {
             set_data_post(data);
         });
     });
-    view! { <div>{data_post}</div> }
+    view! { <div class="dark:text-white text-gray-800">{data_post}</div> }
 }
 
 async fn get_post_data(id: u64) -> String {

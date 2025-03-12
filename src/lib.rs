@@ -1,8 +1,8 @@
 mod components;
 mod constants;
-mod pages;
 #[allow(long_running_const_eval)]
 mod js_extension_binding;
+mod pages;
 
 mod router;
 mod services;
@@ -27,7 +27,7 @@ pub fn App() -> impl IntoView {
         if let Some(html) = document.document_element() {
             let html: HtmlElement = html.unchecked_into();
             if prefers_dark_mode {
-                html.set_class_name("dark w-full h-full bg-gray-900");
+                html.set_class_name("dark");
             } else {
                 html.set_class_name("");
             }
