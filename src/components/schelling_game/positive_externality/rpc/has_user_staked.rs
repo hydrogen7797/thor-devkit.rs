@@ -61,7 +61,7 @@ pub fn HasUserStaked(
                 view! {
                     <div class="alert">
                         <span class="loading loading-spinner"></span>
-                        "Loading... Please sign with extension."
+                        "Loading..."
                     </div>
                 }
                 .into_any()

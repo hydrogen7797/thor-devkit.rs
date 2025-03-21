@@ -45,37 +45,37 @@ pub fn SchellingGameComponent(profile_user_account: String) -> impl IntoView {
                                 <ChallengeEvidence profile_user_account={profile_user_account()} />
 
                             </div>
+                        }.into_any(),
+                        Period::Staking => {
+                            view! {
+                                <div>
+                                    <ApplyJurors profile_user_account={profile_user_account()} />
+                                </div>
+                            }.into_any()
                         }
-                        .into_any(),
-                        Period::Staking => view! {
-                            <div>
-                                <ApplyJurors profile_user_account={profile_user_account()} />
-                            </div>
-                        }
-                        .into_any(),
                         Period::Drawing => view! {
                             <div>
                                 <DrawJurors profile_user_account={profile_user_account()} />
                             </div>
-                        }
-                        .into_any(),
+                        }.into_any(),
                         Period::Commit => view! {
                             <div>
                                 <CommitVote profile_user_account={profile_user_account()} />
                             </div>
-                        }
-                        .into_any(),
+                        }.into_any(),
                         Period::Vote => view! {
                             <div>
                                 <RevealVote profile_user_account={profile_user_account()} />
                             </div>
-                        }
-                        .into_any(),
+                        }.into_any(),
                         Period::Appeal => view! { <div></div> }.into_any(),
                         Period::Execution => {
-                            view! { <div>You are in Execution phase. Get your incentives</div> }
-                        }
-                        .into_any(),
+                            view! {
+                                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded border text-[10px] sm:text-base">
+                                    You are in Execution phase. Get your incentives
+                                </div>
+                            }
+                        }.into_any()
                     };
                     view
                 } else {

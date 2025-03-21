@@ -71,7 +71,11 @@ pub fn SchellingGameComponent(department_required_fund_id: u64) -> impl IntoView
                         }.into_any(),
                         Period::Appeal => view! { <div></div> }.into_any(),
                         Period::Execution => {
-                            view! { <div>You are in Execution phase. Get your incentives</div> }
+                            view! {
+                                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded border text-[10px] sm:text-base">
+                                    You are in Execution phase. Get your incentives
+                                </div>
+                            }
                         }.into_any()
                     };
                     view
