@@ -1,3 +1,5 @@
+pub mod add_incentives_count;
+pub mod add_incentives_count_sign_in;
 pub mod apply_jurors;
 pub mod apply_jurors_sign_in;
 pub mod apply_staking_period;
@@ -12,8 +14,6 @@ pub mod create_post_sign_in;
 pub mod draw_jurors;
 pub mod draw_jurors_sign_in;
 pub mod game;
-pub mod get_incentives;
-pub mod get_incentives_sign_in;
 pub mod home;
 pub mod release_juror_incentives;
 pub mod release_juror_incentives_sign_in;

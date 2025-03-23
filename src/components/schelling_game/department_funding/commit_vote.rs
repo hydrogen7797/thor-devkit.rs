@@ -38,8 +38,7 @@ pub fn CommitVote(department_required_fund_id: u64) -> impl IntoView {
                                 <ChangePeriod department_required_fund_id={department_required_fund_id
                                     .clone()} />
                             </div>
-                            <div class="text-gray-900 dark:text-white">
-                            </div>
+                            <div class="text-gray-900 dark:text-white"></div>
                             <form
 
                                 id="commit-vote-submit-from"

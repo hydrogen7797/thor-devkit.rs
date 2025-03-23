@@ -11,6 +11,7 @@ use crate::components::schelling_game::department_funding::{
     views::juror_selected_check::JurorSelectedCheck as JurorSelectedCheckDepartmentFunding,
 };
 use crate::components::schelling_game::positive_externality::{
+    add_incentives_count::AddIncentivesCount as PositiveExternalityAddIncentivesCount,
     apply_staking_period_params::ApplyStakingPeriodParams as ApplyStakingPeriodForPositiveExternality,
     change_period_sign_in::SignTransaction as ChangePeriodPositiveExternality,
     create_post::CreatePositiveExternalityPost,
@@ -132,6 +133,11 @@ pub fn RouterApp() -> impl IntoView {
                 <Route
                     path={path!("/positive-externality/release-juror-incentives/")}
                     view={ReleaseJurorIncentives}
+                />
+
+                <Route
+                    path={path!("/positive-externality/add_incentives_count/:user_to_calculate")}
+                    view={PositiveExternalityAddIncentivesCount}
                 />
 
                 <Route

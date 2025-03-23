@@ -68,8 +68,5 @@ pub fn JurorSelected(
             },
         )
     };
-    view! {
-        <div>{async_result}
-        </div>
-    }
+    view! { <div>{async_result}</div> }
 }
